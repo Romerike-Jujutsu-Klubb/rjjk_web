@@ -10,17 +10,18 @@
       .row
         .col = f.text_field :email
         .col = f.text_field :phone
-        javascript:
-          let $inputs = $('input#user_email,input#user_phone');
-          console.log("inputs: " + $inputs.length);
-          $inputs.closest('form').on('submit', function() {
-            console.log('submiting');
-            $inputs.not(this).prop('required', !$(this).val().length);
-          });
-          $inputs.on('input', function() {
-            console.log('inputing');
-            $inputs.not(this).prop('required', !$(this).val().length);
-          });
+        - unless @user.age&.<(18) && @user.guardian_1&.contact_info?
+          javascript:
+            let $inputs = $('input#user_email,input#user_phone');
+            console.log("inputs: " + $inputs.length);
+            $inputs.closest('form').on('submit', function() {
+              console.log('submiting');
+              $inputs.not(this).prop('required', !$(this).val().length);
+            });
+            $inputs.on('input', function() {
+              console.log('inputing');
+              $inputs.not(this).prop('required', !$(this).val().length);
+            });
       .row
         .col = f.text_field :address
         .col = f.text_field :postal_code
@@ -37,7 +38,7 @@
       button.btn.btn-primary.float-right name="next" type="submit"
         ' Neste
         i.fa.fa-angle-double-right
-      button.btn.btn-secondary.mr-3.float-right name="back" type="submit"
+      button.btn.btn-secondary.mr-3 name="back" type="submit"
         i.fa.fa-chevron-left>
         | Tilbake
 javascript:

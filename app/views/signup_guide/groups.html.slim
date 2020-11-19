@@ -36,12 +36,11 @@
       = f.collection_check_boxes(:group_ids, @groups, :id, :extended_label) do |group|
         = group.label { group.check_box }
 
-      .float-right
-        button.mr-3 name="back" type="submit" class="btn btn-secondary"
-          i.fa.fa-chevron-left>
-          | Tilbake
-        button name="submit" type="submit" class="btn btn-primary"
-          ' Meld inn
-          i.fa.fa-thumbs-up
+      button.mr-3 name="back" type="submit" class="btn btn-secondary"
+        i.fa.fa-chevron-left>
+        | Tilbake
+      button.btn.btn-primary.float-right name="submit" type="submit"
+        ' Meld inn
+        i.fa.fa-thumbs-up
 javascript:
   $('#user_email').focus();

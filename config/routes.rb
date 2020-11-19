@@ -301,6 +301,7 @@ Rails.application.routes.draw do
     match :groups, via: %i[get post]
     post :complete
     patch :complete
+    get :find_user
   end
 
   resources :signups do
