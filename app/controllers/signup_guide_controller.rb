@@ -44,13 +44,12 @@ class SignupGuideController < ApplicationController
 
   def find_user
     if (phone_query = params[:phone]).present?
-    users = User.where('phone ILIKE ?', "#{phone_query}%")
-    response = users.map do |u|
-      {
-        value: u.phone, text: "#{u.phone} #{u.name}", id: u.id, phone: u.phone, email: u.email,
-        name: u.name, birthdate: u.birthdate, male: u.male, address: u.address, postal_code: u.postal_code
-      }
-    end
+      users = User.where('phone ILIKE ?', "#{phone_query}%")
+      response = users.map do |u|
+        { value: u.phone, text: "#{u.phone} #{u.name}", id: u.id, phone: u.phone, email: u.email,
+          name: u.name, birthdate: u.birthdate, male: u.male, address: u.address,
+          postal_code: u.postal_code }
+      end
     else
       response = []
     end
