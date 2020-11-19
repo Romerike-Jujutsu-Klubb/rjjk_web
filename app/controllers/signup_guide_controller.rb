@@ -82,6 +82,7 @@ class SignupGuideController < ApplicationController
       end
       @user = existing_mail_user
       @user.attributes = params[:user]
+      store_signup
     end
 
     if @user.invalid? && (@user.errors.keys & %i[email phone postal_code address]).any?
