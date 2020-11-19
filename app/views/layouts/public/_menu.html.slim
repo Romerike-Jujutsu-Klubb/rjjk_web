@@ -11,9 +11,8 @@ nav#navbar.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
       - @information_pages.select(&:public).reject(&:hidden).each do |ip|
         li.nav-item id="menu-item-#{ip.id}"
           a.nav-link href=information_page_path(ip.title) = ip.title
-      - if Rails.env.development? || Rails.env.test? || current_user&.name&.==('Uwe Kubosch')
-        li.nav-item
-          a.nav-link.btn.btn-warning href=signup_guide_root_path Prøv oss!
+      li.nav-item
+        a.nav-link.btn.btn-warning href=signup_guide_root_path Prøv oss!
       li.nav-item
         a.nav-link href=(current_user ? root_path : with_detour(login_path)) Medlemssider
     form.form-inline.my-2.my-lg-0 action=search_path
