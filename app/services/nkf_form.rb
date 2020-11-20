@@ -38,12 +38,13 @@ module NkfForm
     form_field = form.page.css("##{nkf_field}")
     form_value = form_field.attr('value')&.value
     nkf_value = nkf_mapping[:nkf_value]
+    nkf_attr = nkf_mapping[:nkf_attr]
     if nkf_value != form_value
-      logger.info "Updated NKF value: #{nkf_value.inspect} => #{form_value.inspect}"
+      logger.info "Updated NKF value #{nkf_attr}: #{nkf_value.inspect} => #{form_value.inspect}"
       nkf_value = form_value
     end
     if mapped_rjjk_value.blank? && nkf_value.blank?
-      logger.error "No update needed for #{nkf_mapping[:nkf_attr]}"
+      logger.error "No update needed for #{nkf_attr}"
       return
     end
 
@@ -65,7 +66,7 @@ module NkfForm
         Set form field #{form_field.name}: #{form_value.inspect} => #{desired_option.value.inspect}
       LINE
       desired_option.select
-      if nkf_mapping[:nkf_attr] == :medlemskategori_navn
+      if nkf_attr == :medlemskategori_navn
         fee_form_field = NkfMember::FIELD_MAP[:kont_sats][:form_field][form_key]
         options_uri = URI('https://nkfwww.kampsport.no/portal/pls/portal/myports.ks_ajax.main')
         http = Net::HTTP.new(options_uri.host, options_uri.port)
