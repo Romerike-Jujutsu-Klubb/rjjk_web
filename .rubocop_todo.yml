@@ -9,7 +9,6 @@
 # Offense count: 6
 Lint/DuplicateBranch:
   Exclude:
-    - 'app/controllers/attendance_form_controller.rb'
     - 'app/controllers/event_registration_controller.rb'
     - 'app/models/member.rb'
     - 'app/services/nkf_attribute_conversion.rb'
