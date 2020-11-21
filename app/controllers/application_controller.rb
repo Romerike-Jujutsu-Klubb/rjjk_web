@@ -30,7 +30,8 @@ class ApplicationController < ActionController::Base
   end
 
   NO_LAYOUT_KEYS = %i[partial text plain html body json].freeze
-  def render(*args, **opts)
+  def render(*args)
+    opts = args[-1].is_a?(Hash) ? args[-1] : {}
     if opts[:layout] == false || (opts.keys & NO_LAYOUT_KEYS).any?
       # Skip layout models
     elsif _layout(lookup_context, []) == PUBLIC_LAYOUT || opts[:layout] == PUBLIC_LAYOUT
