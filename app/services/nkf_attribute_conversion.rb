@@ -389,20 +389,17 @@ module NkfAttributeConversion
   end
 
   def nkf_attribute_to_rjjk(target, target_attribute, nkf_value)
-    if target == :user && target_attribute == :height
-      nkf_value == 0 ? nil : nkf_value
-    elsif target == :user && target_attribute == :postal_code
-      nkf_value == 9999 ? nil : nkf_value
-    elsif nkf_value.is_a?(Integer) || nkf_value.is_a?(Date)
-      nkf_value
-    elsif /^\s*(?<day>\d{2})\.(?<month>\d{2})\.(?<year>\d{4})\s*$/ =~ nkf_value
+    return nkf_value == 0 ? nil : nkf_value if target == :user && target_attribute == :height
+    return nkf_value == 9999 ? nil : nkf_value if target == :user && target_attribute == :postal_code
+    return nkf_value if nkf_value.is_a?(Integer) || nkf_value.is_a?(Date)
+
+    if /^\s*(?<day>\d{2})\.(?<month>\d{2})\.(?<year>\d{4})\s*$/ =~ nkf_value
       Date.new(year.to_i, month.to_i, day.to_i)
     elsif /Mann|Kvinne/.match?(nkf_value)
       nkf_value == 'Mann'
-    elsif nkf_value.blank? && (target =~ /^(billing|guardian_)/ ||
-        target_attribute =~ /^guardian_|email|mobile|phone|_on$/)
-      nil
-    elsif nkf_value.blank? && (target == :user && User::NILLABLE_FIELDS.include?(target_attribute))
+    elsif nkf_value.blank? && (
+          (target =~ /^(billing|guardian_)/ || target_attribute =~ /^guardian_|email|mobile|phone|_on$/) ||
+            ((target == :user && User::NILLABLE_FIELDS.include?(target_attribute))))
       nil
     elsif nkf_value.present? && target_attribute.to_s.include?('email')
       nkf_value.downcase
