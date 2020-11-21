@@ -31,19 +31,14 @@ class EventRegistrationController < ApplicationController
       @event_invitee = EventInvitee.new(params[:event_invitee])
       @event_invitee.will_attend = true
 
-      if current_user
-        @event_invitee.user_id = current_user.id
-      elsif @event_invitee.email.present? &&
-            (user = User.find_by('email ILIKE ?', @event_invitee.email.strip))
-        @event_invitee.user_id = user.id
-      elsif @event_invitee.phone.present? &&
-            (user = User.find_by(phone: @event_invitee.phone.strip.delete_prefix('+47')))
-        @event_invitee.user_id = user.id
-      elsif @event_invitee.email.present? && @event_invitee.email.match?(User::EMAIL_REGEXP) &&
-            @event_invitee.name.present?
-        user = User.create! email: @event_invitee.email, name: @event_invitee.name, locale: I18n.locale
-        @event_invitee.user_id = user.id
-      end
+      user = current_user ||
+          (@event_invitee.email.present? && User.find_by('email ILIKE ?', @event_invitee.email.strip)) ||
+          (@event_invitee.phone.present? &&
+                  User.find_by(phone: @event_invitee.phone.strip.delete_prefix('+47'))) ||
+          (@event_invitee.email.present? && @event_invitee.email.match?(User::EMAIL_REGEXP) &&
+                  @event_invitee.name.present? &&
+              User.create!(email: @event_invitee.email, name: @event_invitee.name, locale: I18n.locale))
+      @event_invitee.user_id = user.id if user
 
       if @event_invitee.user_id && (existing_registration = EventInvitee
           .find_by(event_id: @event_invitee.event_id, user_id: @event_invitee.user_id))
