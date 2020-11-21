@@ -401,13 +401,9 @@ class Member < ApplicationRecord
       nil
     # elsif passive_on
     #   100
-    elsif current_election
+    elsif current_election || active_group_instructors.size >= 2
       100
-    elsif active_group_instructors.size == 1
-      50
-    elsif active_group_instructors.size >= 2
-      100
-    elsif instructor?
+    elsif active_group_instructors.size == 1 || instructor?
       50
     end
   end
