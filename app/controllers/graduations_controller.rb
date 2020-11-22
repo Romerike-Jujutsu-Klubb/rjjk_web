@@ -187,7 +187,9 @@ class GraduationsController < ApplicationController
 
   def send_date_change_message
     graduation = Graduation.find(params[:id])
-    if graduation.held_on != graduation.date_info_sent_for
+    if graduation.held_on == graduation.date_info_sent_for
+      flash.alert = 'Dato har ikke blitt endret.'
+    else
       Graduation.transaction do
         graduation.group.members.active(graduation.held_on).order(:id).each do |member|
           next if member.next_rank(graduation).position >= Rank::SHODAN_POSITION
@@ -199,8 +201,6 @@ class GraduationsController < ApplicationController
         graduation.update! date_info_sent_at: Time.current, date_info_sent_for: graduation.held_on
       end
       flash.notice = 'Melding om endring av dato er sendt.'
-    else
-      flash.alert = 'Dato har ikke blitt endret.'
     end
 
     redirect_to edit_graduation_path(graduation, anchor: :form_tab)

@@ -38,11 +38,11 @@ class ImagesController < ApplicationController
     image_content = image.content_data_io
     return redirect_to_icon(image) if image_content.nil?
 
-    if requested_format != image.format
-      send_image(image, MiniMagick::Image.read(image_content), requested_format)
-    else
+    if requested_format == image.format
       send_data(image_content.string, disposition: 'inline', type: image.content_type,
           filename: image.name)
+    else
+      send_image(image, MiniMagick::Image.read(image_content), requested_format)
     end
   rescue => e
     logger.error e

@@ -122,14 +122,6 @@ Style/HashTransformValues:
   Exclude:
     - 'app/controllers/attendances_controller.rb'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-Style/NegatedIfElseCondition:
-  Exclude:
-    - 'app/controllers/graduations_controller.rb'
-    - 'app/controllers/images_controller.rb'
-    - 'app/services/attendance_history_graph.rb'
-
 # Offense count: 1
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: respond_to_missing?

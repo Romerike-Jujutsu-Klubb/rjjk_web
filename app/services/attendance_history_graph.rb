@@ -43,7 +43,7 @@ AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
       next unless totals[i] && (current_month.nil? ||
         ((month - current_month > 1) && CHART_MONTHS.include?(month)) || year != current_year)
 
-      labels[i] = year != current_year ? "#{month}\n    #{year}" : month.to_s
+      labels[i] = year == current_year ? month.to_s : "#{month}\n    #{year}"
       current_year = year
       current_month = month
     end
