@@ -73,13 +73,6 @@ Performance/ArraySemiInfiniteRangeSlice:
     - 'Gemfile'
     - 'test/application_system_test_case.rb'
 
-# Offense count: 3
-Performance/MethodObjectAsBlock:
-  Exclude:
-    - 'app/models/member.rb'
-    - 'app/services/nkf_attribute_conversion.rb'
-    - 'test/controllers/attendances_controller_test.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 Performance/Sum:

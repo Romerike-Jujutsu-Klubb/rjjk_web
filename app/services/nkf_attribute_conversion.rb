@@ -87,7 +87,8 @@ module NkfAttributeConversion
   MAPPED_FIELDS = FIELD_MAP.select { |_nkf_attr, mapping| mapping[:map_to] }.freeze
 
   def mapping_attributes(form)
-    MAPPED_FIELDS.select { |_nkf_attr, mapping| mapping[:form_field][form] }.map(&method(:rjjk_attribute))
+    MAPPED_FIELDS.select { |_nkf_attr, mapping| mapping[:form_field][form] }
+        .map { |nkf_atr, f| rjjk_attribute(nkf_atr, f) }
   end
 
   def mapping_changes

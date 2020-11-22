@@ -365,7 +365,7 @@ class Member < ApplicationRecord
     user.contact_users.any? do |other_user|
       next if other_user == user
 
-      older_member?(other_user) || other_user.depending_users.any?(&method(:older_member?))
+      older_member?(other_user) || other_user.depending_users.any? { |u| older_member?(u) }
     end
   end
 

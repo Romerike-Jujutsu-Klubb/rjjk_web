@@ -68,7 +68,7 @@ class AttendancesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  Attendance::Status.constants(false).map(&Attendance::Status.method(:const_get)).each do |status|
+  Attendance::Status.constants(false).map { |c| Attendance::Status.const_get(c) }.each do |status|
     test "should get review #{status}" do
       practice = practices(:voksne_2013_42_thursday)
       login(:uwe)
