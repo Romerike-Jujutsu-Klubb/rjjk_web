@@ -63,7 +63,7 @@ class Graduate < ApplicationRecord
   end
 
   def registered_trainings
-    rank.curriculum_group.practice_groups.map { |g| g.registered_trainings_in_period(training_period) }.sum
+    rank.curriculum_group.practice_groups.sum { |g| g.registered_trainings_in_period(training_period) }
   end
 
   def registration_percentage
