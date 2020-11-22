@@ -71,9 +71,6 @@ Naming/MethodParameterName:
 Performance/ArraySemiInfiniteRangeSlice:
   Exclude:
     - 'Gemfile'
-    - 'app/services/nkf_appointments_scraper.rb'
-    - 'app/services/nkf_member_import.rb'
-    - 'app/services/skill_card.rb'
     - 'test/application_system_test_case.rb'
 
 # Offense count: 4
