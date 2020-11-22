@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class AttendanceHistoryGraph
+  CHART_MONTHS = [1, 8].freeze
   def self.history_graph_data
     first_date = Date.civil(2010, 8, 1)
     weeks = []
@@ -40,8 +41,7 @@ AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
       year = week[0]
       month = Date.commercial(week[0], week[1], 2).mon
       next unless totals[i] && (current_month.nil? ||
-          ((month - current_month > 1) && [1, 8].include?(month)) ||
-          year != current_year)
+        ((month - current_month > 1) && CHART_MONTHS.include?(month)) || year != current_year)
 
       labels[i] = year != current_year ? "#{month}\n    #{year}" : month.to_s
       current_year = year

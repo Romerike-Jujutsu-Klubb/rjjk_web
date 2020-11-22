@@ -3,6 +3,7 @@
 class UserMergeController < ApplicationController
   RELATIONS = %i[embus event_invitees images memberships news_item_likes news_items payees primary_wards
                  secondary_wards user_messages].freeze
+  IGNORED_ASSOCIATIONS = %w[last_attendance last_membership member].freeze
   before_action :admin_required
 
   def show
@@ -30,7 +31,7 @@ class UserMergeController < ApplicationController
     User.transaction do
       @user.attributes = params[:user] if params[:user]
       @user.class.reflections.each do |ref_name, reflection|
-        next if %w[last_attendance last_membership member].include?(ref_name)
+        next if IGNORED_ASSOCIATIONS.include?(ref_name)
         next unless reflection.is_a? ActiveRecord::Reflection::HasOneReflection
 
         user_value = @user.send(ref_name)

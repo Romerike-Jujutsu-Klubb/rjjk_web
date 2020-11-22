@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class NkfAppointmentsScraper
+  APPOINTMENT_MAP = { 'Barne og ungdomsrepresentant' => 'Foreldrerepresentant' }.freeze
+
   def self.import_appointments
     tries ||= 1
     logger.info 'Import appointments'
@@ -18,7 +20,7 @@ class NkfAppointmentsScraper
     # FIXME(uwe):  Download CSV instead of scraping.
 
     appointments = rows.map do |r|
-      role_name = { 'Barne og ungdomsrepresentant' => 'Foreldrerepresentant' }[r[1]] || r[1]
+      role_name = APPOINTMENT_MAP[r[1]] || r[1]
       role = Role.by_name(role_name).first_or_create!
       member_name = r[0]
       m = User.where("(last_name || ' ' || first_name) = ?", member_name)

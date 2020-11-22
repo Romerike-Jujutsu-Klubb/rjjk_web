@@ -73,15 +73,6 @@ Performance/ArraySemiInfiniteRangeSlice:
     - 'Gemfile'
     - 'test/application_system_test_case.rb'
 
-# Offense count: 4
-# Configuration parameters: MinSize.
-Performance/CollectionLiteralInLoop:
-  Exclude:
-    - 'app/controllers/user_merge_controller.rb'
-    - 'app/services/attendance_history_graph.rb'
-    - 'app/services/nkf_appointments_scraper.rb'
-    - 'app/services/nkf_member_import.rb'
-
 # Offense count: 3
 Performance/MethodObjectAsBlock:
   Exclude:

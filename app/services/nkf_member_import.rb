@@ -4,6 +4,9 @@ class NkfMemberImport
   include ParallelRunner
   include MonitorMixin
 
+  IGNORED_FIELDS = %w[aktivitetsomrade_id aktivitetsomrade_navn alder avtalegiro
+                      beltefarge dan_graderingsserifikat forbundskontingent].freeze
+
   attr_reader :changes, :error_records, :exception, :import_rows, :new_records, :nkf_agent
 
   # @param nkf_member_ids [Integer|Array<Integer>] only import the given NKF member id(s)
@@ -124,8 +127,7 @@ class NkfMemberImport
       logger.debug row
       attributes = {}
       columns.each_with_index do |column, i|
-        next if %w[aktivitetsomrade_id aktivitetsomrade_navn alder avtalegiro
-                   beltefarge dan_graderingsserifikat forbundskontingent].include? column
+        next if IGNORED_FIELDS.include? column
 
         row[i] = row[i][0] if column == 'kjonn'
         attributes[column] = row[i]&.strip
