@@ -66,8 +66,6 @@ class SignupGuideTest < ApplicationSystemTestCase
     fill_in :user_guardian_1_attributes_phone, with: '+1 206 322 1582'
     fill_in :user_guardian_1_attributes_email, with: 'bruce.lee@test.com'
     fill_in :user_guardian_1_attributes_name, with: 'Bruce Lee'
-    fill_in :user_guardian_1_attributes_birthdate, with: '27111940'
-    find('label', text: 'Mann').click
     fill_in :user_guardian_1_attributes_address, with: '1554 15th Ave E, Seattle, WA 98112-2805'
     fill_in :user_guardian_1_attributes_postal_code, with: '2805'
     screenshot :guardian_filled
@@ -107,8 +105,6 @@ class SignupGuideTest < ApplicationSystemTestCase
     fill_in :user_guardian_1_attributes_phone, with: '+1 206 322 1582'
     fill_in :user_guardian_1_attributes_email, with: 'bruce.lee@test.com'
     fill_in :user_guardian_1_attributes_name, with: 'Bruce Lee'
-    fill_in :user_guardian_1_attributes_birthdate, with: '27111940'
-    find('label', text: 'Mann').click
     fill_in :user_guardian_1_attributes_address, with: '1554 15th Ave E, Seattle, WA 98112-2805'
     fill_in :user_guardian_1_attributes_postal_code, with: '2805'
     screenshot :guardian_filled

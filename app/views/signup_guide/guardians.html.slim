@@ -11,13 +11,6 @@
           .col-sm = gf.email_field :email, required: true
         = gf.text_field :name, required: true, disabled: true
         .row
-          .col = gf.date_field :birthdate, disabled: true
-          .col
-            .control-label Kjønn
-            = render 'layouts/tri_state_switch', f: gf, field_id: "user_guardian_1_attributes_male", \
-                field_name: "user[guardian_1_attributes][male]", state: @user.guardian_1&.male, \
-                true_label: 'Mann', false_label: 'Kvinne', disabled: true
-        .row
           .col-sm = gf.text_field :address, disabled: true
           .col = gf.text_field :postal_code, disabled: true
 
@@ -39,11 +32,8 @@ javascript:
       // console.trace(xhr);
       if (data.length == 0) {
         $('#user_guardian_1_attributes_name').prop('disabled', false);
-        $('#user_guardian_1_attributes_birthdate').prop('disabled', false);
         $('#user_guardian_1_attributes_address').prop('disabled', false);
         $('#user_guardian_1_attributes_postal_code').prop('disabled', false);
-        $("input#user_guardian_1_attributes_male_true").prop('disabled', false);
-        $("input#user_guardian_1_attributes_male_false").prop('disabled', false);
         $('#user_guardian_1_attributes_email').focus()
       } else if (data.length == 1) {
         item = data[0];
@@ -52,10 +42,8 @@ javascript:
         $('#user_guardian_1_attributes_id').val(item.id);
         $('#user_guardian_1_attributes_email').val(item.email);
         $('#user_guardian_1_attributes_name').val(item.name);
-        $('#user_guardian_1_attributes_birthdate').val(item.birthdate);
         $('#user_guardian_1_attributes_address').val(item.address);
         $('#user_guardian_1_attributes_postal_code').val(item.postal_code);
-        $("input#user_guardian_1_attributes_male_" + item.male).prop('checked', true);
       } else {
         console.log("Multiple users with the same phone?!");
       }
