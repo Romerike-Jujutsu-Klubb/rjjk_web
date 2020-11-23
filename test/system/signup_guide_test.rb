@@ -145,8 +145,30 @@ class SignupGuideTest < ApplicationSystemTestCase
     fill_in :user_guardian_1_attributes_postal_code, with: '2805'
     click_on 'Neste'
 
-    fill_in :user_phone, with: '+1 206 322 1582'
     fill_in :user_email, with: 'bruce.lee@test.com'
+    click_on 'Neste'
+
+    assert_current_path signup_guide_contact_info_path
+
+    screenshot :contact_info_with_error_message
+  end
+
+  test 'New user under 18 years with duplicate phone for member and guardian' do
+    visit signup_guide_root_path
+
+    fill_in :user_name, with: 'Brendon Lee'
+    fill_in :user_birthdate, with: '01022003'
+    find('label', text: 'Mann').click
+    click_on 'Neste'
+
+    fill_in :user_guardian_1_attributes_phone, with: '+1 206 322 1582'
+    fill_in :user_guardian_1_attributes_email, with: 'bruce.lee@test.com'
+    fill_in :user_guardian_1_attributes_name, with: 'Bruce Lee'
+    fill_in :user_guardian_1_attributes_address, with: '1554 15th Ave E, Seattle, WA 98112-2805'
+    fill_in :user_guardian_1_attributes_postal_code, with: '2805'
+    click_on 'Neste'
+
+    fill_in :user_phone, with: '+1 206 322 1582'
     click_on 'Neste'
 
     assert_current_path signup_guide_contact_info_path
