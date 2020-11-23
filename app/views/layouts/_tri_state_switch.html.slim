@@ -2,7 +2,7 @@
 /= f.radio_button :passed, true, label: :Ja, class: 'mr-1', label_class: 'mr-2', onchange: "$('#passed_btn_#{graduate.id}').click()"
 /= f.radio_button :passed, false, label: :Nei, class: 'mr-1', onchange: "$('#passed_btn_#{graduate.id}').click()"
 / https://codepen.io/Davide_sd/pen/AmazD
-.btn-group.mt-2 data-toggle="buttons"
+.btn-group.mt-2.w-100 data-toggle="buttons"
   label.btn.btn-sm.p-2 class=("btn-#{'outline-' unless state}success")
     = true_label
     input.ml-1 type="radio" name=field_name id="#{field_id}_true" value=:true checked=state required=local_assigns[:required] disabled=local_assigns[:disabled]

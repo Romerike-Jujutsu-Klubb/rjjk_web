@@ -11,7 +11,7 @@
     = bootstrap_form_for @user, url: signup_guide_contact_info_path do |f|
       .row
         .col = f.text_field :phone, label: @user.guardian_1 ? "#{@user.first_name} sin telefon" : 'Telefon'
-        .col = f.text_field :email, label: @user.guardian_1 ? "#{@user.first_name} sin e-post" : 'E-post'
+        .col-md = f.text_field :email, label: @user.guardian_1 ? "#{@user.first_name} sin e-post" : 'E-post'
         - unless @user.age&.<(18) && @user.guardian_1&.contact_info?
           javascript:
             let $inputs = $('input#user_email,input#user_phone');
@@ -25,7 +25,7 @@
               $inputs.not(this).prop('required', !$(this).val().length);
             });
       .row
-        .col = f.text_field :address
+        .col-md = f.text_field :address
         .col = f.text_field :postal_code
 
       button.btn.btn-primary.float-right name="next" type="submit"
