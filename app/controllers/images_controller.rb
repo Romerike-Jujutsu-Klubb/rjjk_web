@@ -205,9 +205,11 @@ class ImagesController < ApplicationController
 
   def rank_required(image, check_referer: true)
     referer = request.headers['HTTP_REFERER']&.gsub(/\?.*$/, '')
-    if !check_referer || [root_url, front_parallax_url].include?(referer)
-      return false if FrontPageSection.exists?(image_id: image.id)
+    if (!check_referer || [root_url, front_parallax_url].include?(referer)) &&
+          FrontPageSection.exists?(image_id: image.id)
+      return false
     end
+
     image.application_steps.each do |step|
       next unless current_user&.member.nil? ||
           step.application_image_sequence.technique_application.rank > current_user.member.next_rank

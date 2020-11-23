@@ -110,13 +110,10 @@ module UserSystem
   end
 
   def login_from_params
-    if (token = params[:key])
-      if (self.session_user = User.authenticate_by_token(token))
-        params.delete(:key)
-        store_cookie(current_user)
-        logger.info "User #{current_user.name} (#{current_user.id}) logged in by key."
-      end
-
+    if (token = params[:key]) && (self.session_user = User.authenticate_by_token(token))
+      params.delete(:key)
+      store_cookie(current_user)
+      logger.info "User #{current_user.name} (#{current_user.id}) logged in by key."
     end
     current_user
   end
