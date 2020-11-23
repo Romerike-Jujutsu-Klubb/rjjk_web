@@ -123,7 +123,7 @@ class User < ApplicationRecord
       billing_user.errors.add :email, I18n.t('activerecord.errors.messages.blank')
     end
     if guardian_1&.email.present? && email == guardian_1.email
-      errors.add :email, 'er den samme som for foresatt'
+      errors.add :email, 'er den samme som for foresatt.  E-post må være unik.'
     end
   end
   # validates_associated :member, on: :update # TODO(uwe): Activate this?
