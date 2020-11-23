@@ -1,15 +1,19 @@
 .card
-  h5.card-header Siden #{@user.first_name} er #{@user.age} år trenger vi en <b>foresatt</b>.
+  h3.card-header Foresatt
   .card-body
+    p
+      ' Siden #{@user.first_name} er #{@user.age} år trenger vi en
+      b.text-info foresatt
+      | .
     = bootstrap_form_for @user, url: signup_guide_guardians_path do |f|
       = f.hidden_field :guardian_1_id
 
       = f.fields_for :guardian_1 do |gf|
         = gf.hidden_field :id
         .row
-          .col = gf.phone_field :phone, required: true, autocomplete: "off", class: 'autoComplete'
-          .col-sm = gf.email_field :email, required: true
-        = gf.text_field :name, required: true, disabled: true
+          .col = gf.phone_field :phone, required: true, autocomplete: "off", label: 'Foresatt telefon'
+          .col-sm = gf.email_field :email, required: true, label: 'Foresatt e-post'
+        = gf.text_field :name, required: true, disabled: true, label: 'Foresatt navn'
         .row
           .col-sm = gf.text_field :address, disabled: true
           .col = gf.text_field :postal_code, disabled: true
@@ -23,13 +27,9 @@
 javascript:
   $('#user_guardian_1_attributes_phone').focus().on('keyup modify', function(e){
     if ($(this).val().length !== 8) {
-      console.log("Phone: " + $(this).val().length);
       return;
     }
     $.getJSON('#{signup_guide_find_user_path}', {phone: $(this).val()}, function(data, code, xhr) {
-      console.log(data);
-      // console.trace(code);
-      // console.trace(xhr);
       if (data.length == 0) {
         $('#user_guardian_1_attributes_name').prop('disabled', false);
         $('#user_guardian_1_attributes_address').prop('disabled', false);

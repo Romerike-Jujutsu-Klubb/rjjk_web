@@ -77,7 +77,7 @@ class SignupGuideController < ApplicationController
           "Vi har allerede registrert #{existing_mail_user.name} (#{existing_mail_user.email}) fra før."
       if existing_mail_user.member
         flash.alert = "#{existing_mail_user.name} er allerede medlem!"
-        redirect_to login_path
+        redirect_to signup_guide_contact_info_path
         return
       end
       @user = existing_mail_user

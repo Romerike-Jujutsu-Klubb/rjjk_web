@@ -122,6 +122,9 @@ class User < ApplicationRecord
       errors.add :billing_user_id, 'trenger e-post eller telefon'
       billing_user.errors.add :email, I18n.t('activerecord.errors.messages.blank')
     end
+    if guardian_1&.email.present? && email == guardian_1.email
+      errors.add :email, 'er den samme som for foresatt'
+    end
   end
   # validates_associated :member, on: :update # TODO(uwe): Activate this?
 

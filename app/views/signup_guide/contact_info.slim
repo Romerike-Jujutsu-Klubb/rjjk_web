@@ -1,15 +1,17 @@
 .card
-  h5.card-header Kontaktinfo for #{@user.age&.<(18) ? @user.first_name : @user.name}
+  h5.card-header
+    ' Kontaktinfo for
+    span.text-info #{@user.age&.<(18) ? @user.first_name : @user.name}
   .card-body
-    - if @user.guardian_1 && @user.age >= 13
-      p For medlemmer over 13 år anbefaler vi at de har egen kontaktinfo.
+    - if @user.guardian_1
+      - if @user.age >= 13
+        p For medlemmer over 13 år anbefaler vi at de har egen kontaktinfo.
+      - else
+        p Medlemmer under 13 år trenger ikke egen kontaktinfo.
     = bootstrap_form_for @user, url: signup_guide_contact_info_path do |f|
-      = f.hidden_field :name
-      = f.hidden_field :birthdate
-      = f.hidden_field :male
       .row
-        .col = f.text_field :email
-        .col = f.text_field :phone
+        .col = f.text_field :phone, label: @user.guardian_1 ? "#{@user.first_name} sin telefon" : 'Telefon'
+        .col = f.text_field :email, label: @user.guardian_1 ? "#{@user.first_name} sin e-post" : 'E-post'
         - unless @user.age&.<(18) && @user.guardian_1&.contact_info?
           javascript:
             let $inputs = $('input#user_email,input#user_phone');
@@ -25,15 +27,6 @@
       .row
         .col = f.text_field :address
         .col = f.text_field :postal_code
-
-      = f.fields_for :guardian_1 do |gf|
-        = gf.hidden_field :name
-        = gf.hidden_field :birthdate
-        = gf.hidden_field :male
-        = gf.hidden_field :email
-        = gf.hidden_field :phone
-        = gf.hidden_field :address
-        = gf.hidden_field :postal_code
 
       button.btn.btn-primary.float-right name="next" type="submit"
         ' Neste

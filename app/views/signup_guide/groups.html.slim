@@ -14,25 +14,6 @@
 
     = bootstrap_form_for @user, url: signup_guide_groups_path do |f|
       = invisible_captcha
-      = f.hidden_field :id
-      = f.hidden_field :name
-      = f.hidden_field :birthdate
-      = f.hidden_field :male
-      = f.hidden_field :email
-      = f.hidden_field :phone
-      = f.hidden_field :address
-      = f.hidden_field :postal_code
-
-      - if @user.guardian_1
-        = f.fields_for :guardian_1 do |gf|
-          = gf.hidden_field :name
-          = gf.hidden_field :birthdate
-          = gf.hidden_field :male
-          = gf.hidden_field :email
-          = gf.hidden_field :phone
-          = gf.hidden_field :address
-          = gf.hidden_field :postal_code
-
       = f.collection_check_boxes(:group_ids, @groups, :id, :extended_label) do |group|
         = group.label { group.check_box }
 
