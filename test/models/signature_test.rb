@@ -4,6 +4,7 @@ require 'test_helper'
 
 class SignatureTest < ActiveSupport::TestCase
   test 'file=' do
-    signatures(:lars).file = fixture_file_upload('files/board_meeting_minutes.txt', 'text/plain')
+    signatures(:lars).file =
+        Rack::Test::UploadedFile.new("#{self.class.fixture_path}files/board_meeting_minutes.txt")
   end
 end

@@ -62,13 +62,6 @@ class ActiveSupport::TestCase
     clear_user
   end
 
-  # FIXME(uwe): Remove: Added in Rails 5
-  def fixture_file_upload(path, mime_type = nil, binary = false)
-    path = File.join(self.class.fixture_path, path) if self.class.respond_to?(:fixture_path) && self.class.fixture_path
-    Rack::Test::UploadedFile.new(path, mime_type, binary)
-  end
-  # EMXIF
-
   def with_retries(label: 'test', attempts: nil, exceptions: [Minitest::Assertion], backoff: 0.001.seconds,
       backoff_factor: 2, backoff_limit: Capybara.default_max_wait_time, verbose: false)
     yield
