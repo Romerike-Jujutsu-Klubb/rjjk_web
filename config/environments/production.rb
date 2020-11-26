@@ -47,7 +47,8 @@ Rails.application.configure do
   config.lograge.enabled = true
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
   config.public_file_server.headers = {
-    'Cache-Control' => "public, max-age=#{1.year.to_i}",
+    'Cache-Control' => "public, max-age=#{1.year.to_i}, s-maxage=#{1.year.to_i}",
+    'Expires' => "#{1.year.from_now.to_formatted_s(:rfc822)}"
   }
   config.require_master_key = true
   if ENV['RAILS_LOG_TO_STDOUT'].present?
