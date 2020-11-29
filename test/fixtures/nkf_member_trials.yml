@@ -8,7 +8,6 @@ hans:
   epost: hans@eriksen.org
   epost_faktura: faktura@eriksen.org
   mobil: MyString
-  innmeldtdato: 2010-10-03
   reg_dato: 2010-10-03
   tid: 1
   gren_stilart_avd_parti___gren_stilart_avd_parti: Jujutsu
@@ -22,7 +21,6 @@ erik:
   adresse_2: MyString
   epost: NKF_mt_two@example.com
   mobil: MyString
-  innmeldtdato: 2010-10-03
   reg_dato: 2010-10-03
   tid: 2
   gren_stilart_avd_parti___gren_stilart_avd_parti: Jujutsu
@@ -36,7 +34,6 @@ even:
   adresse_2: MyString 3
   epost: NKF_mt_three@example.com
   mobil: MyString4
-  innmeldtdato: 2010-10-02
   reg_dato: 2010-10-02
   tid: 3
   gren_stilart_avd_parti___gren_stilart_avd_parti: Jujutsu

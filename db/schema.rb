@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_03_102820) do
+ActiveRecord::Schema.define(version: 2020_11_29_205657) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -505,7 +505,6 @@ ActiveRecord::Schema.define(version: 2020_11_03_102820) do
     t.string 'adresse_2', limit: 64
     t.string 'epost', limit: 64, null: false
     t.string 'mobil', limit: 16
-    t.date 'innmeldtdato', null: false
     t.datetime 'created_at'
     t.datetime 'updated_at'
     t.integer 'tid', null: false

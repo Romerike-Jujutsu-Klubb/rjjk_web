@@ -9,12 +9,12 @@ class NkfMemberTrial < ApplicationRecord
 
   scope :for_group, ->(group) {
     where('fodselsdato BETWEEN ? AND ?', group.to_age.years.ago, group.from_age.years.ago)
-        .order(:innmeldtdato, :fornavn, :etternavn)
+        .order(:reg_dato, :fornavn, :etternavn)
   }
 
   search_scope %i[fornavn etternavn epost], order: %i[fornavn etternavn]
 
-  validates :epost, :etternavn, :fodselsdato, :fornavn, :postnr, :innmeldtdato,
+  validates :epost, :etternavn, :fodselsdato, :fornavn, :postnr,
       :gren_stilart_avd_parti___gren_stilart_avd_parti, :reg_dato, :tid,
       presence: true
   validates :kjonn, inclusion: { in: %w[M K I] }
@@ -40,6 +40,8 @@ class NkfMemberTrial < ApplicationRecord
   def emails
     [epost, epost_faktura].compact.map(&:strip).uniq.sort
   end
+
+  def innmeldtdato=(date); end
 
   def to_s
     name

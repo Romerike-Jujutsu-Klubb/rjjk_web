@@ -6,7 +6,7 @@ ul
       => link_to trial.name, trial.signup || trial
       | (#{trial.age} år)
       ul
-        li Registrert: #{trial.innmeldtdato}
+        li Registrert: #{trial.reg_dato}
         - attendances = trial.signup.user.attendances.present
         li
           => attendances.select { |a| a.date >= 2.months.ago.to_date }.size
