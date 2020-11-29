@@ -13,10 +13,12 @@ table.table.table-sm
         tr
           - if i == 0
             td rowspan=mapped_attributes.size
-              - if member
+              - if member.is_a? Member
                 a href=member_path(member, anchor: :tab_nkf_tab) = member
               - else
-                .text-danger Medlem mangler
+                a href=nkf_member_path(member)
+                  span.text-danger Medlem mangler:
+                  =< member
           td = mapping[:target]
           td = mapping[:target_attribute]
           td = mapping[:mapped_rjjk_value]

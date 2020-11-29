@@ -69,6 +69,10 @@ class NkfMember < ApplicationRecord
     gren_stilart_avd_parti___gren_stilart_avd_parti.split(/ - /).map { |n| n.split('/')[3] }
   end
 
+  def left?
+    utmeldtdato.present?
+  end
+
   def to_s
     "#{fornavn} #{etternavn}"
   end

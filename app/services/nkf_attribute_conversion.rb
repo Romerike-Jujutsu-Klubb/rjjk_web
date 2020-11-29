@@ -173,8 +173,9 @@ module NkfAttributeConversion
       billing_attributes.delete(:email)
     end
 
-    unless [guardian_1_attributes[:email], guardian_2_attributes[:email], billing_attributes[:email]]
-          .include?(contact_email)
+    unless contact_email &&
+          [guardian_1_attributes[:email], guardian_2_attributes[:email], billing_attributes[:email]]
+                .include?(contact_email)
       user_attributes[:email] = contact_email
       if (existing_email_user = (contact_email && User.find_by(email: contact_email)))
         logger.info "Found existing email user: #{existing_email_user.inspect}"
@@ -203,7 +204,12 @@ module NkfAttributeConversion
             logger.info <<~LINE
               Existing phone user already mapped to membership: #{user_attributes.inspect}: #{existing_phone_member.inspect}
             LINE
-            if user_attributes[:birthdate] < existing_phone_member.birthdate
+            if user_attributes[:birthdate] == existing_phone_member.birthdate &&
+                  user_attributes[:first_name] == existing_phone_member.first_name
+              logger.info 'Adding new membership to existing user'
+              user = existing_phone_user
+              user.update! user_attributes unless attributes.dig(:membership, :left_on)
+            elsif user_attributes[:birthdate] < existing_phone_member.birthdate
               logger.info 'Keeping phone for new membership due to higher age'
               existing_phone_member.user.update! phone: nil
             else

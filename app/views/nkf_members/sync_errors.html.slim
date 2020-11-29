@@ -24,11 +24,12 @@ javascript:
 h1 NKF Synchronization errors (#{@errors.inject(0){|a,e| a + e[1].size}})
 
 - left_errors, current_errors = @errors.partition{|row| row[0]&.left?}
-nav
-  #nav-tab.nav.nav-tabs role="tablist"
-    a#nav-home-tab.nav-item.nav-link.active data-toggle="tab" data-target="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true"
-      | Medlemmer (#{current_errors.size})
-    - if left_errors.any?
+
+- if left_errors.any?
+  nav
+    #nav-tab.nav.nav-tabs role="tablist"
+      a#nav-home-tab.nav-item.nav-link.active data-toggle="tab" data-target="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true"
+        | Medlemmer (#{current_errors.size})
       a#nav-profile-tab.nav-item.nav-link data-toggle="tab" data-target="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"
         | Utmeldte (#{left_errors.size})
 

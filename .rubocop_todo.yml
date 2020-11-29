@@ -9,7 +9,7 @@
 # Offense count: 234
 # Configuration parameters: IgnoredMethods.
 Metrics/AbcSize:
-  Max: 208
+  Max: 218
 
 # Offense count: 24
 # Configuration parameters: CountComments, CountAsOne, ExcludedMethods.
@@ -20,7 +20,7 @@ Metrics/BlockLength:
 # Offense count: 4
 # Configuration parameters: CountBlocks.
 Metrics/BlockNesting:
-  Max: 5
+  Max: 6
 
 # Offense count: 28
 # Configuration parameters: CountComments, CountAsOne.
@@ -30,7 +30,7 @@ Metrics/ClassLength:
 # Offense count: 85
 # Configuration parameters: IgnoredMethods.
 Metrics/CyclomaticComplexity:
-  Max: 52
+  Max: 56
 
 # Offense count: 228
 # Configuration parameters: CountComments, CountAsOne, ExcludedMethods.
@@ -40,7 +40,7 @@ Metrics/MethodLength:
 # Offense count: 5
 # Configuration parameters: CountComments, CountAsOne.
 Metrics/ModuleLength:
-  Max: 378
+  Max: 381
 
 # Offense count: 4
 # Configuration parameters: CountKeywordArgs.
@@ -50,7 +50,7 @@ Metrics/ParameterLists:
 # Offense count: 74
 # Configuration parameters: IgnoredMethods.
 Metrics/PerceivedComplexity:
-  Max: 60
+  Max: 64
 
 # Offense count: 10
 # Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.

@@ -18,7 +18,7 @@ class NkfMembersController < ApplicationController
   def sync_errors
     @errors = NkfMember.includes(member: { user: [RELATED_USER_SYMS, :groups] })
         .references(:members).order('members.left_on': :desc, updated_at: :desc)
-        .map { |nkfm| [nkfm.member, nkfm.mapping_changes] }.reject { |m| m[1].empty? }
+        .map { |nkfm| [nkfm.member || nkfm, nkfm.mapping_changes] }.reject { |m| m[1].empty? }
   end
 
   def sync_with_nkf
