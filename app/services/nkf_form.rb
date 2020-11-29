@@ -98,6 +98,8 @@ module NkfForm
         form_field_37.node.replace(response_37)
         form_field_37.options = response_options_37
       end
+    elsif form.radiobutton_with(name: nkf_field)
+      form.radiobutton_with(name: nkf_field, value: desired_value).check
     else
       form[nkf_field] = desired_value
     end

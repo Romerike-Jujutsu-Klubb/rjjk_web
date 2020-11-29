@@ -45,7 +45,7 @@ module NkfAttributeConversion
     innmeldtdato: { map_to: { membership: :joined_on },
                     form_field: { member: :frm_48_v45, trial: :frm_28_v64 } },
     kjonn: { map_to: { user: :male },
-             form_field: { member: :frm_48_v112, new_trial: :frm_29_v11, trial: :frm_28_v15 },
+             form_field: { member: :frm_48_v11, new_trial: :frm_29_v11, trial: :frm_28_v15 },
              values: { true => 'M', false => 'K' } },
     klubb: {},
     klubb_id: {},
