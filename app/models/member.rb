@@ -399,8 +399,8 @@ class Member < ApplicationRecord
   def calculated_discount
     if honorary?
       nil
-    # elsif passive_on
-    #   100
+    elsif passive_on
+      100
     elsif current_election || active_group_instructors.size >= 2
       100
     elsif active_group_instructors.size == 1 || instructor?
