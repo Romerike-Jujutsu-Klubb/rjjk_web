@@ -107,6 +107,6 @@ class Attendance < ApplicationRecord
   end
 
   def status_label
-    (Time.current < practice.start_at ? STATES : PAST_STATES)[status]&.at(1) || status
+    (Time.current < practice.start_at ? STATES : PAST_STATES)[status]&.at(0) || status
   end
 end

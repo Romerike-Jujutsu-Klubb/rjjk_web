@@ -13,10 +13,11 @@ class AttendancesController < ApplicationController
   end
 
   def since_graduation
-    @member = User.find(params[:id]).member
+    @user = User.find(params[:id])
+    @member = @user.member
     @date = params[:date]&.to_date || Date.current
-    @graduate = @member.current_graduate(nil, @date)
-    @attendances = @member.user.attendances_since_graduation(@date, include_absences: true).sort_by(&:date)
+    @graduate = @member&.current_graduate(nil, @date)
+    @attendances = @user.attendances_since_graduation(@date, include_absences: true).sort_by(&:date)
         .reverse
   end
 

@@ -4,11 +4,10 @@ module AttendanceFormDataLoader
   private
 
   def load_form_data(year, month, group_id)
-    # FIXME(uwe): Remove use of `@date` and use `first_date` and `last_date` instead
-    @date = year && month ? Date.parse("#{year}-#{month}-01") : Date.current
-
-    first_date = Date.new(@date.year, @date.month, 1)
-    last_date = Date.new(@date.year, @date.month, -1)
+    @year = year
+    @month = month
+    first_date = Date.new(year, month, 1)
+    last_date = Date.new(year, month, -1)
 
     @instructors = []
     if group_id
@@ -23,7 +22,7 @@ module AttendanceFormDataLoader
         current_members = []
         attended_members = []
       else
-        @group = Group.includes(:martial_art).find(group_id)
+        @group = Group.includes(:group_schedules, :martial_art).find(group_id)
         weekdays = @group.group_schedules.map(&:weekday)
         @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
 
