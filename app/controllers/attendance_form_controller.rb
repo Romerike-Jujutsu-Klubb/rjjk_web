@@ -6,7 +6,8 @@ class AttendanceFormController < ApplicationController
   before_action :instructor_required
 
   def index
-    @groups = Group.active(Date.current).order :from_age
+    @groups = Group.active(Date.current).includes(:group_schedules).order(:from_age).to_a
+                   .select { |g| g.group_schedules.any? }
     @my_groups = current_user.member.instruction_groups
     @my_groups += (@groups - @my_groups)
     if params[:practice_id]
