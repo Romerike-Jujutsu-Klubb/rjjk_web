@@ -6,7 +6,7 @@ class MemberFeatureTest < ApplicationSystemTestCase
   def test_show
     visit_with_login member_path(members(:sebastian)), redirected_path: '/users/594055058'
     screenshot :membership
-    find('a.nav-link', text: 'Personalia').click
+    find('a.nav-link', text: 'Sebastian Kubosch').click
     screenshot :person
     find('a.nav-link', text: 'Graderinger').click
     screenshot :graduations
