@@ -8,6 +8,7 @@ class AttendanceFormController < ApplicationController
   def index
     @groups = Group.active(Date.current).order :from_age
     @my_groups = current_user.member.instruction_groups
+    @my_groups += (@groups - @my_groups)
     if params[:practice_id]
       @practice = Practice.find(params[:practice_id])
     else
