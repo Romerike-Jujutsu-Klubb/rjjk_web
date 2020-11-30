@@ -36,7 +36,7 @@ class ActiveSupport::TestCase
   include FixtureFileHelpers
   include UserSystem
 
-  parallelize
+  parallelize workers: (Concurrent.physical_processor_count * 1.5).to_i
   fixtures :all
 
   setup { Timecop.freeze(TEST_TIME) }

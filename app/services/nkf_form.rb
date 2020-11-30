@@ -35,8 +35,14 @@ module NkfForm
     mapped_rjjk_value = nkf_mapping[:mapped_rjjk_value]
     return unless (nkf_field = nkf_mapping.dig(:form_field, form_key)&.to_s)
 
-    form_field = form.page.css("##{nkf_field}")
-    form_value = form_field.attr('value')&.value
+    form_field = form.field_with(name: nkf_field) ||
+        form.radiobutton_with(name: nkf_field, checked: true) || form.radiobutton_with(name: nkf_field)
+    if form_field.is_a?(Mechanize::Form::SelectList)
+      selected_option = form_field.options.find(&:selected?)
+      form_value = selected_option&.text&.strip
+    else
+      form_value = form_field.value
+    end
     nkf_value = nkf_mapping[:nkf_value]
     nkf_attr = nkf_mapping[:nkf_attr]
     if nkf_value != form_value
@@ -56,14 +62,14 @@ module NkfForm
         raise "Option #{desired_value.inspect} not found in #{form_field.options.map(&:text).inspect}"
       end
 
-      if form_value == desired_option.value
+      if form_value == desired_option.text
         logger.info <<~LINE
           Set form field #{form_field.name}: #{form_value.inspect} => #{desired_option.value.inspect}: Unchanged
         LINE
         return
       end
       logger.info <<~LINE
-        Set form field #{form_field.name}: #{form_value.inspect} => #{desired_option.value.inspect}
+        Set form field #{form_field.name}: #{form_value.inspect} => #{desired_option.text.inspect}
       LINE
       desired_option.select
       if nkf_attr == :medlemskategori_navn

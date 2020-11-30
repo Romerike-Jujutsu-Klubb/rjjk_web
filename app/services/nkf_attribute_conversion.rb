@@ -21,13 +21,13 @@ module NkfAttributeConversion
     foresatte: { map_to: { user: :guardian_1_or_billing_name },
                  form_field: { member: :frm_48_v23, new_trial: :frm_29_v23, trial: :frm_28_v26 } },
     foresatte_epost: { map_to: { guardian_1: :email },
-                       form_field: { member: :frm_48_v73, new_trial: :frm_29_v73, trial: :frm_a28_v73 } },
+                       form_field: { member: :frm_48_v73, new_trial: :frm_a29_v73, trial: :frm_a28_v73 } },
     foresatte_mobil: { map_to: { guardian_1: :phone },
-                       form_field: { member: :frm_48_v74, new_trial: :frm_29_v74, trial: :frm_a28_v74 } },
+                       form_field: { member: :frm_48_v74, new_trial: :frm_a29_v74, trial: :frm_a28_v74 } },
     foresatte_nr_2: { map_to: { guardian_2: :name },
                       form_field: { member: :frm_48_v72, new_trial: :frm_29_v72, trial: :frm_a28_v72 } },
     foresatte_nr_2_mobil: { map_to: { guardian_2: :phone }, form_field: {
-      member: :frm_48_v75, new_trial: :frm_29_v75, trial: :frm_a28_v75
+      member: :frm_48_v75, new_trial: :frm_a29_v75, trial: :frm_a28_v75
     } },
     fornavn: { map_to: { user: :first_name },
                form_field: { member: :frm_48_v03, new_trial: :frm_29_v03, trial: :frm_28_v08 } },
