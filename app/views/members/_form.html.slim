@@ -46,8 +46,10 @@
     .col
       = f.text_field :account_no
     .col
-      = f.text_field :discount_override,
-              placeholder: ("Beregnet: #{membership.calculated_discount}" if membership.calculated_discount)
+      - if (discount = membership.calculated_discount)
+        - placeholder = discount[0]
+        - appendix = "#{t discount[1]}: #{discount[0]}%"
+      = f.text_field :discount_override, placeholder: placeholder, append: appendix
   .row
     .col = f.select :nkf_fee, [['Ja', true], ['Nei', false]]
     .col = f.select :payment_problem, [['Nei', false], ['Ja', true]]

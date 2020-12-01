@@ -393,16 +393,24 @@ class Member < ApplicationRecord
   def discount
     return discount_override if discount_override
 
-    calculated_discount
+    calculated_discount[0]
   end
 
   def calculated_discount
     if honorary?
-      nil
-    elsif passive_on || current_election || active_group_instructors.size >= 2
-      100
-    elsif active_group_instructors.size == 1 || instructor?
-      50
+      [nil, :honorary_member]
+    elsif passive_on
+      [100, :passive]
+    elsif current_election&.role&.years_on_the_board
+      [100, :on_the_board]
+    elsif current_election
+      [100, :elected]
+    elsif active_group_instructors.size >= 2
+      [100, :instructor]
+    elsif active_group_instructors.size == 1
+      [50, :half_instructor]
+    elsif instructor?
+      [50, :permanent_instructor]
     end
   end
 

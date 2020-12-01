@@ -336,12 +336,14 @@ nb:
   create: Opprett
   description: Beskrivelse
   draft: Kladd
+  elected: Verv
   event: Arrangement
   event_registration_confirmation_email_sent: "Du vil motta en e-post med en lenke for å bekrefte påmeldingen."
   expired: Utdatert
   external_event: Eksternt arrangement
   go_to_info_page: "Gå til informasjonssiden"
   graduation_title: "Gradering %{name}"
+  half_instructor: Halv instruktør
   holiday: Ferie
   honorary_member: Æresmedlem
   image: Bilde
@@ -353,7 +355,10 @@ nb:
   joined_on_year: Innmeldingsår
   member_created: Nytt medlem opprettet OK.
   my_registration: "Min påmelding"
+  on_the_board: Styremedlem
   participants: "påmeldte"
+  passive: Passiv
+  permanent_instructor: Fast instruktør
   present: Tilstede
   published: Publisert
   rank: Grad
