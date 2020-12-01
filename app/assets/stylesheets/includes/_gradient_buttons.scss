@@ -1,0 +1,5 @@
+@each $color, $value in $theme-colors {
+  .btn-#{$color} {
+    background: linear-gradient(rgba($value, .67), $value);
+  }
+}
