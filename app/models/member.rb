@@ -411,6 +411,8 @@ class Member < ApplicationRecord
       [50, :half_instructor]
     elsif instructor?
       [50, :permanent_instructor]
+    else
+      [nil, nil]
     end
   end
 
