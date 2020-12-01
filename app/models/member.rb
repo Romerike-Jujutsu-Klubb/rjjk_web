@@ -398,7 +398,7 @@ class Member < ApplicationRecord
 
   def calculated_discount
     if honorary?
-      [nil, :honorary_member]
+      [100, :honorary_member]
     elsif passive_on
       [100, :passive]
     elsif current_election&.role&.years_on_the_board
