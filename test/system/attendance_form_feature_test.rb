@@ -49,7 +49,7 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
                   'Totalt 1'],
         all('tr td:first-child').map(&:text).reject(&:blank?)
 
-    uwe_row = find('table:first-of-type tbody tr:first-of-type')
+    uwe_row = first('table tbody tr')
     assert uwe_row
     assert_equal ["Uwe Kubosch\n55569666", '42', 'svart belte', '', '', 'P', '', ''], # , '1 / 1'],
         uwe_row.all('td').map(&:text).map(&:strip)
@@ -65,7 +65,7 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
         lars_row.all('td').map(&:text).map(&:strip)
 
     # Mark Lars as present
-    new_instructor_row = find('table:first-of-type tbody tr:nth-of-type(2)')
+    new_instructor_row = first('table tbody tr:nth-of-type(2)')
     assert new_instructor_row
     assert_equal ['', '', '', '', '', '', ''],
         new_instructor_row.all('td').map(&:text).map(&:strip)
