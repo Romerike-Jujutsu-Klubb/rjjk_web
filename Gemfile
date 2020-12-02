@@ -91,10 +91,6 @@ group :development do
   gem 'stackprof'
 end
 
-# group :development do
-#   gem 'meta_request'
-# end
-
 group :test do
   # https://github.com/twalpole/apparition
   # gem 'apparition', github: 'twalpole/apparition'
@@ -104,9 +100,11 @@ group :test do
   gem 'minitest-capybara'
   gem 'mocha', require: 'mocha/minitest'
   gem 'nokogiri-diff'
+  gem 'rubocop-md'
+  gem 'rubocop-minitest'
   gem 'rubocop-performance'
   gem 'rubocop-rails'
-  # gem 'rubycritic', require: false
+  gem 'rubocop-rake'
   gem 'selenium-webdriver'
   # gem 'simplecov', require: false
   gem 'timecop'

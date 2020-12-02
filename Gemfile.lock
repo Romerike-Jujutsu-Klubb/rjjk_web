@@ -100,14 +100,13 @@ GEM
       actionpack (>= 5.2)
       activemodel (>= 5.2)
     builder (3.2.4)
-    capybara (3.34.0)
+    capybara (3.9.0)
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (~> 1.8)
       rack (>= 1.6.0)
       rack-test (>= 0.6.3)
-      regexp_parser (~> 1.5)
-      xpath (~> 3.2)
+      xpath (~> 3.1)
     capybara-screenshot-diff (1.3.1)
       actionpack (>= 4.2, < 7)
       capybara (>= 2, < 4)
@@ -232,7 +231,7 @@ GEM
       ntlm-http (~> 0.1, >= 0.1.1)
       webrobots (>= 0.0.9, < 0.2)
     memoist (0.16.2)
-    memory_profiler (0.9.14)
+    memory_profiler (1.0.0)
     method_source (1.0.0)
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
@@ -353,17 +352,21 @@ GEM
     retriable (3.1.2)
     rexml (3.2.4)
     ri_cal (0.8.8)
-    rubocop (1.4.2)
+    rubocop (1.5.1)
       parallel (~> 1.10)
       parser (>= 2.7.1.5)
       rainbow (>= 2.2.2, < 4.0)
-      regexp_parser (>= 1.8)
+      regexp_parser (>= 2.0)
       rexml
-      rubocop-ast (>= 1.1.1)
+      rubocop-ast (>= 1.2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 2.0)
-    rubocop-ast (1.2.0)
+    rubocop-ast (1.3.0)
       parser (>= 2.7.1.5)
+    rubocop-md (0.4.1)
+      rubocop (>= 0.60)
+    rubocop-minitest (0.10.1)
+      rubocop (>= 0.87)
     rubocop-performance (1.9.1)
       rubocop (>= 0.90.0, < 2.0)
       rubocop-ast (>= 0.4.0)
@@ -371,6 +374,8 @@ GEM
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 0.87.0)
+    rubocop-rake (0.5.1)
+      rubocop
     ruby-progressbar (1.10.1)
     ruby2_keywords (0.0.2)
     rubyzip (2.3.0)
@@ -389,7 +394,7 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
-    semantic_range (2.3.0)
+    semantic_range (2.3.1)
     serviceworker-rails (0.6.0)
       railties (>= 3.1)
     signet (0.14.0)
@@ -510,8 +515,11 @@ DEPENDENCIES
   rake
   redis (~> 4.0)
   ri_cal
+  rubocop-md
+  rubocop-minitest
   rubocop-performance
   rubocop-rails
+  rubocop-rake
   rufus-scheduler
   sassc-rails
   script_relocator

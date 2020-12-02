@@ -1,7 +1,10 @@
 inherit_from: .rubocop_todo.yml
 require:
+  - rubocop-md
+  - rubocop-minitest
   - rubocop-performance
   - rubocop-rails
+  - rubocop-rake
 
 AllCops:
   DisplayCopNames: true
