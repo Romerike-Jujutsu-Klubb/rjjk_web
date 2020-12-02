@@ -10,19 +10,18 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
     login_and_visit '/'
     click_menu('Oppmøte', section: 'Instruksjon')
     assert_current_path attendance_forms_path
-    find('#lists-tab').click
-    screenshot :index
-    find('#group_name_Panda').click
-    screenshot :index_select_panda
-    find('#group_name_Tiger').click
-    screenshot :index_select_tiger
-    find('#group_name_Voksne').click
-    screenshot :index_select_voksne
+    click_on('Panda')
+    screenshot :select_panda
+    click_on('Tiger')
+    screenshot :select_tiger
+    click_on('Voksne')
+    screenshot :select_voksne
   end
 
   def test_select_panda_october
-    visit_with_login attendance_forms_path(anchor: :lists_tab)
-    select('Oktober 2013', from: 'group_name_Panda')
+    visit_with_login attendance_forms_path
+    find('.nav-link', text: 'Panda').click
+    click_on('Liste')
     assert_current_path attendance_form_path year: 2013, month: 10, group_id: id(:panda)
     assert has_css? 'tr td:first-child'
     assert_equal ["Uwe Kubosch\n55569666",

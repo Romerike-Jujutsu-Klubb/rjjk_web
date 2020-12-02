@@ -26,7 +26,7 @@ function show_tab() {
 
     if (selected_tab.hasClass('active')) {
       console.log("Tab already shown.");
-      // selected_tab.trigger('show.bs.tab');
+      selected_tab.trigger('show.bs.tab');
     } else {
       console.log("Show tab: " + selected_tab.data('target'));
       selected_tab.tab('show');
@@ -54,6 +54,7 @@ function show_tab() {
         console.log("replaceState: " + window.location.href.replace(location.hash, "") + default_tab.attr("data-target") + '_tab');
         window.history.replaceState({}, window.title, window.location.href.replace(location.hash, "") + default_tab.attr("data-target") + '_tab');
         console.log("location.hash: " + decodeURIComponent(location.hash));
+        default_tab.trigger('show.bs.tab');
       }
     } else {
       default_tab = $('a.nav-link[data-toggle="tab"]');
@@ -62,10 +63,19 @@ function show_tab() {
         console.log("replaceState: " + window.location.href.replace(location.hash, "") + default_tab.attr("data-target") + '_tab');
         window.history.replaceState({}, window.title, window.location.href.replace(location.hash, "") + default_tab.attr("data-target") + '_tab');
         console.log("location.hash: " + decodeURIComponent(location.hash));
-
       }
     }
   }
+}
+
+function load_tab(tab, target) {
+  tab.html('<div class="text-center" style="padding: 3em"><i class="fas fa-circle-notch fa-spin fa-5x mb-3"></i><br/>Et øyeblikk...</div>');
+  tab.load(target, function(responseText, textStatus) {
+    if (textStatus === "error") {
+      tab.html('<div class="text-center text-danger" style="padding: 3em">Hoppsann!  Der gikk det galt.</div>');
+      tab.append('<pre>' + responseText + '</pre>');
+    }
+  });
 }
 
 $(function() {
@@ -137,13 +147,7 @@ $(function() {
     if (!tab.html()) {
       var target = tab.data('target');
       if (target) {
-        tab.html('<div class="text-center" style="padding: 3em"><i class="fa fa-circle-notch fa-spin fa-5x mb-3"/><br/>Et øyeblikk...</div>');
-        tab.load(target, function(responseText, textStatus) {
-          if (textStatus === "error") {
-            tab.html('<div class="text-center text-danger" style="padding: 3em">Hoppsann!  Der gikk det galt.</div>');
-            tab.append('<pre>' + responseText + '</pre>');
-          }
-        });
+        load_tab(tab, target);
       }
     }
     return true;

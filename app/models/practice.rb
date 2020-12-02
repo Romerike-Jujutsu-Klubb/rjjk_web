@@ -40,10 +40,10 @@ class Practice < ApplicationRecord
     Time.current > end_at
   end
 
-  def to_s(weekday: false, time: true)
-    "#{group_schedule.group.full_name}#{if weekday
-                                          " #{ApplicationController.helpers.day_name(date.wday)}"
-                                        end} #{date}#{" #{group_schedule.start_at.to_s(false)}" if time}"
+  def to_s(group: true, weekday: false, time: true)
+    week_day = " #{ApplicationController.helpers.day_name(date.wday)}" if weekday
+    group_name = group_schedule.group.full_name if group
+    "#{group_name}#{week_day} #{date}#{" #{group_schedule.start_at.to_s(false)}" if time}"
   end
 
   def attendance_for(user)

@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   resources :annual_meetings
   scope controller: :attendance_form, path: 'oppmøte/skjema' do
     root action: :index, as: :attendance_forms
+    get 'group/:id', action: :group, as: :attendance_group
     get ':year/:month/:group_id', action: :show, as: :attendance_form
   end
   resources :attachments, only: :destroy

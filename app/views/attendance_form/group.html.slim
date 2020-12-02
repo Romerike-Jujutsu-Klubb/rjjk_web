@@ -31,9 +31,13 @@ ruby:
         span.flex-grow-1 Prøvemedlemmer
       = render 'user_list', users: signups, selected_practice: selected_practice
   .card
-    h3.card-header.px-2
-      - practice_options = group.practices.after(2.month.ago).select { |pr| pr.date <= next_practice.date }.sort_by(&:date).reverse.map { |pr| [pr.to_s(weekday: true, time: false), pr.id] }
-      = select nil, :practice_id, practice_options, { selected: selected_practice.id }, class: 'form-control pr-0 flex-grow-1', onchange: 'window.location = "?practice_id=" + $(this).val()'
+    .card-header.px-2
+      - practice_options = group.practices.after(2.month.ago).select { |pr| pr.date <= next_practice.date }.sort_by(&:date).reverse.map { |pr| [pr.to_s(group: false, weekday: true, time: false), pr.id] }
+      .input-group
+        = select nil, :practice_id, practice_options, { selected: selected_practice.id }, class: 'form-control pr-0 flex-grow-1',
+              onchange: "load_tab($(this).closest('.tab-pane'), '#{attendance_group_path(group)}?practice_id=' + $(this).val())"
+        .input-group-append
+          = link_to('Liste', attendance_form_path(year: selected_practice.date.year, month: selected_practice.date.month, group_id: group.id), class: 'btn btn-secondary')
     = render 'user_list', users: attending, selected_practice: selected_practice
   - if instructors.any?
     .card

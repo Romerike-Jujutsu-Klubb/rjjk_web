@@ -191,7 +191,7 @@ class AttendancesController < ApplicationController
         render partial: 'plan_practice', locals: {
           gs: practice.group_schedule, year: year, week: week, attendance: @attendance
         }
-      elsif request.referer && %r{oppm%C3%B8te/skjema}.match?(URI(request.referer).path)
+      elsif request.referer && %r{oppm%C3%B8te/skjema/\d{4}/\d+}.match?(URI(request.referer).path)
         render partial: 'attendance_form/attendance_delete_link', locals: { attendance: @attendance }
       else
         render partial: 'button', locals: { attendance: @attendance }
