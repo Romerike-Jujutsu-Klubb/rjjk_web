@@ -23,6 +23,11 @@ class AttendanceFormController < ApplicationController
     end
   end
 
+  def group
+    @group = Group.find(params[:id])
+
+  end
+
   def show
     load_form_data(params[:year].to_i, params[:month].to_i, params[:group_id])
   end
