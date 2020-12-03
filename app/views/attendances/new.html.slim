@@ -15,13 +15,13 @@ h1 Registrer oppmøte
         = f.select :practice_id, [[@attendance.practice.to_s, @attendance.practice.id]], {}, readonly: true
   .row
     .col-md-6
-      = f.select :user_id, [nil] + @users.map { |m| [m.label, m.id] }, {}, class: :chosen
+      = f.select :user_id, [nil] + @users.map { |m| [m.label, m.id] }, {prompt: 'Velg deltaker'}, class: :chosen
     .col-md-6
       = f.select :status, Attendance::Status.constants.sort.map { |s| [t(s.to_s.downcase), Attendance::Status.const_get(s)] }
 
   .float-right.mb-3
     = back_or_link_to 'Tilbake', attendances_path, class: 'btn btn-link'
-    = f.submit 'Lagre', class: 'btn btn-secondary'
+    = f.primary 'Lagre'
 
 javascript:
     $('#attendance_member_id').focus();
