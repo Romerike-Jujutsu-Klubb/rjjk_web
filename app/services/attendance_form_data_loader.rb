@@ -9,59 +9,35 @@ module AttendanceFormDataLoader
     first_date = Date.new(year, month, 1)
     last_date = Date.new(year, month, -1)
 
-    @instructors = []
-    if group_id
-      if group_id == 'others'
-        @members = Member.includes(user: { attendances: { group_schedule: :group } })
-            .where('user_id NOT in (SELECT DISTINCT user_id FROM group_memberships)')
-            .where('left_on IS NULL OR left_on > ?', @date)
-            .to_a
-        @trials = []
-        weekdays = [2, 4]
-        @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
-        current_members = []
-        attended_members = []
-      else
-        @group = Group.includes(:group_schedules, :martial_art).find(group_id)
-        weekdays = @group.group_schedules.map(&:weekday)
-        @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
+    @group = Group.includes(:group_schedules, :martial_art).find(group_id)
+    weekdays = @group.group_schedules.map(&:weekday)
+    @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
 
-        @instructors = @group.active_instructors(@dates)
+    @instructors = @group.active_instructors(@dates)
 
-        current_members = @group.members.active(first_date, last_date)
-            .includes({ user: { attendances: { practice: :group_schedule }, groups: :group_schedules },
-                        graduates: %i[graduation rank] },
-                :nkf_member)
-        attended_query = Member.references(:practices)
-            .includes(user: { attendances: { practice: :group_schedule } }, graduates: %i[graduation rank])
-            .where('practices.group_schedule_id IN (?)', @group.group_schedules.map(&:id))
-            .where('year > ? OR ( year = ? AND week >= ?)',
-                first_date.cwyear, first_date.cwyear, first_date.cweek)
-            .where('year < ? OR ( year = ? AND week <= ?)',
-                last_date.cwyear, last_date.cwyear, last_date.cweek)
-        if @instructors.any?
-          attended_query = attended_query.where.not('members.id' => @instructors.map(&:id))
-        end
-        attended_members = attended_query.to_a
-        @members = current_members | attended_members
-        @trials = @group.trials
+    current_members = @group.members.active(first_date, last_date)
+        .includes({ user: { attendances: { practice: :group_schedule }, groups: :group_schedules },
+                    graduates: %i[graduation rank] },
+            :nkf_member)
+    attended_query = Member.references(:practices)
+        .includes(user: { attendances: { practice: :group_schedule } }, graduates: %i[graduation rank])
+        .where('practices.group_schedule_id IN (?)', @group.group_schedules.map(&:id))
+        .where('year > ? OR ( year = ? AND week >= ?)',
+            first_date.cwyear, first_date.cwyear, first_date.cweek)
+        .where('year < ? OR ( year = ? AND week <= ?)',
+            last_date.cwyear, last_date.cwyear, last_date.cweek)
+    attended_query = attended_query.where.not('members.id' => @instructors.map(&:id)) if @instructors.any?
+    attended_members = attended_query.to_a
+    @members = current_members | attended_members
+    @trials = @group.trials
 
-        @instructors.sort_by! do |m|
-          r = m.current_rank(@group.martial_art, last_date)
-          [r ? -r.position : 99, m.first_name, m.last_name]
-        end
-        @members.sort_by! do |m|
-          r = m.current_rank(@group.martial_art, first_date)
-          [r ? -r.position : 99, m.first_name, m.last_name]
-        end
-      end
-    else
-      @members = []
-      @trials = []
-      current_members = []
-      weekdays = [2, 4]
-      @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
-      attended_members = []
+    @instructors.sort_by! do |m|
+      r = m.current_rank(@group.martial_art, last_date)
+      [r ? -r.position : 99, m.first_name, m.last_name]
+    end
+    @members.sort_by! do |m|
+      r = m.current_rank(@group.martial_art, first_date)
+      [r ? -r.position : 99, m.first_name, m.last_name]
     end
 
     @instructors -= current_members

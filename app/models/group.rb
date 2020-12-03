@@ -115,22 +115,18 @@ class Group < ApplicationRecord
         .reverse
   end
 
-  def active_instructors(dates = [Date.current])
+  def active_instructors(dates)
     instructors = []
 
     if (chief_instructor = current_semester&.chief_instructor)
       instructors << chief_instructor
     end
-    group_instructors_query = GroupInstructor
-        .includes(:group_schedule,
-            member: [{ user: { attendances: { practice: :group_schedule } } }, :nkf_member])
-        .where(group_schedules: { group_id: id })
-    if instructors.any?
-      group_instructors_query = group_instructors_query
-          .where.not('group_instructors.member_id' => instructors.map(&:id))
-    end
-    instructors += group_instructors_query.to_a.select { |gi| dates.any? { |d| gi.active?(d) } }
-        .map(&:member).uniq
+
+    group_semester = group_semesters
+        .joins(:semester).find_by!('? BETWEEN semesters.start_on AND semesters.end_on', dates[0])
+    instructors |= group_semester.group_instructors.includes(member: { user: { attendances: :practice } })
+        .map(&:member)
+
     instructors_query = Member.active(dates.first, dates.last)
         .includes({ user: [{ attendances: { practice: :group_schedule } }, :groups],
                     graduates: %i[graduation rank] }, :nkf_member)
