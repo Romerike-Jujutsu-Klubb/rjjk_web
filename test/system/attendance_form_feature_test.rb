@@ -24,31 +24,26 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
     click_on('Liste')
     assert_current_path attendance_form_path year: 2013, month: 10, group_id: id(:panda)
     assert has_css? 'tr td:first-child'
-    assert_equal ["Uwe Kubosch\n55569666",
+    assert_equal ['Uwe Kubosch',
                   'Lars Bråten',
-                  "Erik Hansen\nNKF_mt_two@example.com",
-                  "Hans Eriksen\nfaktura@eriksen.org",
-                  # "Even Jensen\nNKF_mt_three@example.com",
+                  'Erik Hansen',
+                  'Hans Eriksen',
                   'Totalt 3',
-                  "Sebastian Kubosch (Permisjon)\n98765432 / 55569666",
+                  'Sebastian Kubosch (Permisjon)',
                   'Totalt 1'],
         all('tr td:first-child').map(&:text).reject(&:blank?)
   end
 
   def test_record_panda_october
     visit_with_login attendance_form_path year: 2013, month: 10, group_id: id(:panda)
-    assert_equal ["Uwe Kubosch\n55569666",
-                  'Lars Bråten',
-                  "Erik Hansen\nNKF_mt_two@example.com",
-                  "Hans Eriksen\nfaktura@eriksen.org",
-                  'Totalt 3',
-                  "Sebastian Kubosch (Permisjon)\n98765432 / 55569666",
-                  'Totalt 1'],
+    assert_equal ['Uwe Kubosch',
+                  'Lars Bråten', 'Erik Hansen', 'Hans Eriksen', 'Totalt 3',
+                  'Sebastian Kubosch (Permisjon)', 'Totalt 1'],
         all('tr td:first-child').map(&:text).reject(&:blank?)
 
     uwe_row = first('table tbody tr')
     assert uwe_row
-    assert_equal ["Uwe Kubosch\n55569666", '42', 'svart belte', '', '', 'P', '', ''], # , '1 / 1'],
+    assert_equal ['Uwe Kubosch', '42', 'svart belte', '', '', 'P', '', ''], # , '1 / 1'],
         uwe_row.all('td').map(&:text).map(&:strip)
     assert_difference 'Attendance.count' do
       uwe_row.find('td:nth-of-type(4)').find('a').click
@@ -83,8 +78,7 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
     assert_difference 'Attendance.count' do
       erik_row = find('table#members tbody tr:nth-of-type(2)')
       assert erik_row
-      assert_equal(['Erik Hansen NKF_mt_two@example.com', '7',
-                    'Prøvetid til 2010-10-17 Mangler kontrakt', '', '', '', '', ''], # , ''],
+      assert_equal(['Erik Hansen', '7', 'Prøvetid til 2010-10-17 Mangler kontrakt', '', '', '', '', ''],
           erik_row.all('td').map(&:text).map(&:strip).map { |s| s.gsub(/\s+/, ' ') })
       assert_difference 'Attendance.count' do
         erik_row.find('td:nth-of-type(4)').find('a').click
@@ -95,8 +89,7 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
     assert_difference 'Attendance.count' do
       hans_row = find('table#members tbody tr:nth-of-type(3)')
       assert hans_row
-      assert_equal(['Hans Eriksen faktura@eriksen.org', '6',
-                    'Prøvetid til 2010-10-17 Mangler kontrakt', '', '', 'X', '', ''], # , '2'],
+      assert_equal(['Hans Eriksen', '6', 'Prøvetid til 2010-10-17 Mangler kontrakt', '', '', 'X', '', ''],
           hans_row.all('td').map(&:text).map(&:strip).map { |s| s.gsub(/\s+/, ' ') })
       assert_difference 'Attendance.count' do
         hans_row.find('td:nth-of-type(4)').find('a').click

@@ -1,6 +1,6 @@
 - @content_width = 9999
 
-h1 style="font-family:Arial, Helvetica, sans-serif"
+h1
   ' Oppmøteliste #{@group&.name}
   span.text-nowrap
     - prev_month = Date.new(@year, @month, 1) - 1.month
@@ -62,26 +62,7 @@ h1 style="font-family:Arial, Helvetica, sans-serif"
         - missing_contract = (trial.reg_dato + 14) < Date.current
         tr
           td
-            = "#{trial.fornavn} #{trial.etternavn}"
-            br
-            - if missing_contract
-              ruby:
-                message = <<~TEXT
-                  Hei #{trial.fornavn}!%0A%0A
-                  For en stund siden registrerte du deg hos Romerike Jujutsu Klubb, men vi har ikke sett så mye til deg i det siste.  Kanskje du kommer på neste trening?%0A
-                  Treningstidene er%0A
-                  %0A
-                  Panda       (6-9 år): Torsdag 17.45 - 18.45%0A
-                  Tiger     (10-14 år): Tirsdag+Torsdag 17.45 - 18.45%0A
-                  Grizzly (over 15 år): Tirsdag+Torsdag 19.00 - 20.30%0A
-                  %0A
-                  Ting som har skjedd nylig: ...%0A
-                  For tiden trener vi på ...%0A
-                  og neste sosiale samling er ...%0A
-                  Gradering er ..."
-                TEXT
-              = link_to trial.epost_faktura || trial.epost, "mailto:#{trial.epost_faktura || trial.epost}?subject=Innmelding Romerike Jujutsu Klubb&body=#{message}"
-              br
+            a href=nkf_member_trial_path(trial) = "#{trial.fornavn} #{trial.etternavn}"
           td nowrap="true" align="center"
             = trial.age
           td align="center" nowrap="true"
@@ -119,7 +100,7 @@ h1 style="font-family:Arial, Helvetica, sans-serif"
 
 - if @passive_members.present?
   .table-responsive
-    h2.mt-5 style="page-break-before:always" Passive medlemmer #{@group&.name} #{month_name(@month)} #{@year}
+    h2.mt-5 Passive medlemmer #{@group&.name} #{month_name(@month)} #{@year}
 
     table.table-striped.table-bordered width="100%"
       thead

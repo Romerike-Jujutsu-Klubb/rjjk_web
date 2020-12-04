@@ -1,16 +1,14 @@
 - @member_count += 1
 - missing_contract = member.billing_type != 'MANUELL GIRO' && member.nkf_member&.ventekid && member.nkf_member.ventekid !~ /^333000000004/ && member.joined_on < 61.days.ago.to_date
 tr class=cycle('odd', 'even')
-  td nowrap="true" onclick="window.location = '#{url_for(controller: :members, action: :edit, id: member.id)}'"
-    b #{h member.first_name} #{h member.last_name} #{'(Permisjon)' if member.nkf_member&.medlemsstatus == 'P'}
-    - if missing_contract
-      br
-      = member.invoice_email
-      br
-      = member.nkf_member.ventekid
-    - if member.phones
-      br
-      = member.phones.join(' / ')
+  td nowrap="true"
+    a href=url_for(controller: :members, action: :edit, id: member.id)
+      b #{h member.first_name} #{h member.last_name} #{'(Permisjon)' if member.nkf_member&.medlemsstatus == 'P'}
+      - if missing_contract
+        br
+        = member.invoice_email
+        br
+        = member.nkf_member.ventekid
   td nowrap="true" align="center"
     = member.age
   td nowrap="true"
