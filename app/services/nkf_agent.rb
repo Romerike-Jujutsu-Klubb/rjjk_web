@@ -7,7 +7,7 @@ class Mechanize
       a.max_history = max_history
       a.read_timeout = read_timeout
       a.agent.http.verify_mode = agent.http.verify_mode
-      a.agent.http.ssl_version = :SSLv3
+      a.agent.http.ssl_version = agent.http.ssl_version
     end
   end
 end
@@ -34,6 +34,7 @@ class NkfAgent
     super()
     @agent = Mechanize.new
     @agent.agent.http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    @agent.agent.http.ssl_version = OpenSSL::SSL::SSL3_VERSION
     @thread_key = :"nkf_agent_#{key}"
     Thread.current[@thread_key] = @agent
   end
