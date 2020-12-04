@@ -1,6 +1,6 @@
 - @content_width = 1024
 
-a.btn.btn-warning.float-right href=sync_with_nkf_nkf_members_path data-method=:post
+a.btn.btn-warning.float-right href=sync_with_nkf_nkf_members_path data-method=:post data-remote=true
   i.fa.fa-sync.mr-2 class=('fa-spin' if NkfSynchronizationJob.mon_locked?)
   | Synkronisér med NKF
 javascript:
