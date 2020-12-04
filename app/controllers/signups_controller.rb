@@ -106,6 +106,12 @@ class SignupsController < ApplicationController
     redirect_to signups_url, notice: 'Signup was successfully destroyed.'
   end
 
+  def export
+    NkfExportTrialMembersJob.perform_later
+    NkfImportTrialMembersJob.perform_later
+    redirect_to signups_path, notice: 'Started NKF export.'
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

@@ -46,6 +46,9 @@ table.table class=('table-sm' if @signups.size > 12) data-record-path=signups_pa
         td.text-center = signup.user.age || signup.nkf_member_trial&.age
         td = signup.user.groups.map(&:name).join(', ')
         td.text-right
+          - unless signup.nkf_member_trial
+            a.btn.btn-warning.btn-sm.ml-2 href=export_signup_path(signup) data-toggle=:tooltip title="Overfør til NKF." data-method=:post
+              i.fa.fa-external-link-alt.fa-fw
           a.btn.btn-success.btn-sm.ml-2 href=complete_signup_path(signup) data-toggle=:tooltip title="Godkjenn #{signup.user.name}, kontrakt mottatt." data-method=:patch data-confirm="Har du mottatt kontrakt for #{signup.user.name}?"
             i.fa.fa-check.fa-fw
           a.btn.btn-danger.btn-sm.ml-2 href=terminate_signup_path(signup) data-toggle=:tooltip title="Avslutt prøvemedlemskap for #{signup.user.name}" data-method=:delete data-confirm="Er du helt sikker på at du vil avslutte prøvemedlemskapet til #{signup.user.name}?"

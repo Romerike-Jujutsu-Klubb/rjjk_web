@@ -308,6 +308,7 @@ Rails.application.routes.draw do
   resources :signups do
     member do
       patch :complete
+      post :export
       delete :terminate
     end
   end

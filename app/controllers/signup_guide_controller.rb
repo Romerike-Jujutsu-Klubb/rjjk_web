@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class SignupGuideController < ApplicationController
-  include NkfForm
-
   layout PUBLIC_LAYOUT
 
   before_action do
@@ -122,16 +120,9 @@ class SignupGuideController < ApplicationController
 
       user.address ||= user.guardian_1&.address
       user.postal_code ||= user.guardian_1&.postal_code
-      @signup = Signup.new(user: user)
-
-      agent = NkfAgent.new(:signup)
-      trial_form_page = agent.new_trial_form
-      mapped_changes = @signup.mapping_attributes(:new_trial)
-      logger.info "Submitting new member trial to NKF: #{mapped_changes}"
-      submit_form(trial_form_page, 'ks_bli_medlem', mapped_changes, :new_trial,
-          submit_in_development: true)
-      @signup.save!
+      @signup = Signup.create!(user: user)
       clear_signup
+      NkfExportTrialMembersJob.perform_later
       NkfImportTrialMembersJob.perform_later
       render :complete
     end

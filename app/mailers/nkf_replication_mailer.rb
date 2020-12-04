@@ -3,6 +3,12 @@
 class NkfReplicationMailer < ApplicationMailer
   default to: 'uwe@kubosch.no'
 
+  def export_signups(signups)
+    @signups = signups
+    @title = "Registrerte #{signups.size} innmeldinger hos NKF"
+    mail subject: @title
+  end
+
   def import_changes(nkf_member_import, nkf_member_trial_import)
     @import = nkf_member_import
     @trial_import = nkf_member_trial_import

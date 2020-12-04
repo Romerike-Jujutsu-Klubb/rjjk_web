@@ -1,0 +1,4 @@
+h2 Opprettet følgende nye medlemmer (#{@signups.size})
+ul
+  - @signups.each do |s|
+    li = s.user.name
