@@ -47,9 +47,9 @@
       = f.text_field :account_no
     .col-sm
       - if (discount = membership.calculated_discount)
-        - label = discount[0] ? "Rabatt (Beregnet: #{discount[0]}%)" : nil
+        - label = "#{t('activerecord.attributes.member.discount_override')}#{discount[0] && " (Beregnet: #{discount[0]}%)"}"
         - placeholder = discount[0]
-        - appendix = t(discount[1])
+        - appendix = discount[1] && t(discount[1])
       = f.text_field :discount_override, label: label, placeholder: placeholder, append: appendix
   .row
     .col = f.select :nkf_fee, [['Ja', true], ['Nei', false]]
