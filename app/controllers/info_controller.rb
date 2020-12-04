@@ -16,6 +16,7 @@ class InfoController < ApplicationController
       return if @information_page.public? || current_user
 
       redirect_to login_path, notice: 'Vennligst log på for å se denne siden.'
+      return
     end
 
     if (page_alias = PageAlias.find_by(old_path: request.path))

@@ -493,7 +493,7 @@ class User < ApplicationRecord
   def new_security_token(duration)
     self.security_token = self.class.hashed(salted_password + Time.current.to_i.to_s + rand.to_s)
     self.token_expiry = User.token_lifetime(duration).from_now
-    save!
+    save! validate: false
     security_token
   end
 end
