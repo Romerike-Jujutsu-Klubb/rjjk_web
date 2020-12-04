@@ -34,7 +34,7 @@ class NkfAgent
     super()
     @agent = Mechanize.new
     @agent.agent.http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    @agent.agent.http.ssl_version = OpenSSL::SSL::SSL3_VERSION
+    @agent.agent.http.ssl_version = :SSLv3
     @thread_key = :"nkf_agent_#{key}"
     Thread.current[@thread_key] = @agent
   end
