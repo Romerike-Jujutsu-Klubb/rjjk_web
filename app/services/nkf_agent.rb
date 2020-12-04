@@ -7,6 +7,7 @@ class Mechanize
       a.max_history = max_history
       a.read_timeout = read_timeout
       a.agent.http.verify_mode = agent.http.verify_mode
+      a.agent.http.ssl_version = :SSLv3
     end
   end
 end
