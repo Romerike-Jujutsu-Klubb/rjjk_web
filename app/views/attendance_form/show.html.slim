@@ -99,9 +99,8 @@ h1
       = render 'attendance_form_footer'
 
 - if @passive_members.present?
+  h2.mt-5 Passive medlemmer #{@group&.name} #{month_name(@month)} #{@year}
   .table-responsive
-    h2.mt-5 Passive medlemmer #{@group&.name} #{month_name(@month)} #{@year}
-
     table.table.table-striped.table-bordered.table-sm
       thead
         tr
