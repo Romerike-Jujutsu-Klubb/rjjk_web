@@ -17,7 +17,7 @@ h1 style="font-family:Arial, Helvetica, sans-serif"
 
 - if @instructors.any?
   .table-responsive.mb-4
-    table.table-striped.table-bordered width="100%"
+    table#instructors.table-striped.table-bordered width="100%"
       thead
         tr
           th Instruktører (#{@instructors.size})
@@ -43,7 +43,7 @@ h1 style="font-family:Arial, Helvetica, sans-serif"
 - @date_totals = {}
 
 .table-responsive
-  table.table-striped.table-bordered width="100%"
+  table#members.table-striped.table-bordered width="100%"
     thead
       tr
         th Navn

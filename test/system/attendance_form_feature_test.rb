@@ -25,7 +25,6 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
     assert_current_path attendance_form_path year: 2013, month: 10, group_id: id(:panda)
     assert has_css? 'tr td:first-child'
     assert_equal ["Uwe Kubosch\n55569666",
-                  'Totalt 1',
                   'Lars Bråten',
                   "Erik Hansen\nNKF_mt_two@example.com",
                   "Hans Eriksen\nfaktura@eriksen.org",
@@ -39,11 +38,9 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
   def test_record_panda_october
     visit_with_login attendance_form_path year: 2013, month: 10, group_id: id(:panda)
     assert_equal ["Uwe Kubosch\n55569666",
-                  'Totalt 1',
                   'Lars Bråten',
                   "Erik Hansen\nNKF_mt_two@example.com",
                   "Hans Eriksen\nfaktura@eriksen.org",
-                  # "Even Jensen\nNKF_mt_three@example.com",
                   'Totalt 3',
                   "Sebastian Kubosch (Permisjon)\n98765432 / 55569666",
                   'Totalt 1'],
@@ -59,7 +56,7 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
     end
 
     # Attendance 'X' NOT present
-    lars_row = find('table:first-of-type tbody tr:nth-of-type(5)')
+    lars_row = find('table#members tbody tr:nth-of-type(1)')
     assert lars_row
     assert_equal ['Lars Bråten', '46', 'brunt belte', '', 'X', '', '', ''], # , '1 / 2'],
         lars_row.all('td').map(&:text).map(&:strip)
@@ -67,8 +64,7 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
     # Mark Lars as present
     new_instructor_row = first('table tbody tr:nth-of-type(2)')
     assert new_instructor_row
-    assert_equal ['', '', '', '', '', '', ''],
-        new_instructor_row.all('td').map(&:text).map(&:strip)
+    assert_equal ['', '', '', '', '', ''], new_instructor_row.all('td').map(&:text).map(&:strip)
     assert_difference 'Attendance.count' do
       new_instructor_row.find('td:nth-of-type(2)').click
       assert_current_path '/attendances/new', ignore_query: true
@@ -77,15 +73,15 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
       assert_current_path attendance_form_path year: 2013, month: 10, group_id: id(:panda)
 
       # Attendance 'X' present
-      lars_row = find('table:first-of-type tbody tr:nth-of-type(5)')
+      lars_row = find('table#members tbody tr:nth-of-type(1)')
       assert lars_row
-      assert_equal ['Lars Bråten', '46', 'brunt belte', 'X', 'X', '', '', ''], # , '2 / 3'],
+      assert_equal ['Lars Bråten', '46', 'brunt belte', 'X', 'X', '', '', ''],
           lars_row.all('td').map(&:text).map(&:strip)
       lars_row.find('td:nth-of-type(4)').find('a', text: 'X')
     end
 
     assert_difference 'Attendance.count' do
-      erik_row = find('table:first-of-type tbody tr:nth-of-type(6)')
+      erik_row = find('table#members tbody tr:nth-of-type(2)')
       assert erik_row
       assert_equal(['Erik Hansen NKF_mt_two@example.com', '7',
                     'Prøvetid til 2010-10-17 Mangler kontrakt', '', '', '', '', ''], # , ''],
@@ -95,8 +91,9 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
         erik_row.find('td:nth-of-type(4)').find('a', text: 'X')
       end
     end
+
     assert_difference 'Attendance.count' do
-      hans_row = find('table:first-of-type tbody tr:nth-of-type(7)')
+      hans_row = find('table#members tbody tr:nth-of-type(3)')
       assert hans_row
       assert_equal(['Hans Eriksen faktura@eriksen.org', '6',
                     'Prøvetid til 2010-10-17 Mangler kontrakt', '', '', 'X', '', ''], # , '2'],
