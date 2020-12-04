@@ -12,12 +12,18 @@ table.table.table-sm data-record-path=attendance_forms_path
       th Dato
       th Gruppe
       th Status
+      - unless @user.last_membership
+        th
   tbody
     - for attendance in @attendances
       tr data-record-id="#{attendance.date.year}/#{attendance.date.month}/#{attendance.practice.group_schedule.group_id}"
         td = attendance.date
         td = attendance.group_schedule.group.name
         td = attendance.status_label
+        - unless @user.last_membership
+          td.text-right
+            a.btn.btn-danger.btn-sm href=attendance_path(attendance) data-method=:delete data-confirm='Vil du VIRKELIG slette dette oppmøtet?'
+              i.fa.fa-trash
   tfoot
     tr
       th Totalt:

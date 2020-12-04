@@ -17,7 +17,7 @@ h1
 
 - if @instructors.any?
   .table-responsive.mb-4
-    table#instructors.table-striped.table-bordered width="100%"
+    table#instructors.table.table-striped.table-bordered.table-sm
       thead
         tr
           th Instruktører (#{@instructors.size})
@@ -43,7 +43,7 @@ h1
 - @date_totals = {}
 
 .table-responsive
-  table#members.table-striped.table-bordered width="100%"
+  table#members.table.table-striped.table-bordered.table-sm
     thead
       tr
         th Navn
