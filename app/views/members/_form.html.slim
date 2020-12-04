@@ -29,11 +29,11 @@
       label NKF medlemsnr
       span.form-control = (membership.nkf_member.try(:medlemsnummer) || 'Ikke i NKF-registeret.')
   .row
-    .col-4
+    .col-sm
       = f.text_field :passive_on, class: 'date', placeholder: 'dato'
-    .col-4
+    .col-sm
       = f.text_field :honorary_on, class: 'date', placeholder: 'dato'
-    .col-4 class=('col-lg-2' if membership.left_on)
+    .col-sm class=('col-lg-2' if membership.left_on)
       = f.text_field :left_on, class: 'date'
     - if membership.left_on
       .col-lg-2.pt-4.d-none.d-lg-inline
@@ -42,12 +42,12 @@
     - if membership.billing_type.present?
       .col
         = f.select :billing_type, [%w(AvtaleGiro AvtaleGiro), %w(AutoGiro AUTOGIRO), ['Manuell Giro', 'MANUELL GIRO'], \
-            membership.billing_type && [membership.billing_type, membership.billing_type]].compact.uniq(&:second), prompt: 'Velg betalingsform'
-    .col
+            membership.billing_type && [membership.billing_type, membership.billing_type]].compact.uniq(&:second), include_blank: true
+    .col-sm
       = f.text_field :account_no
-    .col
+    .col-sm
       - if (discount = membership.calculated_discount)
-        - label = "Rabatt (Beregnet: #{discount[0]}%)"
+        - label = discount[0] ? "Rabatt (Beregnet: #{discount[0]}%)" : nil
         - placeholder = discount[0]
         - appendix = t(discount[1])
       = f.text_field :discount_override, label: label, placeholder: placeholder, append: appendix
