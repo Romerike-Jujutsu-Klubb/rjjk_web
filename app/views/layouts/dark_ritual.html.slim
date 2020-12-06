@@ -30,15 +30,15 @@ html lang="nb"
     .row.fixed-top.container-fluid.px-0.mx-auto style='top:#{@content_width ? 2 : 1}px;left:1px;pointer-events:none'
       .col style="margin-right:2px"
         - if flash.alert
-          .alert.alert-danger.alert-dismissible.fade.show.w-100.mt-1.mt-md-3 role="alert" style='pointer-events:auto;line-height:1.5 !important;font:normal 1.0rem Verdana, sans-serif'
+          .alert.alert-danger.alert-dismissible.fade.show.mt-1.mt-md-3 role="alert" style='pointer-events:auto'
             button.close type="button" data-dismiss="alert" aria-label="Close"
               span aria-hidden="true" &times;
             = textalize flash.alert || '&nbsp;'
-        - if flash[:notice]
-          .alert.alert-info.alert-dismissible.fade.show.w-100.mt-3 role="alert" style='line-height:1.5 !important;font:normal 1.0rem Verdana,sans-serif;pointer-events:auto'
+        - if flash.notice
+          .alert.alert-info.alert-dismissible.fade.show.mt-3 role="alert" style='pointer-events:auto'
             button.close type="button" data-dismiss="alert" aria-label="Close"
               span aria-hidden="true" &times;
-            = textalize flash[:notice]
+            = textalize flash.notice
       - unless @content_width
         .d-none.d-lg-block style="width:290px" &nbsp;
     #main-wrapper.container-fluid.d-flex.flex-column
