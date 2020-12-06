@@ -21,4 +21,8 @@ class Signup < ApplicationRecord
   validate do
     errors.add(:user_id, 'is already a member') if user.member
   end
+
+  def to_s
+    user.name
+  end
 end

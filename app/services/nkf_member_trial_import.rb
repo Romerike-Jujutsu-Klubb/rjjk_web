@@ -39,18 +39,12 @@ class NkfMemberTrialImport
 
   def get_member_trial_rows(nkf_agent)
     logger.debug 'get_member_trial_rows'
-
-    trial_ids = []
-
-    # FIXME(uwe): Add pagination when reading NKF member trials
     trial_index_page = nkf_agent.trial_index
     member_trials_body = trial_index_page.body
-    new_trial_ids = member_trials_body.scan(/edit_click28\('(.*?)'\)/).map(&:first)
-    trial_ids += new_trial_ids
-
+    trial_ids = member_trials_body.scan(/edit_click28\('(.*?)'\)/).map(&:first)
     logger.debug "Found #{trial_ids.size} member trials"
 
-    NkfMemberTrial.where.not(tid: trial_ids).to_a.each do |t|
+    NkfMemberTrial.where.not(tid: trial_ids).each do |t|
       logger.info "orphaned_trial: #{t}"
       t.signup&.destroy!
       t.destroy!
@@ -62,10 +56,16 @@ class NkfMemberTrialImport
         trial_details_page = nkf_agent.trial_page(tid)
         if (nkf_trial = NkfMemberTrial.find_by(tid: tid))
           if nkf_trial.signup.nil?
-            user = User.find_by(email: changes[:epost]) if changes[:epost].present?
-            user ||= User.find_by(phone: changes[:mobil]) if changes[:mobil].present?
-            user ||= User.create!(nkf_trial.converted_attributes(include_blank: false))
-            nkf_trial.create_signup! user: user
+            orphan_signups = Signup.where(nkf_member_trial_id: nil).to_a
+            if (orphan_signup = orphan_signups.find { |s| s.user.name == nkf_trial.name })
+              orphan_signup.update! nkf_member_trial: nkf_trial
+              @trial_changes << { record: nkf_trial, changes: :matched }
+            else
+              user = User.find_by(email: changes[:epost]) if changes[:epost].present?
+              user ||= User.find_by(phone: changes[:mobil]) if changes[:mobil].present?
+              user ||= User.create!(nkf_trial.converted_attributes(include_blank: false))
+              nkf_trial.create_signup! user: user
+            end
           end
 
           # FIXME(uwe): Change to submitting the form when we are sure it is safe
@@ -95,13 +95,19 @@ class NkfMemberTrialImport
           nkf_trial_attributes = read_form(form, :trial)
           nkf_trial = NkfMemberTrial.create!(tid: tid, **nkf_trial_attributes)
           conv_attr = nkf_trial.converted_attributes(include_blank: false)
-          user = nkf_trial.create_corresponding_user!(conv_attr)
-          if user.signup
-            user.signup.update! nkf_member_trial: nkf_trial
+          orphan_signups = Signup.where(nkf_member_trial_id: nil).to_a
+          if (orphan_signup = orphan_signups.find { |s| s.user.name == nkf_trial.name })
+            orphan_signup.update! nkf_member_trial: nkf_trial
+            @trial_changes << { record: nkf_trial, changes: :matched }
           else
-            Signup.create! user: user, nkf_member_trial: nkf_trial
+            user = nkf_trial.create_corresponding_user!(conv_attr)
+            if user.signup
+              user.signup.update! nkf_member_trial: nkf_trial
+            else
+              Signup.create! user: user, nkf_member_trial: nkf_trial
+            end
+            @trial_changes << { record: nkf_trial, changes: :new }
           end
-          @trial_changes << { record: nkf_trial, changes: :new }
         end
       end
     end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ParallelRunner
-  CONCURRENT_REQUESTS = 4
+  CONCURRENT_REQUESTS = 3
 
   private
 
