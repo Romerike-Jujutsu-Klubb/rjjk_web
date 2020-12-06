@@ -473,7 +473,6 @@ DEPENDENCIES
   bootsnap (>= 1.1.0)
   bootstrap-chosen-rails!
   bootstrap_form
-  capybara (>= 3.34)
   capybara-screenshot-diff
   chartkick
   chosen-rails
