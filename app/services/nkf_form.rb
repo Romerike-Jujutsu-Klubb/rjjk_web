@@ -25,7 +25,7 @@ module NkfForm
         logger.info "No selected option found in #{form_field.options.map(&:text).inspect}"
       end
     else
-      form_value = field_node.attr('value')
+      form_value = field_node.attr('value').strip
     end
 
     [nkf_attr, form_value]
