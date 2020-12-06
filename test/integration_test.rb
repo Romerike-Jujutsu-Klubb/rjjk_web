@@ -8,6 +8,8 @@ class IntegrationTest < ActionDispatch::IntegrationTest
     assert_equal 'done', response.body
   end
 
+  private
+
   def login(login = :uwe)
     user = users(login)
     post login_password_path user: { login: user.login || user.email, password: :atest }

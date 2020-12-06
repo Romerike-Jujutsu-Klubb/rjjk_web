@@ -20,7 +20,7 @@ class LoginControllerTest < IntegrationTest
     assert_response :redirect
     assert_redirected_to controller: :welcome, action: :index
     assert cookies[COOKIE_NAME]
-    assert_equal false, users(:lars).token_expired?
+    assert_not users(:lars).token_expired?
     assert_not_equal 'random_token_string', users(:lars).security_token
   end
 
@@ -232,6 +232,6 @@ class LoginControllerTest < IntegrationTest
 
   def assert_contains(target, container)
     assert_not container.nil?, %( Failed to find "#{target}" in nil String )
-    assert container.include?(target), "#{container.inspect} does not contain #{target.inspect}"
+    assert_includes container, target, "#{container.inspect} does not contain #{target.inspect}"
   end
 end

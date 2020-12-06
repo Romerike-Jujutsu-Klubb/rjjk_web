@@ -52,42 +52,9 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Max: 64
 
-# Offense count: 3
-# Cop supports --auto-correct.
-Minitest/AssertEmpty:
-  Exclude:
-    - 'test/models/user_test.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Minitest/AssertIncludes:
-  Exclude:
-    - 'test/controllers/login_controller_test.rb'
-
-# Offense count: 5
-# Cop supports --auto-correct.
-Minitest/AssertTruthy:
-  Exclude:
-    - 'test/controllers/graduates_controller_test.rb'
-    - 'test/models/user_test.rb'
-
 # Offense count: 67
 Minitest/MultipleAssertions:
   Max: 45
-
-# Offense count: 7
-# Cop supports --auto-correct.
-Minitest/RefuteFalse:
-  Exclude:
-    - 'test/controllers/graduates_controller_test.rb'
-    - 'test/controllers/login_controller_test.rb'
-    - 'test/models/user_test.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-Minitest/TestMethodName:
-  Exclude:
-    - 'test/integration_test.rb'
 
 # Offense count: 10
 # Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.

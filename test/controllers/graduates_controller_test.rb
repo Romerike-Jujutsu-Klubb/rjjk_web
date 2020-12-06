@@ -68,7 +68,7 @@ class GraduatesControllerTest < IntegrationTest
     assert_response :redirect
     assert_redirected_to action: :show, id: @first_id
     assert_not_nil @graduate.reload.confirmed_at
-    assert_equal false, @graduate.declined
+    assert_not @graduate.declined
   end
 
   def test_accept_get
@@ -76,7 +76,7 @@ class GraduatesControllerTest < IntegrationTest
     assert_response :redirect
     assert_redirected_to action: :show, id: @first_id
     assert_not_nil @graduate.reload.confirmed_at
-    assert_equal false, @graduate.declined
+    assert_not @graduate.declined
   end
 
   def test_decline
@@ -84,7 +84,7 @@ class GraduatesControllerTest < IntegrationTest
     assert_response :redirect
     assert_redirected_to action: :show, id: @first_id
     assert_not_nil @graduate.reload.confirmed_at
-    assert_equal true, @graduate.declined
+    assert @graduate.declined
   end
 
   def test_decline_get
@@ -92,6 +92,6 @@ class GraduatesControllerTest < IntegrationTest
     assert_response :redirect
     assert_redirected_to action: :show, id: @first_id
     assert_not_nil @graduate.reload.confirmed_at
-    assert_equal true, @graduate.declined
+    assert @graduate.declined
   end
 end

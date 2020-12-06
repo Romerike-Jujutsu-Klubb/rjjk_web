@@ -89,7 +89,7 @@ class UserTest < ActionMailer::TestCase
 
     u.change_password('a_s3cure_p4ssword')
     assert u.save
-    assert u.errors.empty?
+    assert_empty u.errors
   end
 
   def test_validates_login
@@ -107,11 +107,11 @@ class UserTest < ActionMailer::TestCase
 
     u.login = ''
     assert u.save
-    assert u.errors[:login].empty?
+    assert_empty u.errors[:login]
 
     u.login = 'oktesla'
     assert u.save
-    assert u.errors.empty?
+    assert_empty u.errors
   end
 
   def test_create
@@ -139,10 +139,10 @@ class UserTest < ActionMailer::TestCase
   end
 
   def test_technical_committy
-    assert_equal true, users(:uwe).technical_committy?
-    assert_equal true, users(:lars).technical_committy?
+    assert users(:uwe).technical_committy?
+    assert users(:lars).technical_committy?
     assert_nil users(:long_user).technical_committy?
-    assert_equal false, users(:newbie).technical_committy?
+    assert_not users(:newbie).technical_committy?
   end
 
   test 'emails' do
@@ -182,10 +182,10 @@ class UserTest < ActionMailer::TestCase
   end
 
   test 'absent?' do
-    assert_equal false, users(:lars).absent?
-    assert_equal false, users(:newbie).absent?
-    assert_equal true, users(:sebastian).absent?
-    assert_equal false, users(:uwe).absent?
+    assert_not users(:lars).absent?
+    assert_not users(:newbie).absent?
+    assert users(:sebastian).absent?
+    assert_not users(:uwe).absent?
   end
 
   test 'absent? preloaded attendances for group' do
