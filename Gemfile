@@ -95,7 +95,6 @@ group :test do
   # https://github.com/twalpole/apparition
   # gem 'apparition', github: 'twalpole/apparition'
   # gem 'bullet' # Uncomment to hunt N+1 kind of problems
-  gem 'capybara', '>=3.34' # FIXME(uwe): Remove when capybara uses regex_parser 2+
   gem 'capybara-screenshot-diff' # , path: '~/work/open-source/capybara-screenshot-diff'
   gem 'chunky_png'
   gem 'minitest-capybara'
