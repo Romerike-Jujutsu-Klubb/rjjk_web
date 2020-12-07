@@ -39,7 +39,8 @@ table.table
     tr
       th processor_count
       td = Concurrent.processor_count
-    tr
-      th Puma
-      td
-        pre = Puma.stats_hash.pretty_inspect
+    - unless Rails.env.test?
+      tr
+        th Puma
+        td
+          pre = Puma.stats_hash.pretty_inspect
