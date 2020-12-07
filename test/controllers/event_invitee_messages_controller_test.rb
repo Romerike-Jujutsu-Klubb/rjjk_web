@@ -32,7 +32,13 @@ class EventInviteeMessagesControllerTest < ActionController::TestCase
   end
 
   test 'should show event_invitee_message' do
+    login :newbie
     get :show, params: { id: @event_invitee_message }
+    assert_response :success
+  end
+
+  test 'should show event_invitee_message invitation test' do
+    get :show, params: { id: -@event_invitee_message.event_invitee.event_id }
     assert_response :success
   end
 

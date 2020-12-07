@@ -66,6 +66,8 @@ class EventInvitee < ApplicationRecord
   REGISTRATION_LINK_MARKER = 'EVENT-REGISTRATION-LINK'
 
   def replace_markers(string)
+    return unless string
+
     string = string.gsub('[EVENT_NAME]', event.name) if event.name.present?
     string
         .gsub('[EVENT_LINK]',
