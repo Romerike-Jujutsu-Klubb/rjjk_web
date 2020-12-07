@@ -1,37 +1,31 @@
 h1 Status
 
-h3 Kjøretid
-
-p
-  ' #{uptime.to_i / (3600 * 24)} dager
-  ' #{(uptime.to_i % (3600 * 24)) / 3600} timer
-  ' #{(uptime.to_i % 3600) / 60} minutter
-  ' #{uptime.to_i % 60} sekunder
-
-h3 Versjon
-
-- if File.exists? 'REVISION'
-  dl
-    dt Revision
-    dd = File.read('REVISION')
-    dt Timestamp
-    dd = File.mtime('REVISION')
-- else
-  p Utvikling
-
-h3 Ruby
-
-p = RUBY_DESCRIPTION
-
-
-h3 Rails
-
-p = Rails::VERSION::STRING
-
-h3 Hardware
-
 table.table
   tbody
+    tr
+      th Kjøretid
+      td
+        ' #{uptime.to_i / (3600 * 24)} dager
+        ' #{(uptime.to_i % (3600 * 24)) / 3600} timer
+        ' #{(uptime.to_i % 3600) / 60} minutter
+        ' #{uptime.to_i % 60} sekunder
+    tr
+      th Versjon
+      td
+        - if File.exists? 'REVISION'
+          dl
+            dt Revision
+            dd = File.read('REVISION')
+            dt Timestamp
+            dd = File.mtime('REVISION')
+        - else
+          | Utvikling
+    tr
+      th Ruby
+      td= RUBY_DESCRIPTION
+    tr
+      th Rails
+      td = Rails::VERSION::STRING
     tr
       th physical_processor_count
       td = Concurrent.physical_processor_count
