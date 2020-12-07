@@ -3,6 +3,9 @@ h1 Status
 table.table
   tbody
     tr
+      th Startet
+      td = SERVER_START_TIME.strftime('%F %T')
+    tr
       th Kjøretid
       td
         - if (days = uptime.to_i / (3600 * 24)) > 0
@@ -36,3 +39,7 @@ table.table
     tr
       th processor_count
       td = Concurrent.processor_count
+    tr
+      th Puma
+      td
+        pre = Puma.stats_hash.pretty_inspect
