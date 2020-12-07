@@ -5,10 +5,14 @@ table.table
     tr
       th Kjøretid
       td
-        ' #{uptime.to_i / (3600 * 24)} dager
-        ' #{(uptime.to_i % (3600 * 24)) / 3600} timer
-        ' #{(uptime.to_i % 3600) / 60} minutter
-        ' #{uptime.to_i % 60} sekunder
+        - if (days = uptime.to_i / (3600 * 24)) > 0
+          ' #{days} dager
+        - if (hours = (uptime.to_i % (3600 * 24)) / 3600) > 0
+          ' #{hours} timer
+        - if (minutes = (uptime.to_i % 3600) / 60) > 0
+          ' #{minutes} minutter
+        - if (seconds = uptime.to_i % 60) > 0
+          ' #{seconds} sekunder
     tr
       th Versjon
       td
