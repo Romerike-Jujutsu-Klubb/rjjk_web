@@ -14,7 +14,9 @@ class EventInviteeMessagesController < ApplicationController
       access_denied unless current_user.id == @event_invitee_message.event_invitee.user_id
     else # Test message
       event = Event.find(-item_id)
-      event_invitee = EventInvitee.new(id: item_id, event: event, user_attributes: { name: 'test', email: 'test@example.com' })
+      event_invitee = EventInvitee.new(id: item_id, event: event, user_attributes: {
+        name: 'test', email: 'test@example.com'
+      })
       @event_invitee_message = EventInviteeMessage.new(
           event_invitee: event_invitee, message_type: EventMessage::MessageType::INVITATION
         )

@@ -36,9 +36,10 @@ h1.mb-4 Søkeresultat for "#{@query}"
       - if @pages.present?
         .col.mb-4: .card
           h3.card-header Informasjonssider
-          ul.card-body
-            - @pages.each do |p|
-              li = link_to p.title, p
+          .card-body
+            ul.pl-3
+              - @pages.each do |p|
+                li = link_to p.title, p
       - if @news.present?
         .col.mb-4: .card
           h3.card-header Nyheter
@@ -60,9 +61,10 @@ h1.mb-4 Søkeresultat for "#{@query}"
       - if @images.present?
         .col.mb-4: .card
           h3.card-header Bilder
-          ul.card-body
-            - @images.each do |i|
-              li: a href=gallery_image_path(i) = i.name
+          .card-body
+            ul.pl-3
+              - @images.each do |i|
+                li: a href=gallery_image_path(i) = i.name
       - if @user_messages.present?
         .col.mb-4: .card
           h3.card-header Meldinger
@@ -72,15 +74,17 @@ h1.mb-4 Søkeresultat for "#{@query}"
       - if @basic_techniques.present?
         .col.mb-4: .card
           h3.card-header Grunnteknikker
-          ul.card-body
-            - @basic_techniques.each do |bt|
-              li: a href=basic_technique_path(bt) = bt.name
+          .card-body
+            ul.pl-3
+              - @basic_techniques.each do |bt|
+                li: a href=basic_technique_path(bt) = bt.name
       - if @technique_applications.present?
         .col.mb-4: .card
           h3.card-header Applikasjoner
-          ul.card-body
-            - @technique_applications.each do |ta|
-              li: a href=technique_application_path(ta) = ta.name
+          .card-body
+            ul.pl-3
+              - @technique_applications.each do |ta|
+                li: a href=technique_application_path(ta) = ta.name
   - else
     | Fant ingenting om "#{@query}".
 

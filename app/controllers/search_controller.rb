@@ -17,8 +17,10 @@ class SearchController < ApplicationController
     end
 
     query = "%#{@query.upcase.gsub(/(_|%)/, '\\\\\\1')}%"
-    @pages = InformationPage
-        .where('title ILIKE :query OR body ILIKE :query', query: query).order(:title).to_a
+    pages = InformationPage.where('title ILIKE :query OR body ILIKE :query', query: query).order(:title)
+    pages = pages.for_all unless current_user
+    pages = pages.shown unless current_user&.admin?
+    @pages = pages.to_a
     news_items = NewsItem
         .where('title ILIKE :query OR summary ILIKE :query OR UPPER(body) LIKE :query', query: query)
         .order(created_at: :desc)

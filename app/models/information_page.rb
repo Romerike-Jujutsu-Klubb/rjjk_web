@@ -10,6 +10,7 @@ class InformationPage < ApplicationRecord
   before_validation { body&.strip! }
 
   scope :for_all, -> { where public: true }
+  scope :shown, -> { where hidden: false }
 
   validates :title, uniqueness: { scope: :parent_id, case_sensitive: false }
 

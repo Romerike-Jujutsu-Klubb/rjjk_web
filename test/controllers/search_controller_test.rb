@@ -6,6 +6,7 @@ class SearchControllerTest < IntegrationTest
   test 'user query' do
     get '/search', params: { q: 'Uwe' }
     assert_response :success
+    assert_select '.card', count: 3
   end
 
   test 'empty user query' do
