@@ -65,22 +65,44 @@ class SignupsController < ApplicationController
     trial_index_page = nkf_agent.trial_index
 
     if @signup.nkf_member_trial
-      # Complete the trial
+      trial_page = nkf_agent.trial_page(@signup.nkf_member_trial.tid)
+      trial_form = trial_page.form('ks_godkjenn_medlem')
+      trial_form['frm_28_v06'] = 'G'
+      trial_form.field_with(name: 'frm_28_v66').checked = true
+      trial_form['frm_28_v60'] = trial_form.field_with(name: 'frm_28_v36').options[1].value
+      trial_form['p_ks_godkjenn_medlem_action'] = 'OK'
+      approval_page = trial_form.submit
+
+      logger.info approval_page.inspect
+      approval_body = approval_page.body.force_encoding('ISO-8859-1').encode('UTF-8')
+      logger.info Nokogiri::XML(approval_body, &:noblanks).to_s
+
+      if (m = NkfForm::MEMBER_ERROR_PATTERN.match(approval_body))
+        raise <<~MESSAGE
+          Error approving NKF trial member:
+          #{m[:message].encode(Encoding::UTF_8, form.encoding)}
+          #{form.fields.map { |f| "#{f.name}: #{f.value.inspect}" }.join("\n")}
+        MESSAGE
+      end
     else
       form = trial_index_page.form('ks_godkjenn_medlem')
 
       form['p_ks_godkjenn_medlem_action'].value = 'UPDATE'
       form['frm_28_v04'] = ''
       new_member_page = nkf_agent.submit(form)
+
       logger.info new_member_page.inspect
-      body = new_member_page.body.force_encoding('ISO-8859-1').encode('UTF-8')
-      logger.info Nokogiri::XML(body, &:noblanks).to_s
+      approval_body = new_member_page.body.force_encoding('ISO-8859-1').encode('UTF-8')
+      logger.info Nokogiri::XML(approval_body, &:noblanks).to_s
 
       member_form = new_member_page.form('')
       member_form['frm_28_v04'] = ''
 
-      NkfImportTrialMembersJob.perform_later
+      # FIXME(uwe): Actually create a new member!!!
+
     end
+    NkfSynchronizationJob.perform_later
+    redirect_to signups_path, notice: 'Medlemskapet er opprettet.'
   end
 
   def terminate
