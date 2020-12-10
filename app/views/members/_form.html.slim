@@ -29,11 +29,11 @@
       label NKF medlemsnr
       span.form-control = (membership.nkf_member.try(:medlemsnummer) || 'Ikke i NKF-registeret.')
   .row
-    .col-sm
+    .col
       = f.text_field :passive_on, class: 'date', placeholder: 'dato'
-    .col-sm
+    .col
       = f.text_field :honorary_on, class: 'date', placeholder: 'dato'
-    .col-sm class=('col-lg-2' if membership.left_on)
+    .col class=('col-lg-2' if membership.left_on)
       = f.text_field :left_on, class: 'date'
     - if membership.left_on
       .col-lg-2.pt-4.d-none.d-lg-inline
@@ -43,17 +43,17 @@
       .col
         = f.select :billing_type, [%w(AvtaleGiro AvtaleGiro), %w(AutoGiro AUTOGIRO), ['Manuell Giro', 'MANUELL GIRO'], \
             membership.billing_type && [membership.billing_type, membership.billing_type]].compact.uniq(&:second), include_blank: true
-    .col-sm
-      = f.text_field :account_no
-    .col-sm
+    .col style="min-width:6.5rem"
       - if (discount = membership.calculated_discount)
         - label = "#{t('activerecord.attributes.member.discount_override')}#{discount[0] && " (Beregnet: #{discount[0]}%)"}"
         - placeholder = discount[0] || 0
         - appendix = discount[1] ? t(discount[1]) : '%'
       = f.text_field :discount_override, label: label, placeholder: placeholder, append: appendix
-  .row
+    .col style="min-width:9rem"
+      = f.text_field :account_no
+    - if membership.nkf_member&.ventekid
+      .col style="min-width:13.5rem" = f.static_control label: 'KID', value: membership.nkf_member.ventekid, name: nil
     .col = f.select :nkf_fee, [['Ja', true], ['Nei', false]]
-    .col = f.select :payment_problem, [['Nei', false], ['Ja', true]]
 
   .row
     - if membership.phone_home.present?
