@@ -59,7 +59,6 @@ class Member < ApplicationRecord
   validates :instructor, inclusion: { in: [true, false] }
   validates :joined_on, presence: true
   validates :nkf_fee, inclusion: { in: [true, false] }
-  validates :payment_problem, inclusion: { in: [true, false] }
   validates :user, presence: true
 
   validate do

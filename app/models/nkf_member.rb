@@ -33,7 +33,7 @@ class NkfMember < ApplicationRecord
     end
   end
 
-  MEMBER_DEFAULT_ATTRIBUTES = { instructor: false, nkf_fee: true, payment_problem: false }.freeze
+  MEMBER_DEFAULT_ATTRIBUTES = { instructor: false, nkf_fee: true }.freeze
 
   def create_corresponding_member!
     transaction do

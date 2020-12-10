@@ -51,7 +51,6 @@ class MembersControllerTest < ActionController::TestCase
 
     VCR.use_cassette 'GoogleMaps Lars' do
       post :create, params: { member: {
-        payment_problem: false,
         instructor: false,
         nkf_fee: true,
         joined_on: '2007-06-21',

@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_29_205657) do
+ActiveRecord::Schema.define(version: 2020_12_10_225654) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -458,7 +458,6 @@ ActiveRecord::Schema.define(version: 2020_11_29_205657) do
     t.date 'joined_on', null: false
     t.date 'left_on'
     t.string 'billing_type', limit: 100
-    t.boolean 'payment_problem', null: false
     t.string 'comment', limit: 255
     t.boolean 'instructor', null: false
     t.boolean 'nkf_fee', null: false
