@@ -67,7 +67,8 @@ jobs:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: bundle exec rails test
       - name: Rails system test
-        env: # Or as an environment variable
+        env:
+          LANGUAGE: nb
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
           RAILS_ENV: test
