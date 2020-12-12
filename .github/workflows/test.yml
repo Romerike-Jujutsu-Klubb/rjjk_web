@@ -13,6 +13,13 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  LANGUAGE: nb
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: password
+  RAILS_ENV: test
+  RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+
 jobs:
   Test:
     runs-on: ubuntu-20.04
@@ -53,24 +60,8 @@ jobs:
       - name: Rubocop
         run: bundle exec rubocop --auto-correct
       - name: Database setup
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
-          RAILS_ENV: test
-          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: bundle exec rails db:setup
       - name: Rails test
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
-          RAILS_ENV: test
-          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: bundle exec rails test
       - name: Rails system test
-        env:
-          LANGUAGE: nb
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
-          RAILS_ENV: test
-          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: bundle exec rails test:system
