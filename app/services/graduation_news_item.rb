@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class GraduationNewsItem
+  include UserSystem
+
   def initialize(graduation)
     @graduation = graduation
   end
@@ -27,9 +29,19 @@ class GraduationNewsItem
     false
   end
 
-  def summary; end
+  def summary
+    summary = +''
+    if (censor = @graduation.censors.find { |c| c.member == current_user.member })
+      summary << (censor.examiner? ? "Du er examinator.\n" : "Du er sensor.\n")
+    end
+    summary
+  end
 
   def body
-    @graduation.admin? ? '' : nil
+    @graduation.admin? ? 'Les mer...' : nil
+  end
+
+  def to_model
+    @graduation.to_model
   end
 end
