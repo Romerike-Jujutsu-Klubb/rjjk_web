@@ -3,9 +3,8 @@
 - Administrasjon=>Medlemmer=>Drilldown: Lage ferdig
 - Instruksjon=> Gruppeinstruktører=>Neste Semester som egen tab
 
-<a href="https://travis-ci.org/Romerike-Jujutsu-Klubb/rjjk_web">
-<img align="right" src="https://travis-ci.org/Romerike-Jujutsu-Klubb/rjjk_web.svg?branch=master" alt="Build Status">
-</a>
+![Tests](https://github.com/Romerike-Jujutsu-Klubb/rjjk_web/workflows/Ruby/badge.svg)
+![CodeQL](https://github.com/Romerike-Jujutsu-Klubb/rjjk_web/workflows/CodeQL/badge.svg)
 
 RJJK Web
 ========

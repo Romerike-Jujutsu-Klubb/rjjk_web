@@ -37,7 +37,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   Capybara.default_max_wait_time = 10 * Concurrent.physical_processor_count * 1.5
   Capybara::Screenshot.add_driver_path = true
   Capybara::Screenshot.window_size = WINDOW_SIZE
-  Capybara::Screenshot.enabled = ENV['TRAVIS'].blank?
+  Capybara::Screenshot.enabled = ENV['CI'].blank?
   Capybara::Screenshot.hide_caret = true
   Capybara::Screenshot::Diff.area_size_limit = 6
   Capybara::Screenshot::Diff.color_distance_limit = 12
