@@ -66,4 +66,4 @@ jobs:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: |
           bundle exec rails db:setup
-          bundle exec rails test
+          bundle exec rails test:full
