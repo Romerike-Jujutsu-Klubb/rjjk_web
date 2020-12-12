@@ -3,7 +3,7 @@
 - Administrasjon=>Medlemmer=>Drilldown: Lage ferdig
 - Instruksjon=> Gruppeinstruktører=>Neste Semester som egen tab
 
-![Test](https://github.com/Romerike-Jujutsu-Klubb/rjjk_web/workflows/Ruby/badge.svg)
+![Test](https://github.com/Romerike-Jujutsu-Klubb/rjjk_web/workflows/Test/badge.svg)
 ![CodeQL](https://github.com/Romerike-Jujutsu-Klubb/rjjk_web/workflows/CodeQL/badge.svg)
 
 RJJK Web
