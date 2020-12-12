@@ -32,7 +32,7 @@ jobs:
         uses: eregon/use-ruby-action@master # this will use by default the .ruby-version file in your repository
       - name: Install required apt packages
         run: |
-          sudo apt-get -y install libpq-dev
+          sudo apt-get -y install libpq-dev locales
       - name: Setup cache key and directory for gems cache
         uses: actions/cache@v1
         with:
