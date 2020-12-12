@@ -63,6 +63,9 @@ jobs:
         run: yarn --frozen-lockfile
       - name: Rails test
         env: # Or as an environment variable
+          PGHOST: localhost
+          PGUSER: postgres
+          RAILS_ENV: test
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: |
           bundle exec rails db:setup
