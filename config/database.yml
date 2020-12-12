@@ -11,7 +11,7 @@ default: &default
   <% if ENV['POSTGRES_PASSWORD'].present? %>
   password: <%=ENV['POSTGRES_PASSWORD']%>
   <% end %>
-  <% if ENV['TRAVIS'].present? %>
+  <% if ENV['CI'].present? %>
   collation: C
   ctype: C
   <% elsif OS.linux? %>
