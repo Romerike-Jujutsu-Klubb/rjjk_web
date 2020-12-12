@@ -27,6 +27,7 @@ class SignupGuideTest < ApplicationSystemTestCase
     screenshot :basics_filled
     click_on 'Neste'
 
+    assert_current_path signup_guide_contact_info_path
     screenshot :contact_info
     fill_in :user_email, with: 'bruce.lee@test.com'
     fill_in :user_phone, with: '+1 206 322 1582'
