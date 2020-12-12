@@ -25,8 +25,6 @@ jobs:
     # change this to (see https://github.com/ruby/setup-ruby#versioning):
     # uses: ruby/setup-ruby@v1
       uses: ruby/setup-ruby@21351ecc0a7c196081abca5dc55b08f085efe09a
-      with:
-        ruby-version: 2.7
     - name: Install dependencies
       run: bundle install
     - name: Run tests
