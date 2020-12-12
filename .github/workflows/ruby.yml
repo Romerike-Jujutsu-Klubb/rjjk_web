@@ -14,10 +14,8 @@ on:
     branches: [ master ]
 
 jobs:
-  test:
-
+  Test:
     runs-on: ubuntu-latest
-
     services:
       postgres:
         image: postgres:11.6-alpine
