@@ -13,6 +13,7 @@ require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'
 
 TEST_TIME = Time.zone.local(2013, 10, 17, 18, 46, 0) # Week 42, thursday
+TEST_RUNNERS = (Concurrent.physical_processor_count * 1.5).to_i
 
 Geocoder.configure(lookup: :test)
 Geocoder::Lookup::Test.set_default_stub([{
@@ -36,7 +37,7 @@ class ActiveSupport::TestCase
   include FixtureFileHelpers
   include UserSystem
 
-  parallelize workers: (Concurrent.physical_processor_count * 1.5).to_i
+  parallelize workers: TEST_RUNNERS
   fixtures :all
 
   setup { Timecop.freeze(TEST_TIME) }

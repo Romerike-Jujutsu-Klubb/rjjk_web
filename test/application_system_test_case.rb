@@ -34,7 +34,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
   end
 
-  Capybara.default_max_wait_time = 10 * Concurrent.physical_processor_count * 1.5
+  Capybara.default_max_wait_time = 10 * TEST_RUNNERS
   Capybara::Screenshot.add_driver_path = true
   Capybara::Screenshot.window_size = WINDOW_SIZE
   Capybara::Screenshot.enabled = ENV['CI'].blank?
