@@ -67,7 +67,7 @@ tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"
       - if graduated
         div.text-danger Har allerede bestått denne graden (#{link_to graduated.graduation.held_on, edit_graduation_path(graduated.graduation_id)}).
       - else
-        - current_graduate = mbr.current_graduate(graduate.graduation.group.martial_art, graduate.graduation.held_on)
+        - current_graduate = mbr.current_graduate(graduate.graduation.group.martial_art_id, graduate.graduation.held_on)
         - if next_rank && graduate.rank != next_rank
           - if current_graduate
             div

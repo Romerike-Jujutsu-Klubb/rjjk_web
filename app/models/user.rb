@@ -455,7 +455,7 @@ class User < ApplicationRecord
       ats = attendances
       ats = ats.where(status: Attendance::PRESENT_STATES) unless include_absences
       ats = ats.by_group_id(g.id)
-      if (c = last_membership&.current_graduate(g.martial_art, before_date))
+      if (c = last_membership&.current_graduate(g.martial_art_id, before_date))
         ats = ats.after(c.graduation.held_on)
       end
       ats = ats.to_date(before_date)

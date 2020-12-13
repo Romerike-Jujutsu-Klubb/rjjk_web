@@ -121,7 +121,7 @@ class Graduation < ApplicationRecord
   end
 
   def martial_art
-    group.try(:martial_art) || MartialArt.find_by(name: 'Kei Wa Ryu')
+    group&.martial_art || MartialArt.kwr
   end
 
   def passed?

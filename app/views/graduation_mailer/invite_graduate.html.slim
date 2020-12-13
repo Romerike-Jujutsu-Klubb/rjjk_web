@@ -14,7 +14,7 @@ ul
 - attended = @graduate.member.user.attendances_since_graduation.count
 - limit = @graduate.minimum_attendances
 - needed = limit - attended
-- current_graduate = @graduate.member.current_graduate(@graduate.graduation.martial_art, @graduate.graduation.held_on)
+- current_graduate = @graduate.member.current_graduate(@graduate.graduation.martial_art.id, @graduate.graduation.held_on)
 - remaining = @graduate.graduation.group.trainings_in_period(Date.current..@graduate.graduation.held_on)
 
 p
