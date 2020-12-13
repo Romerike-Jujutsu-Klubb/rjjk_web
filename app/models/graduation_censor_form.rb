@@ -13,7 +13,7 @@ class GraduationCensorForm
     graduation = @graduation
     Prawn::Document.new do
       date = graduation.held_on
-      text "Gradering #{date.day}. #{I18n.t(Date::MONTHNAMES[date.month]).downcase} #{date.year}",
+      text "Gradering #{date.day}. #{I18n.t('date.month_names')[date.month].downcase} #{date.year}",
           size: 18, align: :center
       move_down 16
       data = graduation.graduates.sort_by { |g| [-g.rank.position, g.member.name] }
@@ -21,20 +21,19 @@ class GraduationCensorForm
         member = graduate.member
         member_current_rank = member
             .current_rank(graduate.graduation.martial_art.id, graduate.graduation.held_on)
-        rank_color =
+        from_rank =
             if member_current_rank
-              "Fra: #{member_current_rank.name} #{member_current_rank.colour}"
+              member_current_rank.name
             else
               'Ugradert'
             end
         [
-          <<~TXT,
-            <font size='18'>#{member.first_name}</font> #{member.last_name}#{member.birthdate && " (#{member.age} år)" || ''}
-            #{rank_color}
-            Treninger: #{member.attendances_since_graduation(graduation.held_on).count} (#{graduate.current_rank_age})
-            Til: #{graduate.rank.name} #{graduate.rank.colour}
+          <<~TXT.chomp,
+            <font size='16'>#{member.first_name}</font> #{member.last_name}#{member.birthdate && " (#{member.age} år)" || ''}
+            #{from_rank} > <b>#{graduate.rank.name} #{graduate.rank.colour}</b>
+            Treninger: <b>#{member.attendances_since_graduation(graduation.held_on).count}</b> (#{graduate.current_rank_age})
           TXT
-          '',
+          graduate.member.image&.content_type&.match(%r{image/(jpe?g|png)}) ? { image: graduate.member.image&.content_data_io, fit: [80, 160] } : '',
           '',
         ]
       end
