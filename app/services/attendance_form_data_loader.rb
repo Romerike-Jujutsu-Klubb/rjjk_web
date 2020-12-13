@@ -32,11 +32,11 @@ module AttendanceFormDataLoader
     @trials = @group.trials
 
     @instructors.sort_by! do |m|
-      r = m.current_rank(@group.martial_art, last_date)
+      r = m.current_rank(@group.martial_art_id, last_date)
       [r ? -r.position : 99, m.first_name, m.last_name]
     end
     @members.sort_by! do |m|
-      r = m.current_rank(@group.martial_art, first_date)
+      r = m.current_rank(@group.martial_art_id, first_date)
       [r ? -r.position : 99, m.first_name, m.last_name]
     end
 

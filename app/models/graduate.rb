@@ -32,8 +32,8 @@ class Graduate < ApplicationRecord
   end
 
   def training_start_date
-    member.current_graduate(graduation.group.martial_art, graduation.held_on - 1).try(:graduation)
-        .try(:held_on).try(:+, 1) ||
+    member.current_graduate(graduation.group.martial_art_id, graduation.held_on - 1)
+      &.graduation&.held_on&.+(1) ||
         [member.joined_on, member.attendances.includes(:practice)
             .where('practices.year < :year OR (practices.year = :year AND practices.week <= :week)',
                 year: member.joined_on.cwyear, week: member.joined_on.cweek)
@@ -96,7 +96,7 @@ class Graduate < ApplicationRecord
   end
 
   def current_rank_age
-    member.current_rank_age(graduation.group.martial_art, graduation.held_on)
+    member.current_rank_age(graduation.group.martial_art_id, graduation.held_on)
   end
 
   def cache_key

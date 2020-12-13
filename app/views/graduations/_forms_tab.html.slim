@@ -2,5 +2,7 @@
   .col-md-6.offset-md-3
     .row
       .col: a.btn.btn-success.text-center.h-100.w-100 href=certificates_graduation_path(@graduation) Diplomer
+      .col: a.btn.btn-success.text-center.h-100.w-100 href=certificates_graduation_path(@graduation, signatures: 1) Diplomer med signatur
+    .row.mt-3
       .col: a.btn.btn-primary.h-100.w-100 href=censor_form_pdf_graduation_path(@graduation) Sensor PDF
       .col: a.btn.btn-primary.h-100.w-100 href=censor_form_graduation_path(@graduation) Sensor HTML

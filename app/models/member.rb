@@ -92,7 +92,7 @@ class Member < ApplicationRecord
     html
   end
 
-  def current_graduate(martial_art, date = Date.current)
+  def current_graduate(martial_art_id, date = Date.current)
     grs = if graduates.loaded?
             graduates.sort_by { |g| -g.rank.position }
           else
@@ -100,21 +100,21 @@ class Member < ApplicationRecord
           end
     grs.find do |g|
       g.passed? && g.graduation.held_on < date &&
-          (martial_art.nil? || g.rank.martial_art_id == martial_art.id)
+          (!martial_art_id || g.rank.martial_art_id == martial_art_id)
     end
   end
 
-  def current_rank(martial_art = nil, date = Date.current)
-    current_graduate(martial_art, date)&.rank || Rank::UNRANKED
+  def current_rank(martial_art_id = nil, date = Date.current)
+    current_graduate(martial_art_id, date)&.rank || Rank::UNRANKED
   end
 
-  def current_rank_date(martial_art = nil, date = Date.current)
-    graduate = current_graduate(martial_art, date)
+  def current_rank_date(martial_art_id = nil, date = Date.current)
+    graduate = current_graduate(martial_art_id, date)
     graduate&.graduation&.held_on || joined_on
   end
 
-  def current_rank_age(martial_art, to_date)
-    date = current_rank_date(martial_art, to_date)
+  def current_rank_age(martial_art_id, to_date)
+    date = current_rank_date(martial_art_id, to_date)
     days = (to_date - date).to_i
     years = (to_date - date).to_i / 365
     months = (days - (years * 365)) / 30
@@ -126,7 +126,7 @@ class Member < ApplicationRecord
     age = self.age(graduation.held_on)
     ma = graduation.group&.martial_art ||
         MartialArt.includes(curriculum_groups: :ranks).find_by(name: 'Kei Wa Ryu')
-    current_rank = current_rank(ma, graduation.held_on)
+    current_rank = current_rank(ma.id, graduation.held_on)
     future_ranks = future_ranks(graduation.held_on, ma)
     all_ranks = ma.curriculum_groups.flat_map(&:ranks).sort_by do |r|
       [r.curriculum_group_id == graduation.group&.curriculum_group_id ? 0 : 1, r.position]
@@ -291,7 +291,7 @@ class Member < ApplicationRecord
   end
 
   def title(date = Date.current)
-    current_rank = current_rank(MartialArt.find_by(name: 'Kei Wa Ryu'), date)
+    current_rank = current_rank(MartialArt::KWR_ID, date)
     /dan/.match?(current_rank&.name) ? 'Sensei' : 'Sempai'
   end
 

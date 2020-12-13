@@ -20,7 +20,7 @@ class GraduationCensorForm
           .map do |graduate|
         member = graduate.member
         member_current_rank = member
-            .current_rank(graduate.graduation.martial_art, graduate.graduation.held_on)
+            .current_rank(graduate.graduation.martial_art_id, graduate.graduation.held_on)
         rank_color =
             if member_current_rank
               "Fra: #{member_current_rank.name} #{member_current_rank.colour}"

@@ -134,24 +134,21 @@ class GraduationsController < ApplicationController
     graduation = Graduation.find(params[:id])
     date = graduation.held_on
 
-    censors = graduation.censors.confirmed.sort_by { |c| -(c.member.current_rank&.position || 99) }
-    censor_1 =
-        if censors[0]
-          { title: censors[0].member.title, name: censors[0].member.name,
-            signature: censors[0].member.user.signatures.sample&.image }
-        end
-    censor_2 =
+    if params[:signatures]
+      censors = graduation.censors.confirmed.sort_by { |c| -(c.member.current_rank&.position || 99) }
+      if censors[0]
+        censor_1 = { title: censors[0].member.title, name: censors[0].member.name,
+                     signature: censors[0].member.user.signatures.sample&.image }
         if censors[1]
-          { title: censors[1].member.title,
-            name: censors[1].member.name,
-            signature: censors[1].member.user.signatures.sample&.image }
+          censor_2 = { title: censors[1].member.title, name: censors[1].member.name,
+                       signature: censors[1].member.user.signatures.sample&.image }
+          if censors[2]
+            censor_3 = { title: censors[2].member.title, name: censors[2].member.name,
+                         signature: censors[2].member.user.signatures.sample&.image }
+          end
         end
-    censor_3 =
-        if censors[2]
-          { title: censors[2].member.title,
-            name: censors[2].member.name,
-            signature: censors[2].member.user.signatures.sample&.image }
-        end
+      end
+    end
     content = graduation.graduates.without_failed.sort_by { |g| -g.rank.position }.map do |g|
       { name: g.member.name, rank: g.rank.label, group: g.rank.curriculum_group.name,
         censor1: censor_1, censor2: censor_2, censor3: censor_3 }
@@ -245,9 +242,9 @@ class GraduationsController < ApplicationController
         next if graduation.group_notification && next_rank.position >= Rank::SHODAN_POSITION
 
         g = Graduate.new graduation_id: graduation.id, member_id: member.id,
-            rank_id: next_rank.id,
-            passed: graduation.group.school_breaks? || nil,
-            paid_graduation: true, paid_belt: true
+                         rank_id: next_rank.id,
+                         passed: graduation.group.school_breaks? || nil,
+                         paid_graduation: true, paid_belt: true
         if g.save
           success_count += 1
         else

@@ -19,6 +19,10 @@ class MartialArt < ApplicationRecord
   KWR_NAME = 'Kei Wa Ryu'
   KWR_ID = originals.find_by(name: KWR_NAME)&.id || ActiveRecord::FixtureSet.identify(:keiwaryu)
 
+  def kwr
+    find(KWR_ID)
+  end
+
   def kwr?
     name == KWR_NAME
   end

@@ -9,7 +9,7 @@ class RankTest < ActiveSupport::TestCase
     member = members(:sebastian)
     assert_equal 9, member.age
     assert_equal 10, member.age(graduation.held_on)
-    assert_equal ranks(:mon_12), member.current_rank(graduation.martial_art, graduation.held_on)
+    assert_equal ranks(:mon_12), member.current_rank(graduation.martial_art_id, graduation.held_on)
     assert_equal 10, ranks(:mon_10).minimum_age
     assert_equal 14, ranks(:kyu_4).minimum_age
     assert_equal ranks(:mon_10), member.next_rank(graduation)
