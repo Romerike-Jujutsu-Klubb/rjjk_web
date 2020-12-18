@@ -21,7 +21,7 @@ module AttendanceFormDataLoader
             :nkf_member)
     attended_query = Member.references(:practices)
         .includes(user: { attendances: { practice: :group_schedule } }, graduates: %i[graduation rank])
-        .where('practices.group_schedule_id IN (?)', @group.group_schedules.map(&:id))
+        .where(practices: { group_schedule_id: @group.group_schedules.map(&:id) })
         .where('year > ? OR ( year = ? AND week >= ?)',
             first_date.cwyear, first_date.cwyear, first_date.cweek)
         .where('year < ? OR ( year = ? AND week <= ?)',

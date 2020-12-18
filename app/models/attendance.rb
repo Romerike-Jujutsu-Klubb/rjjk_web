@@ -60,7 +60,7 @@ class Attendance < ApplicationRecord
   }
   scope :by_group_id, ->(group_id) {
     includes(practice: :group_schedule).references(:group_schedules)
-        .where('group_schedules.group_id = ?', group_id)
+        .where(group_schedules: { group_id: group_id })
   }
   scope :from_date, ->(limit) {
     from_date = limit.to_date

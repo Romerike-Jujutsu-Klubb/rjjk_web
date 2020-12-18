@@ -14,7 +14,7 @@ class SemesterReminder
   # Ensure first and last sessions are set
   def self.notify_missing_session_dates
     active_groups = Group.active(Date.current).includes(:current_semester, :next_semester)
-        .where('groups.school_breaks = ?', true).to_a
+        .where(groups: { school_breaks: true }).to_a
     groups_with_missing_dates = active_groups.select do |g|
       g.current_semester&.last_session.nil? || (g.next_semester && !g.next_semester.first_session)
     end

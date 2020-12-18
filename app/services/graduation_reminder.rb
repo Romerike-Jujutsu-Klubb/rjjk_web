@@ -33,8 +33,8 @@ class GraduationReminder
   def self.notify_groups
     Graduation.upcoming.includes(:group).references(:groups)
         .where('held_on < ?', 3.months.from_now)
-        .where('group_notification = ?', true)
-        .where('date_info_sent_at IS NULL')
+        .where(group_notification: true)
+        .where(date_info_sent_at: nil)
         .order(:id)
         .each do |graduation|
       graduation.group.members.active(graduation.held_on).order(:id).each do |member|
@@ -145,7 +145,7 @@ class GraduationReminder
     Graduate.includes(graduation: %i[censors group]).references(:groups)
         .where('graduations.held_on BETWEEN ? AND ?', Date.current, GRADUATES_INVITATION_LIMIT.from_now)
         .where('passed IS NULL OR passed = ?', true)
-        .where('graduates.confirmed_at IS NULL')
+        .where(graduates: { confirmed_at: nil })
         .where('graduates.invitation_sent_at IS NULL OR graduates.invitation_sent_at < ?', 1.week.ago)
         .order('graduations.held_on, graduates.id')
         .each do |graduate|

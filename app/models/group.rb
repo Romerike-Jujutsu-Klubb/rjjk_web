@@ -33,7 +33,7 @@ class Group < ApplicationRecord
   accepts_nested_attributes_for :next_semester
 
   scope :active, ->(date = nil) do
-    date ? where('closed_on IS NULL OR closed_on >= ?', date) : where('closed_on IS NULL')
+    date ? where('closed_on IS NULL OR closed_on >= ?', date) : where(closed_on: nil)
   end
   scope :inactive, ->(date) { where('closed_on IS NOT NULL AND closed_on < ?', date) }
 

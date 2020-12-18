@@ -129,7 +129,6 @@ h1,h2,h3 {color: #994;}
 
 /* footer */
 .footer {
-  @extend .py-2;
   background: asset_url('dark_ritual/bgfooter.gif') repeat-x;
   color: #CCC;
   font-size: 0.9em;

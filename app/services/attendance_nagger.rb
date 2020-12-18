@@ -32,7 +32,7 @@ WHERE user_id = members.user_id AND year = ? AND week = ?)',
     group_schedules = GroupSchedule.includes(group: :current_semester).references(:groups)
         .merge(Group.active(now))
         .where('weekday = ? AND start_at >= ?', today.cwday, now.time_of_day)
-        .where('groups.planning = ?', true)
+        .where(groups: { planning: true })
         .where('((NOT groups.school_breaks) OR ? BETWEEN first_session AND last_session)', today)
         .order('groups.from_age', 'groups.to_age')
         .to_a
@@ -66,7 +66,7 @@ WHERE user_id = members.user_id AND year = ? AND week = ?)',
             tomorrow.cwyear, tomorrow.cweek, tomorrow.cwday)
         .where('(group_schedules.start_at <= ? OR group_schedules.start_at <= ?)',
             Time.current.time_of_day, Time.current.time_of_day + 3600)
-        .where('groups.planning = ?', true) # TODO(uwe): Make a scope :with_planning
+        .where(groups: { planning: true }) # TODO(uwe): Make a scope :with_planning
         .where('((NOT groups.school_breaks) OR ? BETWEEN first_session AND last_session)', tomorrow)
         .to_a
     practices.each do |pr|
@@ -87,7 +87,7 @@ WHERE user_id = members.user_id AND year = ? AND week = ?)',
     upcoming_group_schedules = GroupSchedule.includes(group: :current_semester).references(:groups)
         .where('weekday = ? AND end_at >= ? AND groups.closed_on IS NULL',
             today.cwday, now.time_of_day)
-        .where('groups.planning = ?', true)
+        .where(groups: { planning: true })
         .where('((NOT groups.school_breaks) OR ? BETWEEN first_session AND last_session)', today)
         .to_a
     upcoming_group_schedules.each do |gs|
@@ -127,12 +127,12 @@ WHERE user_id = members.user_id AND year = ? AND week = ?)',
     completed_group_schedules = GroupSchedule.includes(:group).references(:groups)
         .where('weekday = ? AND end_at BETWEEN ? AND ?',
             today.cwday, (now - 1.hour).time_of_day, now.time_of_day)
-        .where('groups.closed_on IS NULL')
-        .where('groups.planning = ?', true)
+        .where(groups: { closed_on: nil })
+        .where(groups: { planning: true })
         .to_a
     planned_attendances = Attendance
         .includes(user: :member, practice: :group_schedule).references(:groups)
-        .where('practices.group_schedule_id IN (?)', completed_group_schedules.map(&:id))
+        .where(practices: { group_schedule_id: completed_group_schedules.map(&:id) })
         .where('practices.year = ? AND practices.week = ?', today.cwyear, today.cweek)
         .where('attendances.status = ? AND sent_review_email_at IS NULL',
             Attendance::Status::WILL_ATTEND).to_a

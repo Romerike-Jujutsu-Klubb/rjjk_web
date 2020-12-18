@@ -14,7 +14,7 @@ class Image < ApplicationRecord
 
   has_one :member_image, dependent: :destroy
   has_one :user_like, -> do
-    where("user_images.rel_type = 'LIKE'").where('user_images.user_id = ?', Thread.current[:user].id)
+    where("user_images.rel_type = 'LIKE'").where(user_images: { user_id: Thread.current[:user].id })
   end, class_name: 'UserImage', inverse_of: :image
 
   has_many :application_steps, dependent: :restrict_with_error

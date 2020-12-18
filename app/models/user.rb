@@ -137,7 +137,7 @@ class User < ApplicationRecord
   end
 
   def self.find_administrators
-    where('role = ?', UserSystem::ADMIN_ROLE).all
+    where(role: UserSystem::ADMIN_ROLE).all
   end
 
   def self.authenticate(email, pass)
@@ -442,7 +442,7 @@ class User < ApplicationRecord
       set = set.select { |a| a.date > start_date && a.date <= end_date }
       set.empty?
     else
-      query = attendances.where('attendances.status IN (?)', Attendance::PRESENCE_STATES)
+      query = attendances.where(attendances: { status: Attendance::PRESENCE_STATES })
       query = query.by_group_id(group.id) if group
       query = query.from_date(start_date).to_date(end_date)
       query.empty?

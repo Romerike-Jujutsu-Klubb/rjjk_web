@@ -9,7 +9,7 @@ class InformationPageNotifier
   #     or the change is significat (or should that be in a news item?)
   def self.notify_outdated_pages
     recipients = Member.active(Date.current).includes(:user).references(:users)
-        .where('users.role = ?', 'ADMIN').to_a
+        .where(users: { role: 'ADMIN' }).to_a
     pages = InformationPage.where('hidden IS NULL OR hidden = ?', false)
         .where('revised_at IS NULL OR revised_at < ?', 6.months.ago)
         .order(:revised_at).limit(3).to_a

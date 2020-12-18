@@ -3,7 +3,7 @@
 class NewsPublisher
   def self.send_news
     now = Time.current
-    news_item = NewsItem.where('mailed_at IS NULL')
+    news_item = NewsItem.where(mailed_at: nil)
         .where("publication_state IS NULL OR publication_state = 'PUBLISHED'")
         .where('publish_at IS NULL OR publish_at < ?', now)
         .where('expire_at IS NULL OR expire_at > ?', now)

@@ -522,3 +522,7 @@ ul.nav.nav-tabs {
 .main_left {
   transition: 0.5s;
 }
+
+.footer {
+  @extend .py-2;
+}

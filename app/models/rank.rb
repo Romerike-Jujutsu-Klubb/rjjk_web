@@ -15,7 +15,7 @@ class Rank < ApplicationRecord
   has_many :basic_techniques, dependent: :nullify
   has_many :embus, dependent: :destroy
   has_many :graduates, dependent: :destroy
-  has_many :katas, -> { where 'system = ?', TechniqueApplication::System::KATA },
+  has_many :katas, -> { where(system: TechniqueApplication::System::KATA) },
       class_name: TechniqueApplication.name
   has_many :rank_articles, dependent: :destroy
   has_many :technique_applications, dependent: :nullify
