@@ -179,14 +179,14 @@ class ImagesController < ApplicationController
 
   def gallery
     image_select = gallery_query
-    image_select = image_select.where('approved = ?', true) unless admin?
-    image_select = image_select.where('public = ?', true) unless user?
+    image_select = image_select.where(approved: true) unless admin?
+    image_select = image_select.where(public: true) unless user?
     @image = image_select.where(id: params[:id]).first || image_select.first
     @images = image_select.to_a
   end
 
   def mine
-    image_select = gallery_query.includes(:user_like).where('user_id = ?', current_user.id)
+    image_select = gallery_query.includes(:user_like).where(user_id: current_user.id)
     @images = image_select.to_a
     @image = Image.find_by(id: params[:id]) || @images.first
     render action: :gallery

@@ -29,7 +29,7 @@ class SemestersController < ApplicationController
   def create
     @semester = Semester.new(params[:semester])
     if @semester.save
-      Group.where('school_breaks = ?', true).to_a.each do |g|
+      Group.where(school_breaks: true).to_a.each do |g|
         unless @semester.group_semesters.exists?(group_id: g.id)
           @semester.group_semesters.create!(group_id: g.id)
         end
