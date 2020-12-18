@@ -14,6 +14,18 @@ env:
   RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
 jobs:
+  Lint:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: eregon/use-ruby-action@master # this will use by default the .ruby-version file in your repository
+      - name: Setup cache key and directory for gems cache
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gem-use-ruby-${{ hashFiles('**/Gemfile.lock') }}
+      - name: Rubocop
+        run: bundle exec rubocop --auto-correct
   Test:
     runs-on: ubuntu-20.04
     services:
@@ -49,8 +61,6 @@ jobs:
           bundle install --jobs 4 --retry 3
       - name: Yarn install
         run: yarn --frozen-lockfile
-      - name: Rubocop
-        run: bundle exec rubocop --auto-correct
       - name: Database setup
         run: bundle exec rails db:setup
       - name: Rails test
