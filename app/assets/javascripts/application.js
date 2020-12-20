@@ -15,7 +15,7 @@
 //= require chosen-jquery
 //= require includes/bootstrap_tabs_ios
 //= require includes/remember_tab
-//= require includes/jquery.lazyload
+//= require lazyload/lazyload
 //= require bootstrap-fileinput/js/fileinput
 //= require bootstrap-fileinput/themes/fa/theme
 //= require Chart.bundle
