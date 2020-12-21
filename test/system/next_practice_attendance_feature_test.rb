@@ -9,7 +9,6 @@ class NextPracticeAttendanceFeatureTest < ApplicationSystemTestCase
   end
 
   def test_announce_attendance
-    screenshot_group :announce_attendance
     screenshot :initial
     first('.next-practice .fa-thumbs-down').click
     screenshot :absence

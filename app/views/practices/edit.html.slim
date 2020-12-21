@@ -8,10 +8,10 @@ h3 => @practice.date
 .card-deck.mt-3
   .card
     h3.card-header Plan
-    .card-body
+    .card-body.p-2
       = bootstrap_form_for(@practice) do |f|
-        = f.select :status, ['X']
-        = f.text_area :message, rows: 5,
+        = f.hidden_field :status, value: 'X'
+        = f.text_area :message, rows: 5, hide_label: true,
               placeholder: 'Skriv en liten melding til utøverne om denne treningen.'
         .float-right = f.primary
 
