@@ -27,8 +27,8 @@ class NextPracticeSystemTest < ApplicationSystemTestCase
 
   test 'overview' do
     login_and_visit root_path
-    first('a', text: "Neste trening").click
-    assert_current_path edit_practice_path(id :voksne_2013_42_thursday)
+    first('a', text: 'Neste trening').click
+    assert_current_path edit_practice_path(id(:voksne_2013_42_thursday))
     screenshot :overview
   end
 end
