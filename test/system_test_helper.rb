@@ -16,28 +16,14 @@ module SystemTestHelper
 
   def visit_with_login(path, redirected_path: nil, user: :uwe)
     uri = URI.parse(path)
-    uri.query = [uri.query, "key=#{users(user).security_token}"].compact.join('&')
+    uri.query = [uri.query, "key=#{users(user).generate_security_token(:login)}"].compact.join('&')
     visit uri.to_s
     uri.fragment = nil
     assert_current_path redirected_path || uri.to_s
   end
 
-  def login_and_visit(path, user = :uwe, redirected_path: path)
-    login(user)
-    assert_current_path '/'
-    visit path
-    assert_current_path redirected_path
-  end
-
   def login(user = :uwe)
-    visit '/login/password'
-    fill_login_form user
-  end
-
-  def fill_login_form(user)
-    fill_in 'user_login', with: user
-    fill_in 'user_password', with: 'atest'
-    click_button 'Logg inn'
+    visit_with_login '/', user: user
   end
 
   def wait_for_ajax

@@ -7,7 +7,7 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
 
   def test_index
     screenshot_group :form
-    login_and_visit '/'
+    visit_with_login '/'
     click_menu('Oppmøte', section: 'Instruksjon')
     assert_current_path attendance_forms_path
     click_on('Panda')

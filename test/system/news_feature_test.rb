@@ -21,8 +21,7 @@ class NewsFeatureTest < ApplicationSystemTestCase
   end
 
   def test_index_member
-    screenshot_group :index_member
-    login_and_visit '/news', :newbie
+    visit_with_login '/news', user: :newbie
     assert_current_path '/news'
     screenshot('index')
   end

@@ -5,7 +5,7 @@ module NewFrontPageSystemTests
 
   def test_member_front_page
     screenshot_group :front_page
-    login_and_visit root_path
+    visit_with_login root_path
     assert_selector 'h4', text: 'Neste trening'
     assert_offset '.subnav', :left, SUBNAV_OFFSET
     assert_offset '.main_right', :right, SUBNAV_OFFSET

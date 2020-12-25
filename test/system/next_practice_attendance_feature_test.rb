@@ -5,7 +5,7 @@ require 'application_system_test_case'
 class NextPracticeAttendanceFeatureTest < ApplicationSystemTestCase
   setup do
     screenshot_section :next_practice
-    login_and_visit '/'
+    login
   end
 
   def test_announce_attendance
