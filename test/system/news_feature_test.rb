@@ -3,8 +3,6 @@
 require 'application_system_test_case'
 
 class NewsFeatureTest < ApplicationSystemTestCase
-  setup { screenshot_section :news }
-
   def test_index_public
     screenshot_group :index_public
     visit '/news'
@@ -22,7 +20,6 @@ class NewsFeatureTest < ApplicationSystemTestCase
 
   def test_index_member
     visit_with_login '/news', user: :newbie
-    assert_current_path '/news'
     screenshot('index')
   end
 
