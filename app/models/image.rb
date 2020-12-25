@@ -12,7 +12,6 @@ class Image < ApplicationRecord
 
   belongs_to :user, -> { with_deleted }, inverse_of: :images
 
-  has_one :member_image, dependent: :destroy
   has_one :user_like, -> do
     where("user_images.rel_type = 'LIKE'").where(user_images: { user_id: Thread.current[:user].id })
   end, class_name: 'UserImage', inverse_of: :image

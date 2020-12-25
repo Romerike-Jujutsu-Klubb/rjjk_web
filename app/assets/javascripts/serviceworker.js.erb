@@ -52,7 +52,7 @@ function onFetch(event) {
       // try to return untouched request from network first
       fetch(event.request).then(function(response) {
         let response_copy = response.clone();
-        if (response.status < 300) {
+        if (response.status < 206) {
           caches.open(CACHE_NAME).then(function(cache) {
             cache.put(event.request, response_copy);
           });

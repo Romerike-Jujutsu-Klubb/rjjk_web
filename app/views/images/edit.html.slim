@@ -23,11 +23,12 @@ h1 Redigèr bilde
       .badge.badge-info.mr-3 = @image.user.name
       .badge.badge-info.mr-3 = @image.created_at.strftime('%F %R')
 
-  - if @image.member_image
+  - if @image.user_images.any?
     .card
-      .card-header Medlem
+      .card-header Bruker
       .card-body
-        .badge.badge-info.mr-3 = @image.member_image.member.name
+        - @image.user_images.each do |ui|
+          .badge.badge-info.mr-3 = ui.user.name
 
   - if @image.user_like
     .card
@@ -40,8 +41,7 @@ h1 Redigèr bilde
       .card-header Application Videos
       .card-body
         - @image.application_videos.each do |av|
-          .badge.badge-info.mr-3
-            a href=edit_application_video_path(av.id) = av.technique_application.name
+          a.btn.btn-info.btn-sm.mr-3 href=edit_application_video_path(av.id) = av.technique_application.name
 
   - if @image.application_steps.any?
     .card

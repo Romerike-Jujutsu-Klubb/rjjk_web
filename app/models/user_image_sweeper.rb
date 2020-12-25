@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class MemberSweeper < ActionController::Caching::Sweeper
-  observe :member
+class UserImageSweeper < ActionController::Caching::Sweeper
+  observe :user
 
   def after_create(member)
     expire_image(member)
@@ -17,16 +17,16 @@ class MemberSweeper < ActionController::Caching::Sweeper
 
   private
 
-  def expire_image(member)
-    if member.image
+  def expire_image(user)
+    if user.profile_image
       ActionController::Base.expire_page(Rails.application.routes.url_for(
-          only_path: true, controller: 'members',
-          action: 'image', id: member.id,
-          format: member.image.format
+          only_path: true, controller: :users,
+          action: :profile_image, id: user.id,
+          format: user.profile_image.format
         ))
       ActionController::Base.expire_page(Rails.application.routes.url_for(
-          only_path: true, controller: 'members', action: 'thumbnail', id: member.id,
-          format: member.image.format
+          only_path: true, controller: :users, action: :thumbnail, id: user.id,
+          format: user.profile_image.format
         ))
     end
     cache_dir = ActionController::Base.page_cache_directory

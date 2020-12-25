@@ -8,3 +8,12 @@ two:
   image: one
   rel_type: LIKE
 
+profile_lars:
+  user: lars
+  image: one
+  rel_type: profile
+
+profile_uwe:
+  user: uwe
+  image: two
+  rel_type: profile

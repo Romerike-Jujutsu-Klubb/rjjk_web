@@ -1,5 +1,5 @@
-- has_image = @member.persisted? && @member.image
-img#member_image.w-100.mb-3 src=(image_member_path(@member) if has_image)
+- has_image = @user.persisted? && @user.profile_image
+img#profile_image.mb-3 style="max-height:80vh" src=(profile_image_user_path(@user) if has_image)
 video#video.text-center.w-100 width="320" height="240" autoplay='autoplay' style=('display: none' if has_image)
 canvas#canvas width="320" height="240" style='display: none'
 .text-center.mb-3: button#snap.btn.btn-primary type="button" Ta bilde
@@ -28,15 +28,15 @@ javascript:
         var dataUrl = canvas.toDataURL('image/png');
         $.ajax({
             type: "POST",
-            url: "#{save_image_member_path}",
+            url: "#{save_image_user_path}",
             data: {
                 imgBase64: dataUrl
             }
         }).success(function (o) {
             console.log('saved: ' + o);
             $('#video').hide();
-            $('#member_image').attr('src', "#{image_member_path(@member)}?hash=" + o)
+            $('#profile_image').attr('src', "#{profile_image_user_path(@user)}?hash=" + o)
         });
     });
 
-= file_field :member, :image_file, style: 'width: 206px'
+= file_field :user, :image_file, style: 'width: 206px'

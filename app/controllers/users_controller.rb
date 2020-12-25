@@ -3,6 +3,9 @@
 class UsersController < ApplicationController
   before_action :admin_required
 
+  caches_page :profile_image, :thumbnail
+  cache_sweeper :user_image_sweeper, only: %i[create update destroy]
+
   def index
     @users = User.includes(:last_membership, :member)
         .order(Arel.sql('UPPER(last_name), UPPER(first_name), email, phone, id')).to_a
@@ -24,9 +27,37 @@ class UsersController < ApplicationController
   end
 
   def photo
+    @user = User.find(params[:id])
+  end
+
+  def thumbnail
     user = User.with_deleted.find(params[:id])
-    if user&.member&.image?
-      redirect_to user.member.image
+    if (thumbnail = user.thumbnail)
+      image = user.profile_image
+      send_data(thumbnail, disposition: 'inline', type: image.content_type, filename: image.name)
+    else
+      render text: 'Bilde mangler'
+    end
+  end
+
+  def save_image
+    @user = User.find(params[:id])
+    params.require(:imgBase64) =~ /^data:([^;]+);base64,(.*)$/
+    content = Base64.decode64(Regexp.last_match(2))
+    content_type = Regexp.last_match(1)
+    UserImage.transaction do
+      image = Image.create! user_id: @user.id, name: "Foto #{Date.current}",
+          content_type: content_type, content_data: content, content_length: content.length
+      @user.user_images.create! image: image, rel_type: :profile
+    end
+    render plain: content.hash
+  end
+
+  def profile_image
+    user = User.find(params[:id])
+    if (image = user.profile_image)
+      send_data(image.content_data_io.read, disposition: 'inline', type: image.content_type,
+filename: image.name)
     else
       render text: 'Bilde mangler'
     end

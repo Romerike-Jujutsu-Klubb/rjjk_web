@@ -3,9 +3,6 @@
 class MembersController < ApplicationController
   before_action :admin_required
 
-  caches_page :image, :thumbnail
-  cache_sweeper :member_sweeper, only: %i[create update destroy]
-
   def index
     @members = Member.all.sort_by(&:name)
   end
@@ -79,47 +76,6 @@ class MembersController < ApplicationController
     @administrators = User.find_administrators
     @administrator_emails = @administrators.map(&:email).compact.uniq
     @missing_administrator_emails = @administrators.size - @administrator_emails.size
-  end
-
-  def photo
-    @member = Member.find(params[:id])
-  end
-
-  def save_image
-    @member = Member.find(params[:id])
-    params.require(:imgBase64) =~ /^data:([^;]+);base64,(.*)$/
-    content = Base64.decode64(Regexp.last_match(2))
-    content_type = Regexp.last_match(1)
-    MemberImage.transaction do
-      image = Image.create! user_id: @member.user_id, name: "Foto #{Date.current}",
-          content_type: content_type, content_data: content, content_length: content.length
-      @member.member_images.create! image: image
-    end
-    render plain: content.hash
-  end
-
-  def image
-    @member = Member.find(params[:id])
-    if @member.image?
-      send_data(@member.image.content_data,
-          disposition: 'inline',
-          type: @member.image.content_type,
-          filename: @member.image.name)
-    else
-      render text: 'Bilde mangler'
-    end
-  end
-
-  def thumbnail
-    @member = Member.find(params[:id])
-    if (thumbnail = @member.thumbnail)
-      send_data(thumbnail,
-          disposition: 'inline',
-          type: @member.image.content_type,
-          filename: @member.image.name)
-    else
-      render text: 'Bilde mangler'
-    end
   end
 
   def missing_contract

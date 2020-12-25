@@ -1,8 +1,16 @@
 = bootstrap_form_for user do |f|
   .row
     .col-md
-      = f.text_field :first_name
-      = f.text_field :last_name
+      .row
+        .col
+          = f.text_field :first_name
+          = f.text_field :last_name
+        .col-auto.align-self-center
+          a href=photo_user_path(user)
+            - if user.profile_image
+              = image_tag url_for(controller: :users, action: :thumbnail, id: user.id, format: user.profile_image.format), title: user.profile_image.name
+            - elsif user.persisted?
+              .btn.btn-primary.my-3 Ta bilde
       .row
         .col
           - appendix = []

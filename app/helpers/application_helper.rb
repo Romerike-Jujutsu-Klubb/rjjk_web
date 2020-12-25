@@ -39,6 +39,8 @@ module ApplicationHelper
       else
         cl_image_path(image.cloudinary_identifier, options)
       end
+    elsif action == :inline
+      inline_image_path(image.id, format: format)
     else
       image_path(image.id, format: format, action: action)
     end

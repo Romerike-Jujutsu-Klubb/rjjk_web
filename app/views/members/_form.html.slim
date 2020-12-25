@@ -6,28 +6,18 @@
 
 = bootstrap_form_for membership, url: with_detour(membership, anchor: "tab_membership_#{membership.id}_tab") do |f|
   .row
-    .col-md-4
-      .text-center
-        - if membership.image
-          = image_tag url_for(controller: :members, action: :thumbnail, id: membership.id, format: membership.image.format), title: membership.image.name
-        - elsif membership.persisted?
-          = link_to 'Ta bilde', photo_member_path(membership), class: 'btn btn-primary my-3'
-
-    .col-md-4
-    .col-md-4.mt-3
-      - if membership.group_instructor? || membership.instructor? || membership.user&.groups&.any? { |g| g.from_age >= 13 }
-        .form-group
-          label Instruktør:
-          =< link_to membership.group_instructor? ? 'Ja' : 'Nei', controller: :group_instructors
-          =< check_box :member, :instructor, title: 'Permanent instruktør'
-          =< label :member, :instructor, 'fast', title: 'Permanent instruktør'
-
-  .row
-    .col-6
+    .col
       = f.text_field :joined_on, class: 'date'
-    .col-6.form-group
+    .col.form-group
       label NKF medlemsnr
       span.form-control = (membership.nkf_member.try(:medlemsnummer) || 'Ikke i NKF-registeret.')
+    - if membership.group_instructor? || membership.instructor? || membership.user&.groups&.any? { |g| g.from_age >= 13 }
+      .col-md.form-group
+        label Instruktør
+        span.form-control
+          = link_to membership.group_instructor? ? 'Ja' : 'Nei', controller: :group_instructors
+          = check_box :member, :instructor, title: 'Permanent instruktør', class: 'ml-3'
+          =< label :member, :instructor, 'fast', title: 'Permanent instruktør'
   .row
     .col
       = f.text_field :passive_on, class: 'date', placeholder: 'dato'

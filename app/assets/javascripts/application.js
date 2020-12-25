@@ -31,39 +31,23 @@
 
 $(function() {
   $('.chosen,.chosen-select').chosen();
-});
 
-// Lazy load marked images
-$(window).on('load', function() {
-  $("img[data-original]").each(function() {
-    const container = $(this).closest(".lazy-container")[0];
-    if (container) {
-      $(this).lazyload({container: container});
-    } else {
-      $(this).lazyload();
-    }
-  });
-});
+  // Lazy load marked images
+  lazyload();
 
-$(function() {
   $('[data-toggle=tooltip]').tooltip()
-});
 
-$(function() {
   $.fn.popover.Constructor.Default.whiteList.table = [];
   $.fn.popover.Constructor.Default.whiteList.tr = [];
   $.fn.popover.Constructor.Default.whiteList.td = [];
   $.fn.popover.Constructor.Default.whiteList.tbody = [];
   $.fn.popover.Constructor.Default.whiteList.thead = [];
-
   $('[data-toggle="popover"]').popover()
+
+  bsCustomFileInput.init()
 });
 
 FontAwesomeConfig.autoReplaceSvg = 'nest';
-
-$(function() {
-  bsCustomFileInput.init()
-});
 
 function setAttendanceBtn(btn) {
   $btn = $(btn);

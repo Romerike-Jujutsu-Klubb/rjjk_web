@@ -101,14 +101,4 @@ class MembersControllerTest < ActionController::TestCase
       Member.find(@lars.id)
     end
   end
-
-  def test_thumbnail
-    get :thumbnail, params: { id: id(:lars) }
-    assert_response :success
-  end
-
-  def test_save_image
-    post :save_image, params: { id: id(:lars), imgBase64: 'data:content/type;base64,some data' }
-    assert_response :success
-  end
 end

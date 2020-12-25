@@ -119,7 +119,7 @@ class ImagesController < ApplicationController
   end
 
   def edit
-    @image ||= Image.find(params[:id])
+    @image ||= Image.without_image.includes(:user).find(params[:id])
     begin
       @image.update_dimensions!
     rescue

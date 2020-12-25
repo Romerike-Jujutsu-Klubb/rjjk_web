@@ -232,12 +232,8 @@ Rails.application.routes.draw do
       get :trial_missing_contract
     end
     member do
-      get :image
       get :missing_contract
-      get :photo
-      post :save_image
       get :since_graduation
-      get :thumbnail
     end
   end
 
@@ -344,7 +340,10 @@ Rails.application.routes.draw do
       post :forgot_password
       patch :move_attribute
       get :photo
+      get :profile_image
       patch :restore
+      post :save_image
+      get :thumbnail
       get :valid
     end
   end

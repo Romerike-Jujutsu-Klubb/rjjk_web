@@ -14,8 +14,6 @@ class Member < ApplicationRecord
   belongs_to :user, -> { with_deleted }, inverse_of: :memberships
 
   has_one :current_election, -> { current }, class_name: :Election, inverse_of: :member
-  has_one :last_member_image, -> { order :created_at }, class_name: :MemberImage, inverse_of: :member
-  has_one :image, through: :last_member_image
   has_one :next_graduate, -> do
     includes(:graduation).where('graduations.held_on >= ?', Date.current).order('graduations.held_on')
   end, class_name: :Graduate, inverse_of: :member
@@ -28,7 +26,6 @@ class Member < ApplicationRecord
   has_many :elections, dependent: :destroy
   has_many :graduates, dependent: :destroy
   has_many :group_instructors, dependent: :destroy
-  has_many :member_images, dependent: :destroy
   has_many :passed_graduates, -> { where graduates: { passed: true } }, class_name: 'Graduate',
       inverse_of: :member
   has_many :survey_requests, dependent: :destroy
@@ -242,31 +239,6 @@ class Member < ApplicationRecord
     user.billing_user
   end
   # EMXIF
-
-  def image_file=(file)
-    return if file.blank?
-
-    transaction do
-      content_data = file.read
-      image = Image.create! user_id: user.id, name: file.original_filename,
-          content_type: file.content_type, content_data: content_data, content_length: content_data.size
-      member_images << MemberImage.new(image_id: image.id)
-    end
-  end
-
-  def image?
-    image.present?
-  end
-
-  # FIXME(uwe): Limit to Y-axis as well
-  def thumbnail(x = 120, _y = 160)
-    return unless image?
-
-    magick_image = MiniMagick::Image.read(image.content_data_io)
-    ratio = x.to_f / magick_image.width
-    magick_image.resize("#{x}x#{(magick_image.height * ratio).round}")
-    magick_image.to_blob
-  end
 
   def invoice_email
     billing_email || email

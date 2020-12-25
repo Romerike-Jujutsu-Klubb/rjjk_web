@@ -39,10 +39,22 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_photo
+  def test_thumbnail
     uwe = login(:uwe)
-    get :photo, params: { id: uwe.id }
-    assert_redirected_to uwe.member.image
+    get :thumbnail, params: { id: uwe.id }
+    assert_response :success
+  end
+
+  def test_thumbnail_lars
+    login
+    get :thumbnail, params: { id: id(:lars) }
+    assert_response :success
+  end
+
+  def test_save_image
+    login :lars
+    post :save_image, params: { id: id(:lars), imgBase64: 'data:content/type;base64,some data' }
+    assert_response :success
   end
 
   def test_edit_member

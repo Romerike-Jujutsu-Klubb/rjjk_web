@@ -34,9 +34,14 @@ class User < ApplicationRecord
       class_name: :Attendance, inverse_of: :user
   has_one :last_membership, -> { order(joined_on: :desc, left_on: :desc) }, inverse_of: :user,
           class_name: 'Member'
+  has_one :last_profile_image, -> {
+                                 where(rel_type: 'profile').order(:created_at)
+                               }, class_name: :UserImage, inverse_of: :user
   has_one :member, -> { where(left_on: nil).order(joined_on: :desc) }, inverse_of: :user,
           dependent: :restrict_with_exception
   has_one :signup, -> { order(created_at: :desc) }, inverse_of: :user
+
+  has_one :profile_image, through: :last_profile_image, source: :image
 
   has_many :attendances, dependent: :destroy
   has_many :contactees, dependent: :nullify, class_name: 'User', foreign_key: :contact_user_id,
@@ -60,6 +65,7 @@ class User < ApplicationRecord
            inverse_of: :guardian_2
   has_many :signatures, dependent: :destroy
   has_many :signups, dependent: :destroy
+  has_many :user_images, dependent: :nullify
   has_many :user_messages, dependent: :destroy
 
   has_many :groups, through: :group_memberships
@@ -260,9 +266,9 @@ class User < ApplicationRecord
 
   def to_vcard
     photo_src =
-        if member&.image
-          binary = Base64.encode64(member.image.content_data_io.string).chomp.gsub("\n", "\n ")
-          "TYPE=#{member.image.format.upcase};ENCODING=b:#{binary}"
+        if profile_image
+          binary = Base64.encode64(profile_image.content_data_io.string).chomp.gsub("\n", "\n ")
+          "TYPE=#{profile_image.format.upcase};ENCODING=b:#{binary}"
         else
           "VALUE=URI;TYPE=JPEG:#{photo_user_url(self, format: :jpeg)}"
         end
@@ -475,6 +481,31 @@ class User < ApplicationRecord
 
   def current_rank
     last_membership&.current_rank || Rank::UNRANKED
+  end
+
+  def profile_image_file=(file)
+    return if file.blank?
+
+    transaction do
+      content_data = file.read
+      image = Image.create!(user_id: id, name: file.original_filename,
+          content_type: file.content_type, content_data: content_data, content_length: content_data.size)
+      user_images << UserImage.new(image_id: image.id, rel_type: :profile)
+    end
+  end
+
+  def profile_image?
+    profile_image.present?
+  end
+
+  # FIXME(uwe): Limit to Y-axis as well
+  def thumbnail(width = 120, _height = 160)
+    return unless profile_image?
+
+    magick_image = MiniMagick::Image.read(profile_image.content_data_io)
+    ratio = width.to_f / magick_image.width
+    magick_image.resize("#{width}x#{(magick_image.height * ratio).round}")
+    magick_image.to_blob
   end
 
   protected

@@ -16,9 +16,8 @@
           = image_tag(url_for(action: :show, id: @image.id, format: @image.format), style: 'max-height:65vh') if @image.name
         div
           = "#{@image.width}x#{@image.height}"
-          - if @image.content_data
-            = " (#{@image.content_data.size / 1024}KB)"
-        div = @image.google_drive_reference
+          =< "(#{@image.content_length / 1024}KB)"
+          =< @image.content_type
 
   - if @image.new_record?
     = f.file_field :file, class: :fileinput

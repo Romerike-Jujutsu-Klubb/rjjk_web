@@ -3,6 +3,20 @@
 require "#{File.dirname(__FILE__)}/../test_helper"
 
 class UserTest < ActionMailer::TestCase
+  class Image
+    def original_filename
+      'My Image'
+    end
+
+    def content_type
+      'image/png'
+    end
+
+    def read
+      'Image Content'
+    end
+  end
+
   def test_authenticate
     assert_equal users(:lars), User.authenticate(users(:lars).login, 'atest')
     assert_nil User.authenticate('nontesla', 'atest')
@@ -198,5 +212,11 @@ class UserTest < ActionMailer::TestCase
     users = User.includes(:recent_attendances).order(:id)
     assert_equal [true, false, true, true, true, true, false, false, true, true, false, true, true],
         (users.map { |m| m.absent?(Date.current, groups(:voksne)) })
+  end
+
+  def test_update_image
+    VCR.use_cassette 'GoogleMaps Lars' do
+      users(:lars).update! profile_image_file: Image.new
+    end
   end
 end

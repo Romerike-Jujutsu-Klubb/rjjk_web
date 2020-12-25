@@ -33,7 +33,7 @@ class GraduationCensorForm
             #{from_rank} > <b>#{graduate.rank.name} #{graduate.rank.colour}</b>
             Treninger: <b>#{member.attendances_since_graduation(graduation.held_on).count}</b> (#{graduate.current_rank_age})
           TXT
-          if graduate.member.image&.content_type&.match(%r{image/(jpe?g|png)})
+          if graduate.member.user.profile_image&.content_type&.match(%r{image/(jpe?g|png)})
             { image: graduate.member.image&.content_data_io, fit: [80, 160] }
           else
             ''

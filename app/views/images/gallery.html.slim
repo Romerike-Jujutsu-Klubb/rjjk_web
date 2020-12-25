@@ -31,7 +31,7 @@
       - height = image_height + 10
       .col
         = link_to id: i.id do
-          = image_tag image_url_with_cl(i, action: :inline, width: image_width, format: :webp), \
+          = image_tag image_url_with_cl(i, action: :inline, width: image_width), \
                 title: i.name || 'Bilde', style: "width:#{width}px;height:#{height}px;object-fit:cover", class: 'img-thumbnail', lazy: true
   .row.text-center
     - slice.each do |i|
