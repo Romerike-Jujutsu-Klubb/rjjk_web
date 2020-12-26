@@ -330,6 +330,7 @@ Rails.application.routes.draw do
   resources :user_images, only: [] do
     member do
       post :like
+      patch :use
     end
   end
   resources :user_merge, only: %i[show update]

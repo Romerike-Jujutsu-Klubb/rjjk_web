@@ -59,6 +59,8 @@ class User < ApplicationRecord
            inverse_of: :billing_user
   has_many :primary_wards, dependent: :nullify, class_name: 'User', foreign_key: :guardian_1_id,
            inverse_of: :guardian_1
+  has_many :profile_images, -> { where(rel_type: 'profile').order(updated_at: :desc) },
+      class_name: :UserImage, inverse_of: :user
   has_many :recent_attendances, -> { merge(Attendance.from_date(92.days.ago).to_date(31.days.from_now)) },
       class_name: :Attendance, inverse_of: :user
   has_many :secondary_wards, dependent: :nullify, class_name: 'User', foreign_key: :guardian_2_id,

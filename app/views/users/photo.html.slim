@@ -1,16 +1,18 @@
+h1 Profilbilde
+
 #error_message.alert.alert-danger.mt-3 style='display: none'
 - has_image = @user.persisted? && @user.profile_image
 .row
-  .col.text-center.align-self-center
-    img#profile_image.mb-3 style="max-height:80vh" src=(profile_image_user_path(@user) if has_image)
-    i#loading.fa.fa-spinner.fa-spin.fa-5x
-  .col-auto.align-self-center
-    button#snap.btn.btn-primary type="button" style='display: none'
+  .col.text-center
+    video#video.text-center width="320" height="240" autoplay='autoplay'
+    canvas#canvas width="320" height="240" style='display: none'
+  .col.col-md-auto.text-center.align-self-center
+    button#snap.btn.btn-primary.my-3 type="button" style='display: none'
       i.fa.fa-camera>
       | Ta bilde
-  .col.text-center
-    video#video.text-center.w-100 width="320" height="240" autoplay='autoplay'
-    canvas#canvas width="320" height="240" style='display: none'
+  .col.text-center.align-self-center
+    img#profile_image style="max-height:80vh" src=(profile_image_user_path(@user) if has_image)
+    i#loading.fa.fa-spinner.fa-spin.fa-5x
 
 javascript:
     // Grab elements, create settings, etc.
@@ -79,3 +81,13 @@ javascript:
 = bootstrap_form_for @user do |f|
   = f.file_field :image_file, style: 'width: 206px'
   .text-right = f.primary 'Last opp bilde'
+
+.row
+  - @user.profile_images.each do |ui|
+    .col.text-center.mt-3
+      img src=image_path(ui.image)
+      .mt-2
+        a.btn.btn-success href=use_user_image_path(ui) data-method=:patch
+          | Bruk
+        a.btn.btn-danger.ml-2 href=with_detour(image_path(ui.image)) data-method=:delete data-confirm="Er du sikker på at du vil slette profilbildet?"
+          | Slett
