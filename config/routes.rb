@@ -165,16 +165,16 @@ Rails.application.routes.draw do
     member do
       get :gallery
       get :blurred
-      get 'inline(/:width).:format', action: :inline, as: :inline
-      get 'show(/:width).:format', action: :show, as: :show
+      get 'inline(/:width)(.:format)', action: :inline, as: :inline
+      get 'show(/:width)(.:format)', action: :show, as: :show
       patch :reset_google_drive_reference
     end
     collection do
       get :gallery
       get :mine
       post :upload
-      get 'inline/:id(/:width).:format', action: :inline
-      get 'show/:id(/:width).:format', action: :show
+      get 'inline/:id(/:width)(.:format)', action: :inline
+      get 'show/:id(/:width)(.:format)', action: :show
     end
   end
   resources :information_pages, controller: :info, path: :info do

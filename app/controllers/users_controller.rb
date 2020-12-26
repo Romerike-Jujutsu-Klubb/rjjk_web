@@ -33,7 +33,7 @@ class UsersController < ApplicationController
   def thumbnail
     user = User.with_deleted.find(params[:id])
     if (user_image = user.last_profile_image)
-      redirect_to inline_image_path(user_image.image_id, width: 120)
+      redirect_to inline_image_path(user_image.image_id, width: 120, format: params[:format])
     else
       render text: 'Bilde mangler'
     end

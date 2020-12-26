@@ -42,13 +42,13 @@ class UsersControllerTest < ActionController::TestCase
   def test_thumbnail
     uwe = login(:uwe)
     get :thumbnail, params: { id: uwe.id }
-    assert_response :success
+    assert_redirected_to inline_image_path(id(:two), width: 120)
   end
 
   def test_thumbnail_lars
     login
     get :thumbnail, params: { id: id(:lars) }
-    assert_response :success
+    assert_redirected_to inline_image_path(id(:one), width: 120)
   end
 
   def test_save_image
