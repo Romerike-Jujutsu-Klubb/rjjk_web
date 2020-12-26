@@ -3,16 +3,16 @@
 class UserImageSweeper < ActionController::Caching::Sweeper
   observe :user
 
-  def after_create(member)
-    expire_image(member)
+  def after_create(user)
+    expire_image(user)
   end
 
-  def after_update(member)
-    expire_image(member)
+  def after_update(user)
+    expire_image(user)
   end
 
-  def after_destroy(member)
-    expire_image(member)
+  def after_destroy(user)
+    expire_image(user)
   end
 
   private
@@ -20,8 +20,7 @@ class UserImageSweeper < ActionController::Caching::Sweeper
   def expire_image(user)
     if user.profile_image
       ActionController::Base.expire_page(Rails.application.routes.url_for(
-          only_path: true, controller: :users,
-          action: :profile_image, id: user.id,
+          only_path: true, controller: :users, action: :profile_image, id: user.id,
           format: user.profile_image.format
         ))
       ActionController::Base.expire_page(Rails.application.routes.url_for(
