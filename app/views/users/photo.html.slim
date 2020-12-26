@@ -3,16 +3,26 @@ h1 Profilbilde
 #error_message.alert.alert-danger.mt-3 style='display: none'
 - has_image = @user.persisted? && @user.profile_image
 .row
-  .col.text-center
-    video#video.text-center width="320" height="240" autoplay='autoplay'
-    canvas#canvas width="320" height="240" style='display: none'
-  .col.col-md-auto.text-center.align-self-center
-    button#snap.btn.btn-primary.my-3 type="button" style='display: none'
-      i.fa.fa-camera>
-      | Ta bilde
-  .col.text-center.align-self-center
-    img#profile_image style="max-height:80vh" src=(profile_image_user_path(@user) if has_image)
+  .col-auto.mx-auto.mt-3.align-self-center
+    img#profile_image src=(profile_image_user_path(@user) if has_image) style="width:320px;height:240px;object-fit:contain"
     i#loading.fa.fa-spinner.fa-spin.fa-5x
+  .col-auto.mx-auto.mt-3 style="height:240px"
+    video#video width="320" height="240" autoplay='autoplay'
+    canvas#canvas width="320" height="240" style='display: none'
+    button#snap.btn.btn-primary.ml-3.position-absolute type="button" style='display:none;bottom:0;left:0'
+      | Ta bilde
+      i.fa.fa-camera<
+
+  - @user.profile_images.each do |ui|
+    .col-auto.mx-auto.mt-3
+      img src=image_path(ui.image) style="width:320px;height:240px;object-fit:contain"
+      a.btn.btn-success.position-absolute.mr-3 href=use_user_image_path(ui) data-method=:patch style="right:0"
+        i.fa.fa-thumbs-up>
+        | Bruk
+      a.btn.btn-danger.position-absolute.ml-3 style="bottom:0;left:0" href=with_detour(image_path(ui.image)) data-method=:delete data-confirm="Er du sikker på at du vil slette profilbildet?"
+        i.fa.fa-trash>
+        | Slett
+
 
 javascript:
     // Grab elements, create settings, etc.
@@ -78,16 +88,7 @@ javascript:
       });
   }
 
-= bootstrap_form_for @user do |f|
-  = f.file_field :image_file, style: 'width: 206px'
-  .text-right = f.primary 'Last opp bilde'
-
-.row
-  - @user.profile_images.each do |ui|
-    .col.text-center.mt-3
-      img src=image_path(ui.image)
-      .mt-2
-        a.btn.btn-success href=use_user_image_path(ui) data-method=:patch
-          | Bruk
-        a.btn.btn-danger.ml-2 href=with_detour(image_path(ui.image)) data-method=:delete data-confirm="Er du sikker på at du vil slette profilbildet?"
-          | Slett
+.mt-3
+  = bootstrap_form_for @user do |f|
+    = f.file_field :image_file
+    .text-right = f.primary 'Last opp bilde'
