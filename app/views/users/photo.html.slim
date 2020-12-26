@@ -4,7 +4,7 @@ h1 Profilbilde
 - has_image = @user.persisted? && @user.profile_image
 .row
   .col-auto.mx-auto.mt-3.align-self-center
-    img#profile_image.mw-100 src=(profile_image_user_path(@user) if has_image)
+    img#profile_image.mw-100 src=(inline_image_path(@user.profile_image) if has_image)
     i#loading.fa.fa-spinner.fa-spin.fa-5x
   .col-auto.mx-auto.mt-3.align-self-center
     video#video.w-100 autoplay='autoplay'
@@ -84,9 +84,9 @@ javascript:
         }
       }).done(function(o) {
         console.log('saved: ' + o);
-        $('#profile_image').attr('src', "#{profile_image_user_path(@user)}?hash=" + o)
         $('#profile_image').show();
         $('#loading').show();
+        window.location = "#{photo_user_path(@user)}?hash=" + o;
       });
     });
 
