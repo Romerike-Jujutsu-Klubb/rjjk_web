@@ -497,7 +497,7 @@ class User < ApplicationRecord
   end
 
   def profile_image?
-    profile_image.present?
+    last_profile_image.present?
   end
 
   # FIXME(uwe): Limit to Y-axis as well
