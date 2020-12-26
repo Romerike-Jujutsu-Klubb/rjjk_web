@@ -35,7 +35,7 @@ class User < ApplicationRecord
   has_one :last_membership, -> { order(joined_on: :desc, left_on: :desc) }, inverse_of: :user,
           class_name: 'Member'
   has_one :last_profile_image, -> {
-                                 where(rel_type: 'profile').order(:created_at)
+                                 where(rel_type: 'profile').order(updated_at: :desc)
                                }, class_name: :UserImage, inverse_of: :user
   has_one :member, -> { where(left_on: nil).order(joined_on: :desc) }, inverse_of: :user,
           dependent: :restrict_with_exception

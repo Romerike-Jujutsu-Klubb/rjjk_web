@@ -46,7 +46,7 @@ class UsersController < ApplicationController
     content = Base64.decode64(Regexp.last_match(2))
     content_type = Regexp.last_match(1)
     UserImage.transaction do
-      image = Image.create! user_id: @user.id, name: "Foto #{Date.current}",
+      image = Image.create! user_id: current_user.id, name: "Foto #{Date.current}",
           content_type: content_type, content_data: content, content_length: content.length
       @user.user_images.create! image: image, rel_type: :profile
     end
