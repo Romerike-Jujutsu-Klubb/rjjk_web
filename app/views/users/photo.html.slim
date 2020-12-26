@@ -4,15 +4,14 @@ h1 Profilbilde
 - has_image = @user.persisted? && @user.profile_image
 .row
   .col-auto.mx-auto.mt-3.align-self-center
-    img#profile_image src=(profile_image_user_path(@user) if has_image) style="width:320px;height:240px;object-fit:contain"
+    img#profile_image.mw-100 src=(profile_image_user_path(@user) if has_image)
     i#loading.fa.fa-spinner.fa-spin.fa-5x
-  .col-auto.mx-auto.mt-3 style="height:240px"
-    video#video width="320" height="240" autoplay='autoplay'
-    canvas#canvas width="320" height="240" style='display: none'
+  .col-auto.mx-auto.mt-3.align-self-center
+    video#video.mw-100 autoplay='autoplay' style="width:320px;height:240px;object-fit:contain"
+    canvas#canvas width="320" height="320" style='display: none'
     button#snap.btn.btn-primary.ml-3.position-absolute type="button" style='display:none;bottom:0;left:0'
       | Ta bilde
       i.fa.fa-camera<
-
   - @user.profile_images.each do |ui|
     .col-auto.mx-auto.mt-3
       img src=image_path(ui.image) style="width:320px;height:240px;object-fit:contain"
@@ -23,20 +22,22 @@ h1 Profilbilde
         i.fa.fa-trash>
         | Slett
 
-
 javascript:
     // Grab elements, create settings, etc.
     var video = document.getElementById('video');
 
     // Get access to the camera!
     if (navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function') {
-      let devices
+      let cameras = [];
       try {
         navigator.mediaDevices.enumerateDevices().then(function(devices) {
           devices.forEach(function(device) {
-            console.log(device.kind + ": " + device.label +
-                " id = " + device.deviceId);
+            if (device.kind === 'videoinput') {
+              console.log(device.kind + ": " + device.label + " id = " + device.deviceId);
+              cameras.push(device);
+            }
           });
+          initCamera(cameras[0]);
         }).catch(function(err) {
           console.log(err.name + ": " + err.message);
           $('#error_message').append(err).show();
@@ -46,26 +47,39 @@ javascript:
         $('#error_message').append(error).show();
       }
 
-      // Not adding `{ audio: true }` since we only want video now
-      navigator.mediaDevices.getUserMedia({
-        video: true
-      }).then(function(stream) {
-        video.srcObject = stream;
-        video.play();
-        $('#snap').show();
-      }).catch(function(err) {
-        console.log(err.name + ": " + err.message);
-        $('#error_message').append(err.name + ": " + err.message).show();
-      });
+      function initCamera(device) {
+        // Not adding `{ audio: true }` since we only want video now
+        navigator.mediaDevices.getUserMedia({
+          video: {deviceId: device.deviceId}
+        }).then(function(stream) {
+          video.srcObject = stream;
+          video.play();
+        }).catch(function(err) {
+          console.log(err.name + ": " + err.message);
+          $('#error_message').append(err.name + ": " + err.message).show();
+        });
+      }
 
     // Elements for taking the snapshot
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
     var video = document.getElementById('video');
 
+    $(video).on('resize', function(e){
+      console.log('resize');
+      console.log(e);
+      $('#snap').show();
+      console.log(video);
+      console.log(video.videoWidth);
+      console.log(video.videoHeight);
+      $(video).css('width', video.videoWidth);
+      $(video).css('height', video.videoHeight);
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+    });
     // Trigger photo take
     document.getElementById("snap").addEventListener("click", function() {
-      context.drawImage(video, 0, 0, 320, 240);
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
       var dataUrl = canvas.toDataURL('image/png');
       $('#profile_image').attr('src', "")
       $('#profile_image').hide();
