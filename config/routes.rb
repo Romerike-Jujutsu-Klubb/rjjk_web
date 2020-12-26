@@ -341,10 +341,8 @@ Rails.application.routes.draw do
       post :forgot_password
       patch :move_attribute
       get :photo
-      get :profile_image
       patch :restore
       post :save_image
-      get :thumbnail
       get :valid
     end
   end

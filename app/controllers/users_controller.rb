@@ -3,8 +3,7 @@
 class UsersController < ApplicationController
   before_action :admin_required
 
-  caches_page :profile_image, :thumbnail
-  cache_sweeper :user_image_sweeper, only: %i[create update destroy]
+  cache_sweeper :chart_image_sweeper, only: %i[create update destroy]
 
   def index
     @users = User.includes(:last_membership, :member)
@@ -30,15 +29,6 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  def thumbnail
-    user = User.with_deleted.find(params[:id])
-    if (user_image = user.last_profile_image)
-      redirect_to inline_image_path(user_image.image_id, width: 120, format: params[:format])
-    else
-      render text: 'Bilde mangler'
-    end
-  end
-
   def save_image
     @user = User.find(params[:id])
     params.require(:imgBase64) =~ /^data:([^;]+);base64,(.*)$/
@@ -50,16 +40,6 @@ class UsersController < ApplicationController
       @user.user_images.create! image: image, rel_type: :profile
     end
     render plain: content.hash
-  end
-
-  def profile_image
-    user = User.find(params[:id])
-    if (image = user.profile_image)
-      send_data(image.content_data_io.read, disposition: 'inline', type: image.content_type,
-filename: image.name)
-    else
-      render text: 'Bilde mangler'
-    end
   end
 
   def new

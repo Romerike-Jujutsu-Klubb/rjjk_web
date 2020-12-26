@@ -3,6 +3,8 @@
 class MembersController < ApplicationController
   before_action :admin_required
 
+  cache_sweeper :chart_image_sweeper, only: %i[create update destroy]
+
   def index
     @members = Member.all.sort_by(&:name)
   end

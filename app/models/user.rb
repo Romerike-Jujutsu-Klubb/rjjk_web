@@ -500,16 +500,6 @@ class User < ApplicationRecord
     last_profile_image.present?
   end
 
-  # FIXME(uwe): Limit to Y-axis as well
-  def thumbnail(width = 120, _height = 160)
-    return unless profile_image?
-
-    magick_image = MiniMagick::Image.read(profile_image.content_data_io)
-    ratio = width.to_f / magick_image.width
-    magick_image.resize("#{width}x#{(magick_image.height * ratio).round}")
-    magick_image.to_blob
-  end
-
   protected
 
   def validate_password?

@@ -7,8 +7,8 @@
           = f.text_field :last_name
         .col-auto.align-self-center
           a href=photo_user_path(user)
-            - if user.profile_image
-              = image_tag url_for(controller: :users, action: :thumbnail, id: user.id, format: user.profile_image.format), title: user.profile_image.name
+            - if (user_image = user.last_profile_image)
+              = image_tag inline_image_path(user_image.image_id, width: 120, format: params[:format]), title: user.profile_image.name
             - elsif user.persisted?
               .btn.btn-primary.my-3 Ta bilde
       .row

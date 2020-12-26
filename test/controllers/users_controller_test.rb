@@ -39,18 +39,6 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_thumbnail
-    uwe = login(:uwe)
-    get :thumbnail, params: { id: uwe.id }
-    assert_redirected_to inline_image_path(id(:two), width: 120)
-  end
-
-  def test_thumbnail_lars
-    login
-    get :thumbnail, params: { id: id(:lars) }
-    assert_redirected_to inline_image_path(id(:one), width: 120)
-  end
-
   def test_save_image
     login :lars
     post :save_image, params: { id: id(:lars), imgBase64: 'data:content/type;base64,some data' }
