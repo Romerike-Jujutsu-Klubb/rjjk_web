@@ -7,8 +7,8 @@ h1 Profilbilde
     img#profile_image.mw-100 src=(profile_image_user_path(@user) if has_image)
     i#loading.fa.fa-spinner.fa-spin.fa-5x
   .col-auto.mx-auto.mt-3.align-self-center
-    video#video.mw-100 autoplay='autoplay' style="width:320px;height:240px;object-fit:contain"
-    canvas#canvas width="320" height="320" style='display: none'
+    video#video.w-100 autoplay='autoplay'
+    canvas#canvas.d-none
     button#snap.btn.btn-primary.ml-3.position-absolute type="button" style='display:none;bottom:0;left:0'
       | Ta bilde
       i.fa.fa-camera<
@@ -65,15 +65,8 @@ javascript:
     var context = canvas.getContext('2d');
     var video = document.getElementById('video');
 
-    $(video).on('resize', function(e){
-      console.log('resize');
-      console.log(e);
+    $(video).on('resize', function(){
       $('#snap').show();
-      console.log(video);
-      console.log(video.videoWidth);
-      console.log(video.videoHeight);
-      $(video).css('width', video.videoWidth);
-      $(video).css('height', video.videoHeight);
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
     });
