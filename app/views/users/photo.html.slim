@@ -1,9 +1,6 @@
 h2.mb-0 Profilbilde
 
 #error_message.alert.alert-danger.mt-3 style='display: none'
-#start_photo_alert.alert.alert-info.mt-3 style="display:none"
-  i.fa.fa-spinner.fa-spin.float-right
-  | Starter kamera...
 - has_image = @user.persisted? && @user.profile_image
 .row
   .col-auto.mx-auto.mt-3.align-self-center
@@ -14,8 +11,8 @@ h2.mb-0 Profilbilde
           i.fa.fa-trash>
           | Slett
       button#new_photo.btn.btn-primary.ml-3.position-absolute type="button" style='bottom:0;left:0' onclick='startPhotoBooth()'
+        i.fa.fa-camera.fa-fw>
         | Ta nytt bilde
-        i.fa.fa-camera<
       a.btn.btn-success.position-absolute.ml-3 href=user_path(@user) style="top:0;left:0"
         i.fa.fa-thumbs-up>
         | Bruk
@@ -23,8 +20,8 @@ h2.mb-0 Profilbilde
       video#video.w-100 autoplay='autoplay'
       canvas#canvas.d-none
       button#snap.btn.btn-primary.ml-3.position-absolute type="button" style='bottom:0;left:0'
+        i.fa.fa-camera.fa-fw>
         | Ta bilde
-        i.fa.fa-camera<
       a.btn.btn-warning.mr-3.position-absolute href=photo_user_path(@user) style='top:0;right:0'
         i.fa.fa-times>
         | Avbryt
@@ -45,10 +42,10 @@ javascript:
   let cameras = [];
 
   function startPhotoBooth() {
-    $('#new_photo i').removeClass('fa-camera').addClass('fa fa-spinner fa-spin');
-    $('#start_photo_alert').show();
     // Get access to the camera!
     if (navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function') {
+      $('#new_photo').contents().last()[0].textContent = ' Starter kamera';
+      $('#new_photo i').removeClass('fa-camera').addClass('fa fa-spinner fa-spin fa-fw');
       getCameras();
     } else {
       alert("Kamera er ikke tilgjengelig.");
@@ -92,13 +89,14 @@ javascript:
     $('#current_image').hide();
     $('#start_photo_alert').hide();
     $('#photo_booth').show();
-    $('#new_photo i').removeClass('fa-spinner fa-spin').addClass('fa-camera');
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
   });
 
   // Trigger photo take
   document.getElementById("snap").addEventListener("click", function() {
+    $('#snap').contents().last()[0].textContent = ' Lagrer';
+    $('#snap i').removeClass('fa-camera').addClass('fa fa-spinner fa-spin fa-fw');
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
     var dataUrl = canvas.toDataURL('image/png');
     $('#profile_image').attr('src', "")
@@ -113,7 +111,6 @@ javascript:
       }
     }).done(function(o) {
       console.log('saved: ' + o);
-      $('#profile_image').show();
       window.location = "#{photo_user_path(@user)}?hash=" + o;
     });
   });
