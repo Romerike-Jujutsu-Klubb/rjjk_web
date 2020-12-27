@@ -100,8 +100,7 @@ class Image < ApplicationRecord
   def update_dimensions!
     return if (width && height) || !image?
 
-    content = load_content(no_caching: true)
-    magick_image = MiniMagick::Image.read(content).first
+    magick_image = MiniMagick::Image.read(content_data_io).first
     self.width = magick_image.columns
     self.height = magick_image.rows
 

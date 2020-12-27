@@ -6,19 +6,24 @@ module GoogleDriveContent
   end
 
   def content_data_io
-    unless google_drive_reference
-      stored_content = move_to_google_drive!
-      return stored_content && StringIO.new(stored_content) if Rails.env.test?
-    end
-    google_drive_io
+    GoogleDriveUploadJob.perform_later(id) unless google_drive_reference
+    content_data_db_io || google_drive_io || cloudinary_io || self.class.where(id: id).pick(:content_data)
+  end
+
+  def content_data_db_io
+    StringIO.new(content_data) if content_loaded?
   end
 
   def google_drive_io
+    return unless google_drive_reference
+
     logger.info "get google drive io: #{id} #{google_drive_reference}"
     GoogleDriveService.new.get_file_io(google_drive_reference)
   end
 
   def cloudinary_io
+    return unless cloudinary_identifier
+
     Cloudinary::Downloader
         .download(cloudinary_identifier, type: 'upload', resource_type: video? ? 'video' : 'image')
   end
@@ -39,6 +44,7 @@ module GoogleDriveContent
   end
 
   def upload_to_google_drive(loaded_content)
+    return if Rails.env.test?
     logger.info "Store image in Google Drive: #{id}, #{name}"
     file = GoogleDriveService.new
         .store_file(self.class.name.pluralize.underscore, id, loaded_content, content_type)
@@ -46,19 +52,6 @@ module GoogleDriveContent
   end
 
   private
-
-  def load_content(no_caching: false)
-    if content_loaded?
-      content_data
-    elsif google_drive_reference
-      logger.info "Image found in Google Drive: #{id}, #{name}, #{google_drive_reference}"
-      GoogleDriveService.new.get_file_content(google_drive_reference)
-    elsif no_caching || Rails.env.test? # TODO(uwe): How can we test this?  WebMock?
-      self.class.where(id: id).pick(:content_data)
-    else
-      move_to_google_drive!
-    end
-  end
 
   def content_loaded?
     attribute_present?(:content_data) && content_data.present?

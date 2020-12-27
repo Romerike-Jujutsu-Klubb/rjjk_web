@@ -15,8 +15,8 @@ class ImagesController < ApplicationController
 
   def show
     image = Image
-        .select(%i[id cloudinary_identifier cloudinary_transformed_at content_length content_type name
-                   user_id google_drive_reference md5_checksum])
+        .select(%i[cloudinary_identifier cloudinary_transformed_at content_length content_type
+                   google_drive_reference id md5_checksum name user_id])
         .find(params[:id])
     return if rank_required(image)
 
@@ -39,7 +39,7 @@ class ImagesController < ApplicationController
     return redirect_to_icon(image) if image_content.nil?
 
     if requested_format == image.format
-      send_data(image_content.string, disposition: 'inline', type: image.content_type,
+      send_data(image_content, disposition: 'inline', type: image.content_type,
           filename: image.name)
     else
       send_image(image, MiniMagick::Image.read(image_content), requested_format)
@@ -51,7 +51,8 @@ class ImagesController < ApplicationController
   end
 
   def inline
-    image = Image.select('cloudinary_identifier,id,name,content_type,user_id,google_drive_reference')
+    image = Image
+        .select('cloudinary_identifier,content_length,content_type,google_drive_reference,id,name,user_id')
         .find(params[:id])
     return if rank_required(image)
 
