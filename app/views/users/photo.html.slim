@@ -22,7 +22,7 @@ h2.mb-0 Profilbilde
       button#snap.btn.btn-primary.ml-3.position-absolute type="button" style='bottom:0;left:0'
         i.fa.fa-camera.fa-fw>
         | Ta bilde
-      a.btn.btn-warning.mr-3.position-absolute href=photo_user_path(@user) style='top:0;right:0'
+      a.btn.btn-warning.mr-3.position-absolute href=(has_image ? photo_user_path(@user) : user_path(@user)) style='top:0;right:0'
         i.fa.fa-times>
         | Avbryt
   - @user.profile_images.drop(1).each do |ui|
