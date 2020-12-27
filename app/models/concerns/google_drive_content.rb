@@ -45,6 +45,7 @@ module GoogleDriveContent
 
   def upload_to_google_drive(loaded_content)
     return if Rails.env.test?
+
     logger.info "Store image in Google Drive: #{id}, #{name}"
     file = GoogleDriveService.new
         .store_file(self.class.name.pluralize.underscore, id, loaded_content, content_type)
