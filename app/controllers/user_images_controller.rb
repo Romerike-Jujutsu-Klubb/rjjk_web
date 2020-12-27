@@ -6,7 +6,7 @@ class UserImagesController < ApplicationController
   def use
     user_image = UserImage.find(params[:id])
     user_image.update! updated_at: Time.current
-    redirect_to photo_user_path(user_image.user_id)
+    redirect_to user_path(user_image.user_id)
   end
 
   def like

@@ -36,7 +36,8 @@ class UsersController < ApplicationController
     content_type = Regexp.last_match(1)
     UserImage.transaction do
       image = Image.create! user_id: current_user.id, name: "Foto #{Date.current}",
-          content_type: content_type, content_data: content, content_length: content.length
+          content_type: content_type, content_data: content, content_length: content.length,
+                            width: params[:width], height: params[:height]
       @user.user_images.create! image: image, rel_type: :profile
     end
     render plain: content.hash
