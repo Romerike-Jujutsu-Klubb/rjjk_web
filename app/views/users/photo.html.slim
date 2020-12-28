@@ -87,6 +87,7 @@ javascript:
       video: {deviceId: deviceId}
     }).then(function(stream) {
       currentStream = stream;
+      video.srcObject = null;
       video.srcObject = stream;
       video.play();
     }).catch(function(err) {
