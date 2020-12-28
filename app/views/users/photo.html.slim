@@ -41,7 +41,7 @@ javascript:
   let canvas = document.getElementById('canvas');
   let context = canvas.getContext('2d');
   let cameras = [];
-  let selectedCamera;
+  let currentStream;
 
   function startPhotoBooth() {
     // Get access to the camera!
@@ -77,14 +77,15 @@ javascript:
   }
 
   function initCamera(deviceId) {
-    if (selectedCamera) {
-      tracks = selectedCamera.getTracks();
+    if (currentStream) {
+      tracks = currentStream.getTracks();
       tracks.forEach(track => track.stop());
-      selectedCamera = null;
+      currentStream = null;
     }
     navigator.mediaDevices.getUserMedia({
       video: {deviceId: deviceId}
     }).then(function(stream) {
+      currentStream = stream;
       video.srcObject = stream;
       video.play();
     }).catch(function(err) {
