@@ -9,8 +9,12 @@
           a href=photo_user_path(user)
             - if (user_image = user.last_profile_image)
               = image_tag inline_image_path(user_image.image_id, width: 120, format: params[:format]), title: user.profile_image.name
+              .btn.btn-primary.p-0.pl-1.position-absolute.ml-3 style="bottom:0;left:0"
+                i.fa.fa-edit
             - elsif user.persisted?
-              .btn.btn-primary.my-3 Ta bilde
+              .btn.btn-primary.my-3
+                i.fa.fa-camera>
+                | Ta bilde
       .row
         .col
           - appendix = []
