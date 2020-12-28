@@ -15,7 +15,7 @@ class ProfileController < ApplicationController
 
   def photo
     @user = current_user
-    @base_path = profile_index_path
+    @return_path = profile_index_path
     render 'users/photo'
   end
 
