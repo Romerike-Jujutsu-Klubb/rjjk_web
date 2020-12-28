@@ -63,6 +63,7 @@ javascript:
             cameras.push(device);
             const btn = $('<button class="btn btn-secondary btn-sm ml-2" onclick="initCamera(' + "'" + device.deviceId + "'" + ')" title="' + device.label + '"><i class="fa fa-camera"</i></button>');
             $('#camera_selector').append(btn);
+            btn.tooltip();
           }
         });
         initCamera(cameras[0]);
