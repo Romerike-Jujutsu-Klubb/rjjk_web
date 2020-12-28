@@ -30,7 +30,7 @@ module UserSystem
     options.merge key: user.generate_security_token, only_path: false
   end
 
-  #   before_filter :authenticate_user
+  # before_action :authenticate_user
   def authenticate_user
     return true if authenticated_user?
 
@@ -38,7 +38,7 @@ module UserSystem
     false
   end
 
-  #   before_filter :admin_required
+  # before_action :admin_required
   def membership_required
     return false unless authenticate_user
     return true if current_user.member
@@ -53,7 +53,7 @@ module UserSystem
     access_denied('Du må være administrator for å se denne siden.')
   end
 
-  #   before_filter :instructor_required
+  # before_action :instructor_required
   def instructor_required
     return false unless authenticate_user
     return true if instructor?
@@ -61,7 +61,7 @@ module UserSystem
     access_denied('Du må være instruktør for å se denne siden.')
   end
 
-  #   before_filter :technical_committy_required
+  # before_action :technical_committy_required
   def technical_committy_required
     return false unless authenticate_user
     return true if current_user.technical_committy?
