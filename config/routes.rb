@@ -268,6 +268,12 @@ Rails.application.routes.draw do
   resources :page_aliases
   resources :practices
   resources :price_age_groups
+  resources :profile, only: %i[index update] do
+    collection do
+      get :photo
+      post :save_image
+    end
+  end
   resources :public_records
   resources :rank_articles
   resources :ranks do

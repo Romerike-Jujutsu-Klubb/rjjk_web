@@ -2,7 +2,7 @@
 
 class ImagesController < ApplicationController
   PUBLIC_ACTIONS = %i[blurred gallery inline show].freeze
-  PERSONAL_ACTIONS = %i[create mine new upload].freeze
+  PERSONAL_ACTIONS = %i[create destroy mine new upload].freeze
   before_action :admin_required, except: PUBLIC_ACTIONS + PERSONAL_ACTIONS
   before_action :authenticate_user, only: PERSONAL_ACTIONS
 
@@ -161,7 +161,9 @@ class ImagesController < ApplicationController
   end
 
   def destroy
-    Image.find(params[:id]).destroy!
+    image = Image.find(params[:id])
+    admin_required unless image.user_id == current_user.id
+    image.destroy!
     back_or_redirect_to action: :index
   end
 

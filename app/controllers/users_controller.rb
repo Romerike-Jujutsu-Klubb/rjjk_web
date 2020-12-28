@@ -27,6 +27,7 @@ class UsersController < ApplicationController
 
   def photo
     @user = User.find(params[:id])
+    @return_path = user_path(@user)
   end
 
   def save_image

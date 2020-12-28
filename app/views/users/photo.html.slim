@@ -13,7 +13,7 @@ h2.mb-0 Profilbilde
       button#new_photo.btn.btn-primary.ml-3.position-absolute type="button" style='bottom:0;left:0' onclick='startPhotoBooth()'
         i.fa.fa-camera.fa-fw>
         | Ta nytt bilde
-      a.btn.btn-success.position-absolute.ml-3 href=user_path(@user) style="top:0;left:0"
+      a.btn.btn-success.position-absolute.ml-3 href=@return_path style="top:0;left:0"
         i.fa.fa-thumbs-up>
         | Bruk
     #photo_booth style=('display:none')
@@ -22,7 +22,7 @@ h2.mb-0 Profilbilde
       button#snap.btn.btn-primary.ml-3.position-absolute type="button" style='bottom:0;left:0'
         i.fa.fa-camera.fa-fw>
         | Ta bilde
-      a.btn.btn-warning.mr-3.position-absolute href=(has_image ? photo_user_path(@user) : user_path(@user)) style='top:0;right:0'
+      a.btn.btn-warning.mr-3.position-absolute href=(has_image ? url_for : @return_path) style='top:0;right:0'
         i.fa.fa-times>
         | Avbryt
       #camera_selector.mr-3.position-absolute style='bottom:0;right:0'
@@ -114,7 +114,7 @@ javascript:
     $('#profile_image').hide();
     $.ajax({
       type: "POST",
-      url: "#{save_image_user_path}",
+      url: "#{url_for(action: :save_image)}",
       data: {
         imgBase64: dataUrl,
         width: canvas.width,
@@ -122,7 +122,7 @@ javascript:
       }
     }).done(function(o) {
       console.log('saved: ' + o);
-      window.location = "#{photo_user_path(@user)}?hash=" + o;
+      window.location = "#{url_for}?hash=" + o;
     });
   });
 

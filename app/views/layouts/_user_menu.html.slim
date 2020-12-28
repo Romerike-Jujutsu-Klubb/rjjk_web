@@ -3,7 +3,8 @@ h1 data-toggle="collapse" data-target="#user-menu" role="button" aria-expanded="
   i.fa.fa-user.fa-fw>
   = current_user.name
 ul#user-menu.collapse data-parent="#main-menu"
-  li: a href=user_path(current_user) class=(:active if current_page?(user_path(current_user))) Min side
+  - my_page_path = admin? ? user_path(current_user) : profile_index_path
+  li: a href=my_page_path class=(:active if current_page?(my_page_path)) Min side
   - if member?
     - if current_user.member.groups.any?(&:planning)
       li = menu_item 'Mitt oppmøte', controller: :attendances, action: :plan
