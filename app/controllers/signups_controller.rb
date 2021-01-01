@@ -60,46 +60,57 @@ class SignupsController < ApplicationController
   end
 
   def complete
-    nkf_agent = NkfAgent.new(:complete_signup)
-    nkf_agent.login # returns front_page
-    trial_index_page = nkf_agent.trial_index
+    unless Rails.env.test?
+      nkf_agent = NkfAgent.new(:complete_signup)
+      nkf_agent.login # returns front_page
+      trial_index_page = nkf_agent.trial_index
 
-    if @signup.nkf_member_trial
-      trial_page = nkf_agent.trial_page(@signup.nkf_member_trial.tid)
-      trial_form = trial_page.form('ks_godkjenn_medlem')
-      trial_form['frm_28_v06'] = 'G'
-      trial_form.field_with(name: 'frm_28_v66').checked = true
-      trial_form['frm_28_v60'] = trial_form.field_with(name: 'frm_28_v36').options[1].value
-      trial_form['p_ks_godkjenn_medlem_action'] = 'OK'
-      approval_page = trial_form.submit
+      if @signup.nkf_member_trial
+        trial_page = nkf_agent.trial_page(@signup.nkf_member_trial.tid)
+        trial_form = trial_page.form('ks_godkjenn_medlem')
+        trial_form['frm_28_v06'] = 'G'
+        trial_form.field_with(name: 'frm_28_v66').checked = true
+        trial_form['frm_28_v60'] = trial_form.field_with(name: 'frm_28_v36').options[1].value
+        trial_form['p_ks_godkjenn_medlem_action'] = 'OK'
+        approval_page = trial_form.submit
 
-      logger.info approval_page.inspect
-      approval_body = approval_page.body.force_encoding('ISO-8859-1').encode('UTF-8')
-      logger.info Nokogiri::XML(approval_body, &:noblanks).to_s
+        logger.info approval_page.inspect
+        approval_body = approval_page.body.force_encoding('ISO-8859-1').encode('UTF-8')
+        logger.info Nokogiri::XML(approval_body, &:noblanks).to_s
 
-      if (m = NkfForm::MEMBER_ERROR_PATTERN.match(approval_body))
-        raise <<~MESSAGE
-          Error approving NKF trial member:
-          #{m[:message].encode(Encoding::UTF_8, form.encoding)}
-          #{form.fields.map { |f| "#{f.name}: #{f.value.inspect}" }.join("\n")}
-        MESSAGE
+        if (m = NkfForm::MEMBER_ERROR_PATTERN.match(approval_body))
+          raise <<~MESSAGE
+            Error approving NKF trial member:
+            #{m[:message].encode(Encoding::UTF_8, form.encoding)}
+            #{form.fields.map { |f| "#{f.name}: #{f.value.inspect}" }.join("\n")}
+          MESSAGE
+        end
+      else
+        form = trial_index_page.form('ks_godkjenn_medlem')
+
+        form['p_ks_godkjenn_medlem_action'].value = 'UPDATE'
+        form['frm_28_v04'] = ''
+        new_member_page = nkf_agent.submit(form)
+
+        logger.info new_member_page.inspect
+        approval_body = new_member_page.body.force_encoding('ISO-8859-1').encode('UTF-8')
+        logger.info Nokogiri::XML(approval_body, &:noblanks).to_s
+
+        member_form = new_member_page.form('')
+        member_form['frm_28_v04'] = ''
+
+        # FIXME(uwe): Actually create a new NKF member!!!
+
       end
-    else
-      form = trial_index_page.form('ks_godkjenn_medlem')
-
-      form['p_ks_godkjenn_medlem_action'].value = 'UPDATE'
-      form['frm_28_v04'] = ''
-      new_member_page = nkf_agent.submit(form)
-
-      logger.info new_member_page.inspect
-      approval_body = new_member_page.body.force_encoding('ISO-8859-1').encode('UTF-8')
-      logger.info Nokogiri::XML(approval_body, &:noblanks).to_s
-
-      member_form = new_member_page.form('')
-      member_form['frm_28_v04'] = ''
-
-      # FIXME(uwe): Actually create a new member!!!
-
+    end
+    Signup.transaction do
+      attributes = @signup.converted_attributes(include_blank: false)
+      membership_attributes = attributes[:membership]
+      member_attrs = NkfMember::MEMBER_DEFAULT_ATTRIBUTES
+          .merge(user_id: @signup.user_id, joined_on: Date.current).merge(membership_attributes)
+      Member.create!(member_attrs)
+      @signup.nkf_member_trial.destroy!
+      @signup.destroy!
     end
     NkfSynchronizationJob.perform_later
     redirect_to signups_path, notice: 'Medlemskapet er opprettet.'
@@ -108,13 +119,15 @@ class SignupsController < ApplicationController
   def terminate
     Signup.transaction do
       if (trial = @signup.nkf_member_trial)
-        nkf_agent = NkfAgent.new(:complete_signup)
-        nkf_agent.login
-        trial_index_page = nkf_agent.trial_index
-        form = trial_index_page.form('ks_godkjenn_medlem')
-        form['p_ks_godkjenn_medlem_action'] = 'DELETE'
-        form['frm_28_v04'] = trial.tid
-        nkf_agent.submit(form)
+        unless Rails.env.test?
+          nkf_agent = NkfAgent.new(:complete_signup)
+          nkf_agent.login
+          trial_index_page = nkf_agent.trial_index
+          form = trial_index_page.form('ks_godkjenn_medlem')
+          form['p_ks_godkjenn_medlem_action'] = 'DELETE'
+          form['frm_28_v04'] = trial.tid
+          nkf_agent.submit(form)
+        end
         trial.destroy!
         NkfImportTrialMembersJob.perform_later
       end

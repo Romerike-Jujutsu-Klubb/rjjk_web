@@ -53,4 +53,31 @@ class SignupsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to signups_url
   end
+
+  test 'should complete signup' do
+    assert_difference('Signup.count', -1) do
+      assert_difference('NkfMemberTrial.count', -1) do
+        assert_difference('Member.count') do
+          assert_no_difference('User.count') do
+            patch complete_signup_url(@signup)
+          end
+        end
+      end
+    end
+    assert_redirected_to signups_url
+  end
+
+  test 'should terminate signup' do
+    assert_difference('Signup.count', -1) do
+      assert_difference('NkfMemberTrial.count', -1) do
+        assert_no_difference('Member.count') do
+          assert_no_difference('User.count') do
+            delete terminate_signup_url(@signup)
+          end
+        end
+      end
+    end
+
+    assert_redirected_to signups_url
+  end
 end
