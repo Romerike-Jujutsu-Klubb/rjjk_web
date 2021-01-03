@@ -8,13 +8,13 @@ class NewsFeatureTest < ApplicationSystemTestCase
     visit '/news'
     assert_current_path '/news'
     screenshot('index')
-    first('.post img').click
+    first('.card img').click
     modal_selector = '#imageModal .modal-header > button.close'
     close_btn = find(modal_selector)
     screenshot('image')
     close_btn.click
     assert_no_css(modal_selector)
-    all('.post img')[1].click
+    all('.card img')[1].click
     screenshot('image_2')
   end
 
@@ -33,8 +33,7 @@ class NewsFeatureTest < ApplicationSystemTestCase
     screenshot_group :new
     visit_with_login '/?lang=nb'
     screenshot('front')
-    click_menu 'Nyheter', section: 'Web'
-    click_on 'Ny nyhet'
+    open_menu_section('Web').find('.fa-plus').click
     assert_current_path '/news/new'
     screenshot('form')
     fill_in 'news_item[title]', with: 'A new hope'

@@ -2,7 +2,12 @@
 
 .card-deck
   .card
-    h5.card-header = form_header
+    h5.card-header
+      - if @news_item.persisted?
+        a.btn.btn-danger.float-right href=news_item_path(@news_item) data-confirm='Er du sikker?' data-method=:delete
+          i.fa.fa-trash>
+          | Slett
+      = form_header
     .card-body = bootstrap_form_for @news_item, html: {role: 'form'} do |f|
       .row
         .col-md-8 = f.text_field :title

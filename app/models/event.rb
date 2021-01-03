@@ -124,7 +124,7 @@ class Event < ApplicationRecord
   end
 
   def body
-    body_paragraphs = paragraphs&.[](1..-1)
+    body_paragraphs = paragraphs&.drop(1)
     return if body_paragraphs.blank?
 
     body_paragraphs.join("\n\n")

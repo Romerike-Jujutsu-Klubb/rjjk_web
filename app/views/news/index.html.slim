@@ -1,14 +1,14 @@
-- if admin? && NewsController === controller
-  a.btn.btn-primary.float-right href=new_news_item_path
-    i.fa.fa-plus>
-    | Ny nyhet
 - if (focus_item = @news_items[0])
-  = render 'news/item', news_item: focus_item, full: false, focus: true
+  .card.mb-3
+    .card-body
+      = render 'news/item', news_item: focus_item, full: false, focus: true
 
   #primarycontainer
     #primarycontent
       - @news_items[1..-1].each_with_index do |news_item, i|
-        = render 'news/item', news_item: news_item, full: false, focus: false
+        .card.mb-3
+          .card-body
+            = render 'news/item', news_item: news_item, full: false, focus: false
 
 - if @link_to_news_archive
   ul.controls

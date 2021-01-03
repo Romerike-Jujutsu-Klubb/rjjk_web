@@ -2,7 +2,7 @@
 - ingress = event.ingress.presence
 - body = event.body
 - if display_year
-  h4.mt-3.logo-red = event.start_at.year
+  h4.logo-red = event.start_at.year
 - if display_times
   h5.mb-2
     - if event.end_at.nil? || event.end_at == event.start_at
@@ -41,13 +41,14 @@ h5.mb-0 style="color:#FFB400"
   .mb-2
 .text-right
   - if admin? && event.persisted?
-    a.btn.btn-primary.d-none.d-md-inline-block href=edit_polymorphic_path(event)
+    a.btn.btn-primary href=edit_polymorphic_path(event) class=('d-none d-md-inline-block' if body)
       ' Admin
       i.fas.fa-angle-double-right
 
-  = link_to event, class: 'btn btn-info ml-3'
-    => t :read_more
-    i.fas.fa-angle-double-right
+  - if body
+    = link_to event, class: 'btn btn-info ml-3'
+      => t :read_more
+      i.fas.fa-angle-double-right
 
   - if inv
     - if (inv.will_attend.nil? || inv.user.member && inv.will_work.nil?)

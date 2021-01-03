@@ -52,7 +52,7 @@ html lang="nb"
               = image_tag('rjjk_logo_plus_txt_320.png', class: 'd-none d-print-block float-right w-25 m-3 mb-4')
               - if @query
                 = render 'layouts/search'
-              .padded = yield
+              .p-3 = yield
         .main_right.lazy-container.d-print-none = render 'layouts/right_column'
 
       .footer.row.d-print-none

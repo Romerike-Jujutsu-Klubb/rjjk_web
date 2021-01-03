@@ -1,48 +1,48 @@
-.post.mb-4
-  - title = news_item.title
-  - if news_item.publication_state != NewsItem::PublicationState::PUBLISHED
-    - title += " (#{t news_item.publication_state.downcase})"
-  - texts = [news_item.summary, news_item.body].select(&:present?)
-  - if title && !full && texts[1]
-    - title = link_to(title, news_item)
+- title = news_item.title
+- if news_item.publication_state != NewsItem::PublicationState::PUBLISHED
+  - title += " (#{t news_item.publication_state.downcase})"
+- texts = [news_item.summary, news_item.body].select(&:present?)
+- if title && !full && texts[1]
+  - title = link_to(title, news_item)
 
+- if title.present?
   - if full || focus
     h3 = title
   - else
     h4 = title
 
-  .contentarea
-    .details
-      = "Skrevet av #{news_item.creator.name}" if news_item.creator
-      - if title
-        =<> (news_item.publish_at || news_item.created_at).strftime '%Y-%m-%d'
-      - if news_item.expire_at && news_item.expire_at < Time.current
-        b> Utløpt
-        | #{news_item.expire_at.strftime('%F %R')}.
-    .md = textalize(texts[0].strip) if texts[0]
-    - if texts[1]
-      - if full
-        .md = textalize(texts[1].strip)
-      - else
-        p.read_more
-          = detour_to('Les mer...', news_item)
+- details = capture
+  = "Skrevet av #{news_item.creator.name}" if news_item.creator
+  - if title
+    =<> (news_item.publish_at || news_item.created_at).strftime '%Y-%m-%d'
+  - if news_item.expire_at && news_item.expire_at < Time.current
+    b> Utløpt
+    | #{news_item.expire_at.strftime('%F %R')}.
+- if details.present?
+  .details = details
+.md = textalize(texts[0].strip) if texts[0]
+- if texts[1]
+  - if full
+    .md = textalize(texts[1].strip)
+  - else
+    p.read_more
+      = detour_to('Les mer...', news_item)
 
-    - if user? && news_item.persisted?
-      ul.controls.mb-0
-        - if news_item.news_item_likes
-          li.mr-2 id="like_#{news_item.id}"
-            a href=like_news_item_path(news_item) data-method=:post
-              i.far.fa-thumbs-up>
-              | Liker
-        li = detour_to 'Endre', edit_polymorphic_path(news_item), class: :edit
-        - if news_item.is_a? NewsItem
-          - unless news_item.expired?
-            li = detour_to 'Utløpt', {controller: :news, action: :expire, id: news_item}, class: :edit, data: {confirm: 'Er du sikker?'}, method: :post
-          - unless full || focus
-            li = detour_to 'Flytt til toppen', {controller: :news, action: :move_to_top, id: news_item}, class: :edit, method: :post
-          li = detour_to 'Slett', {controller: :news, action: :destroy, id: news_item}, class: :edit, data: {confirm: 'Er du sikker?'}, method: :delete
-        - if admin?
-          li = back_or_link_to 'Tilbake', nil, class: :edit
+- if user? && news_item.persisted?
+  ul.controls.mb-0
+    - if news_item.news_item_likes
+      li.mr-2 id="like_#{news_item.id}"
+        a href=like_news_item_path(news_item) data-method=:post
+          i.far.fa-thumbs-up>
+          | Liker
+    li = detour_to 'Endre', edit_polymorphic_path(news_item), class: :edit
+    - if news_item.is_a? NewsItem
+      - unless news_item.expired?
+        li = detour_to 'Utløpt', {controller: :news, action: :expire, id: news_item}, class: :edit, data: {confirm: 'Er du sikker?'}, method: :post
+      - unless full || focus
+        li = detour_to 'Flytt til toppen', {controller: :news, action: :move_to_top, id: news_item}, class: :edit, method: :post
+    - if full && admin?
+      li = back_or_link_to 'Tilbake', nil, class: :edit
 
-      - if news_item.news_item_likes&.any?
-        div = news_item.likes_message
+  - if news_item.news_item_likes&.any?
+    div = news_item.likes_message

@@ -46,7 +46,7 @@ class WelcomeController < ApplicationController
         @news_items << NewsItem.new(publish_at: event.publish_at,
             body: render_to_string(partial: 'layouts/event_main', locals: {
               event: event,
-              display_year: event.start_at.to_date.cwyear != Date.current.cwyear,
+              display_year: event.start_at.to_date.year != Date.current.year,
               display_month: true, display_times: true
             }))
       end
