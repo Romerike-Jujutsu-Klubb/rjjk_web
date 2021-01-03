@@ -33,7 +33,7 @@ class EventMessagesController < ApplicationController
     @event_message = EventMessage.find(params[:id])
     if @event_message.update(params[:event_message])
       back_or_redirect_to edit_event_path(@event_message.event_id, anchor: :messages_tab),
-                          notice: 'Event message was successfully updated.'
+          notice: 'Event message was successfully updated.'
     else
       render action: :edit
     end

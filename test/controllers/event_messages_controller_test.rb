@@ -50,7 +50,7 @@ class EventMessagesControllerTest < ActionController::TestCase
       ready_at: @event_message.ready_at,
       subject: @event_message.subject,
     } }
-    assert_redirected_to event_message_path(@event_message)
+    assert_redirected_to edit_event_path(@event_message.event_id, anchor: :messages_tab)
   end
 
   test 'should destroy event_message' do
