@@ -3,6 +3,7 @@ nb:
     address: Adresse
     basic_technique_id: Grunnteknikk
     curriculum_group_id: Pensum
+    description: Beskrivelse
     from_age: "Fra alder"
     group_ids: Grupper
     height: Høyde
@@ -37,7 +38,6 @@ nb:
         member_id: Medlem
         practice_id: Trening
       basic_technique:
-        description: Beskrivelse
         rank_id: Grad
         translation: Oversettelse
       card_key:
@@ -161,7 +161,6 @@ nb:
         css_color: CSS Farge
         colour: Beltebeskrivelse
         decoration: Dekorasjon
-        description: Beskrivelse
         embroydery: Brodering
         group_id: Gruppe
         martial_art_id: Stil
