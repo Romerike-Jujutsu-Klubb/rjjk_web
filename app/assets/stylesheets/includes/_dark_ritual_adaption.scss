@@ -227,21 +227,6 @@ body:not(.wide) {
   }
 }
 
-.post {
-  h3 {
-    margin-bottom: 0;
-    color: $logo_light_blue !important;
-  }
-
-  img {
-    max-width: 100%;
-  }
-
-  .next-practice-btn {
-    flex-grow: 1;
-   }
-}
-
 h4 {
   color: $logo_light_blue !important;
 }
