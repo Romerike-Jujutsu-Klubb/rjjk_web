@@ -8,11 +8,15 @@
       - if @event_message.new_record? || @event_message.message_type.blank?
         = f.select :message_type, [nil] + EventMessage::MessageType.constants.sort
       - else
-        = @event_message.message_type
-        = f.hidden_field :message_type
+        .form-group
+          label> Meldingstype:
+          = @event_message.message_type
+          = f.hidden_field :message_type
     .col-sm-6
-      br
-      = f.check_box :ready_at, {checked: !!@event_message.ready_at}, Time.current
+      - if @event_message.event_invitee_messages.any?
+        = @event_message.ready_at.strftime('%F %R')
+      - else
+        = f.check_box :ready_at, {checked: !!@event_message.ready_at}, Time.current
 
   = f.text_field :subject, size: 64
   = f.text_area :body, class: :expanding
