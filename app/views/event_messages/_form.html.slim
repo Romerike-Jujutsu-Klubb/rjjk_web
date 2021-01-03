@@ -1,7 +1,7 @@
 - @content_width = 800
 
 = bootstrap_form_for(@event_message) do |f|
-  = f.static_control :event_id, value: @event_message.event_id, label: @event_message.event&.name
+  = f.static_control :event_id, label: @event_message.event&.name
 
   .row
     .col-sm-6
@@ -12,7 +12,7 @@
         = f.hidden_field :message_type
     .col-sm-6
       br
-      = f.check_box :ready_at, {}, Time.current, nil
+      = f.check_box :ready_at, {checked: !!@event_message.ready_at}, Time.current
 
   = f.text_field :subject, size: 64
   = f.text_area :body, class: :expanding
