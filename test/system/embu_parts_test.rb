@@ -17,7 +17,7 @@ class EmbuPartsTest < ApplicationSystemTestCase
     visit embu_parts_path
     click_on 'New Embu part'
 
-    fill_in 'Description', with: @embu_part.description
+    fill_in 'Beskrivelse', with: @embu_part.description
     fill_in 'embu_part_embu_id', with: @embu_part.embu_id
     fill_in 'Position', with: @embu_part.position
     click_on 'Lag Embu part'
@@ -30,7 +30,7 @@ class EmbuPartsTest < ApplicationSystemTestCase
     visit embu_parts_path
     click_on 'Edit', match: :first
 
-    fill_in 'Description', with: @embu_part.description
+    fill_in 'Beskrivelse', with: @embu_part.description
     fill_in 'Embu', with: @embu_part.embu_id
     fill_in 'Position', with: @embu_part.position
     click_on 'Oppdater Embu part'
