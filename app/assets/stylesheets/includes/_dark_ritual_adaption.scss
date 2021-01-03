@@ -135,9 +135,6 @@ body:not(.wide) {
 
   @media print {
     background: white;
-    .padded {
-      background: white;
-    }
     h2 {
       break-before: page;
       margin-top: 2cm;
@@ -176,16 +173,6 @@ body:not(.wide) {
 
   h1, h2, h3 {
     color: #CCC;
-  }
-
-  > div.padded {
-    padding-top: 0;
-    padding-right: 16px;
-    background-color: #222222;
-
-    > div {
-      margin-bottom: 1em;
-    }
   }
 
   > .row > div {
