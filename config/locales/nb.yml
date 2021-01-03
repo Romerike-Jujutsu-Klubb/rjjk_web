@@ -136,6 +136,7 @@ nb:
         account_no: Kontonummer
         billing_type: "Fakturerings\u00ADmåte"
         comment: Kommentar
+        contract_binding_end_on: Bindingstid til
         discount_override: Rabatt
         honorary_on: Æresmedlem fra
         nkf_fee: NKF Hovedklubb

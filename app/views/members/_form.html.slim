@@ -18,6 +18,10 @@
           = link_to membership.group_instructor? ? 'Ja' : 'Nei', controller: :group_instructors
           = check_box :member, :instructor, title: 'Permanent instruktør', class: 'ml-3'
           =< label :member, :instructor, 'fast', title: 'Permanent instruktør'
+    .col
+      - gi_btn = capture
+        a href='#' onclick="$('#member_contract_binding_end_on').val('#{6.months.from_now.to_date}')" Fått drakt
+      = f.text_field :contract_binding_end_on, class: 'date', append: gi_btn
   .row
     .col
       = f.text_field :passive_on, class: 'date', placeholder: 'dato'

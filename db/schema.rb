@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_03_204154) do
+ActiveRecord::Schema.define(version: 2021_01_03_231709) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -463,6 +463,7 @@ ActiveRecord::Schema.define(version: 2021_01_03_204154) do
     t.date 'passive_on'
     t.datetime 'honorary_on'
     t.integer 'discount_override'
+    t.date 'contract_binding_end_on'
   end
 
   create_table 'news_item_likes', force: :cascade do |t|
