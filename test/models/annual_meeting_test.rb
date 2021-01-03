@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class AnnualMeetingTest < ActiveSupport::TestCase
-  test 'changing event type allows two event in the same year' do
+  test 'changing event type' do
     am1 = annual_meetings(:last)
     am2 = annual_meetings(:next)
 
@@ -13,11 +13,10 @@ class AnnualMeetingTest < ActiveSupport::TestCase
     assert_equal 'AnnualMeeting', am2.type
 
     am2.start_at = '2013-03-01'
-    assert_not am2.valid?
-    assert_equal ['Dato og tid kan bare ha et årsmøte per år.'], am2.errors.full_messages
+    assert am2.valid?
 
     am2.type = 'Event'
-    assert_not am2.valid?
+    assert am2.valid?
 
     am2.type = 'AnnualMeeting'
     assert_equal 'AnnualMeeting', am2.type
@@ -37,6 +36,6 @@ class AnnualMeetingTest < ActiveSupport::TestCase
     assert_equal Camp, am2_4.class
     assert am2_4.valid?
 
-    assert_not am2.valid?
+    assert am2.valid?
   end
 end

@@ -23,11 +23,8 @@
       .row.mt-3
         .col-sm-6
           = f.text_field :name, size: 52, label: 'Tittel'
-      .row
-        .col-sm-6
-          .card
-            .card-header Beskrivelse
-            .card-body.p-0 = f.text_area :description, class: 'expanding', rows: 4, style: 'max-height:50vh', wrapper: false, value: kramdown(@event.description)
+          = f.text_area :summary, class: 'expanding', rows: 4, style: 'max-height:25vh', value: kramdown(@event.summary)
+          = f.text_area :description, class: 'expanding', rows: 4, style: 'max-height:50vh', value: kramdown(@event.description)
         .col-sm-6
           .card
             .card-header Forhåndsvisning
@@ -37,11 +34,8 @@
       .row.mt-3
         .col-sm-6
           = f.text_field :name_en, size: 52, label: 'Title'
-      .row
-        .col-sm-6
-          .card
-            .card-header Description
-            .card-body.p-0 = f.text_area :description_en, class: 'expanding', rows: 4, style: 'max-height:50vh', wrapper: false, value: kramdown(@event.description_en)
+          = f.text_area :summary_en, class: 'expanding', rows: 4, style: 'max-height:25vh', value: kramdown(@event.summary_en)
+          = f.text_area :description_en, class: 'expanding', rows: 4, style: 'max-height:50vh', value: kramdown(@event.description_en)
         .col-sm-6
           .card
             .card-header Preview

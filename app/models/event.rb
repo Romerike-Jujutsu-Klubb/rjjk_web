@@ -69,12 +69,8 @@ class Event < ApplicationRecord
     (end_at || start_at) + 1.week
   end
 
-  def summary
-    ingress
-  end
-
   def ingress
-    paragraphs&.first
+    ((I18n.locale == :nb ? summary : summary_en.presence) || summary)
   end
 
   def invited
@@ -124,10 +120,7 @@ class Event < ApplicationRecord
   end
 
   def body
-    body_paragraphs = paragraphs&.drop(1)
-    return if body_paragraphs.blank?
-
-    body_paragraphs.join("\n\n")
+    ((I18n.locale == :nb ? description : description_en.presence) || description)
   end
 
   def news_item_likes
@@ -136,11 +129,5 @@ class Event < ApplicationRecord
 
   def image
     Image.find(Rails.env.test? ? 980_190_962 : 1054)
-  end
-
-  private
-
-  def paragraphs
-    ((I18n.locale == :nb ? description : description_en.presence) || description)&.split(/\r?\n\r?\n/)
   end
 end

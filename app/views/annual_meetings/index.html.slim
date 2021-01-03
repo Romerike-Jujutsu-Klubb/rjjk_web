@@ -7,7 +7,7 @@ h1 Årsmøter (#{@annual_meetings.size})
 table.table data-record-path=annual_meetings_path class=('table-sm' if @annual_meetings.size > 12)
   tr
     th Start at
-    th
+    th Deltakere
     th
 
   - @annual_meetings.each do |annual_meeting|
@@ -15,7 +15,7 @@ table.table data-record-path=annual_meetings_path class=('table-sm' if @annual_m
       td = annual_meeting.start_at.strftime('%F %R')
       td = annual_meeting.event_invitees.size
       td.text-right.py-2
-        - if annual_meeting.start_at > 1.year.ago && annual_meeting.elections.empty?
+        - if annual_meeting.elections.empty?
           a.btn.btn-danger.btn-sm href=url_for(annual_meeting) data-method=:delete data-confirm='Are you sure?'
             i.fa.fa-trash>
             | Slett

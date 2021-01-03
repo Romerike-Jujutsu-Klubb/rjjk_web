@@ -12,6 +12,7 @@ nb:
     monthly_fee: "Måneds\xADavgift"
     name: Navn
     nkf_member_trial_id: NKF Prøvemedlem
+    summary: Sammendrag
     title: Tittel
     to_age: "Til alder"
     url: URL
@@ -59,7 +60,10 @@ nb:
         role_id: Rolle
         member_id: Medlem
       event:
+        description: Beskrivelse (valgfri)
+        description_en: Description (optional)
         invitees: Inviter
+        summary_en: Summary
       event_invitee:
         comment: Kommentar
         email: E-post
@@ -143,7 +147,6 @@ nb:
         expire_at: til
         publish_at: Publiser fra
         publication_state: Publiseringsstatus
-        summary: Sammendrag
       next_semester:
         first_session: Første trening neste semester
       page_alias:

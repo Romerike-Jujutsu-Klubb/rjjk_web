@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_25_100124) do
+ActiveRecord::Schema.define(version: 2021_01_03_204154) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -293,6 +293,8 @@ ActiveRecord::Schema.define(version: 2020_12_25_100124) do
     t.text 'description_en'
     t.string 'type'
     t.string 'registration_url', limit: 128
+    t.text 'summary'
+    t.text 'summary_en'
   end
 
   create_table 'front_page_sections', force: :cascade do |t|

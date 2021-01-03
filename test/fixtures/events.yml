@@ -3,18 +3,18 @@ one:
   name_en: THE EVENT
   start_at: <%=Time.zone.parse('2017-08-19 13:37').utc.to_s(:db)%>
   created_at: '2013-08-19 13:37'
-  description: |
+  summary: |
     Dette er tidenes arrangementsingress.
-
+  description: |
     Dette er den lange beskrivelsen.  Den har mye tekst.  Lorem ipsum etc.
 
     Dette er den lange beskrivelsen.  Den har mye tekst.  Lorem ipsum etc.
 
     Dette er den lange beskrivelsen.  Den har mye tekst.  Lorem ipsum etc.
 
-  description_en: |
+  summary_en: |
     This is the teaser event of a lifetime.
-
+  description_en: |
     This is the long explanation.  It has a lot of text.  Lorem ipsum etc.
 
     This is the long explanation.  It has a lot of text.  Lorem ipsum etc.
@@ -26,9 +26,9 @@ camp:
   type: Camp
   start_at: <%=Time.zone.parse('2020-05-23 10:00').utc.to_s(:db)%>
   created_at: '2013-01-15 18:14'
-  description: |
+  summary: |
     Romerike Jujutsu Klubb inviterer til treningsleir med Soke Yamaue.
-
+  description: |
     Tema vil være Aikijutsu relatert til Jujutsu. Leiren er åpen for alle.
 
     ![inline.jpg](/images/<%=id :one%>/inline.jpg
@@ -100,4 +100,4 @@ wash_day:
   type: VoluntaryWork
   start_at: 2013-01-23 12:00
   created_at: '2013-01-01 18:13'
-  description: Vi vasker hele dojoen.  Så går vi på Peppe's Pizza.
+  summary: Vi vasker hele dojoen.  Så går vi på Peppe's Pizza.

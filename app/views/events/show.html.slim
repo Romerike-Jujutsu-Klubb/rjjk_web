@@ -10,13 +10,16 @@ h1 = @title
   a.btn.btn-info.mb-3.mr-3 href=rails_blob_path(file) target='_blank'
     i.fa.fa-file-alt>
     = file.filename
-- body = textalize(I18n.locale != :nb ? @event.description_en : @event.description)
+- summary = textalize(@event.ingress)
+- body = textalize(@event.body)
 - if @event_invitee
+  == @event_invitee.replace_markers(summary)
   == @event_invitee.replace_markers(body)
 - else
   - root_url = Rails.application.routes.url_helpers.root_url
   - print_span = "<span class='d-none d-print-inline'>#{I18n.t(:registration_link).chomp('.')}: #{link_to(root_url, root_url)} .</span>"
   - link = "#{link_to(I18n.t(:registration_link), new_event_registration_path(event_invitee: {event_id: @event.id}), class: 'd-print-none')}#{print_span}"
+  == summary.gsub(EventInvitee::REGISTRATION_LINK_MARKER, link)
   == body.gsub(EventInvitee::REGISTRATION_LINK_MARKER, link)
 
 = render 'layouts/modal_image'
