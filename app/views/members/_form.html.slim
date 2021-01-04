@@ -20,7 +20,7 @@
           =< label :member, :instructor, 'fast', title: 'Permanent instruktør'
     .col
       - gi_btn = capture
-        button.btn.btn-secondary onclick="$('#member_contract_binding_end_on').val('#{6.months.from_now.to_date}')" Fått drakt
+        button.btn.btn-secondary type=:button onclick="$('#member_contract_binding_end_on').val('#{6.months.from_now.to_date}')" Fått drakt
       = f.text_field :contract_binding_end_on, class: 'date', append: gi_btn
   .row
     .col
