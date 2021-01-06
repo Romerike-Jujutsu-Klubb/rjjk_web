@@ -7,7 +7,7 @@ class MemberDrilldownController < SimpleDrilldown::Controller
   field :joined_on
   field :contract_binding_end_on
   field :left_on
-  default_fields %w[name joined_on left_on]
+  default_fields %w[name joined_on contract_binding_end_on left_on]
   list_order 'members.joined_on, members.created_at'
 
   dimension :active, <<~SQL.squish
@@ -21,6 +21,7 @@ class MemberDrilldownController < SimpleDrilldown::Controller
   dimension :contract_binding, <<~SQL.squish
     CASE
     WHEN contract_binding_end_on IS NOT NULL AND contract_binding_end_on >= CURRENT_DATE THEN 'Bundet'
+    WHEN contract_binding_end_on IS NOT NULL AND contract_binding_end_on < CURRENT_DATE THEN 'Utløpt'
     ELSE 'Fri'
     END
   SQL
