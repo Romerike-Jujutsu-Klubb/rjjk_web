@@ -35,6 +35,7 @@ table.table class=('table-sm' if @signups.size > 12) data-record-path=signups_pa
       th Navn
       th Alder
       th Grupper
+      th Drakt
   tbody
     - @signups.each do |signup|
       tr data-record-id=signup.id
@@ -45,6 +46,7 @@ table.table class=('table-sm' if @signups.size > 12) data-record-path=signups_pa
             =< "(#{signup.nkf_member_trial.name})"
         td.text-center = signup.user.age || signup.nkf_member_trial&.age
         td = signup.user.groups.map(&:name).join(', ')
+        td = 'Ønsker drakt' if signup.welcome_package?
         td.text-right
           - unless signup.nkf_member_trial
             a.btn.btn-warning.btn-sm.ml-2 href=export_signup_path(signup) data-toggle=:tooltip title="Overfør til NKF." data-method=:post

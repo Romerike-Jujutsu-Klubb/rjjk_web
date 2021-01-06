@@ -39,6 +39,11 @@ class SignupGuideTest < ApplicationSystemTestCase
     screenshot :groups
     find('label', text: 'Rogue-fu (42-99 år)').click
     screenshot :groups_filled
+    click_on 'Neste'
+
+    screenshot :welcome_package
+    find('label', text: 'Ja, jeg trenger drakt.').click
+    screenshot :welcome_package_filled
 
     assert_difference(-> { Signup.count }, 13) do
       assert_difference(-> { User.count }, 33) do
@@ -78,6 +83,11 @@ class SignupGuideTest < ApplicationSystemTestCase
 
     screenshot :groups
     screenshot :groups_filled
+    click_on 'Neste'
+
+    screenshot :welcome_package
+    find('label', text: 'Ja, jeg trenger drakt.').click
+    screenshot :welcome_package_filled
 
     assert_difference(-> { Signup.count }, 13) do
       assert_difference(-> { User.count }, 34) do
@@ -117,6 +127,11 @@ class SignupGuideTest < ApplicationSystemTestCase
 
     screenshot :groups
     screenshot :groups_filled
+    click_on 'Neste'
+
+    screenshot :welcome_package
+    find('label', text: 'Ja, jeg trenger drakt.').click
+    screenshot :welcome_package_filled
 
     assert_difference(-> { Signup.count }, 13) do
       assert_difference(-> { User.count }, 34) do

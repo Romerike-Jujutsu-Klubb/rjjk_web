@@ -171,8 +171,4 @@ class Group < ApplicationRecord
   def on_break?(today = Date.current)
     school_breaks && current_semester.interval.exclude?(today)
   end
-
-  def conains_age(age)
-    (from_age..to_age).cover?(age)
-  end
 end

@@ -302,6 +302,7 @@ Rails.application.routes.draw do
     match :contact_info, via: %i[get post]
     match :guardians, via: %i[get post]
     match :groups, via: %i[get post]
+    match :welcome_package, via: %i[get post]
     post :complete
     patch :complete
     get :find_user

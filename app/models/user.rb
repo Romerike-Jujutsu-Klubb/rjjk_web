@@ -249,23 +249,6 @@ class User < ApplicationRecord
     label
   end
 
-  def as_json(options = {})
-    options = options.dup
-    includes = options[:include]
-    case includes
-    when Hash
-      group_ids_included = includes.delete(:group_ids)
-    when :group_ids
-      group_ids_included = options.delete(:include)
-    end
-
-    json_hash = super.as_json(options)
-
-    json_hash['group_ids'] = group_ids if group_ids_included
-
-    json_hash # don't forget to return this at the end
-  end
-
   def to_vcard
     photo_src =
         if profile_image

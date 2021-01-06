@@ -1,0 +1,20 @@
+.card
+  h5.card-header Velkomstpakke
+  .card-body
+    p Trenger du drakt?  I så fall kan du få en gratis dakt av oss når du melder deg inn mot 6 måneder
+      bindingstid.
+
+    = bootstrap_form_for @signup, url: signup_guide_welcome_package_path do |f|
+      = invisible_captcha
+      .mb-4
+        = @user.errors.full_messages
+        = f.form_group :skill_level
+          = f.radio_button :welcome_package, true, label: "Ja, jeg trenger drakt.", required: true
+          = f.radio_button :welcome_package, false, label: "Nei, jeg trenger ikke drakt."
+
+      button.mr-3 name="back" type="submit" class="btn btn-secondary"
+        i.fa.fa-chevron-left>
+        | Tilbake
+      button.btn.btn-primary.float-right name="submit" type="submit"
+        ' Meld inn
+        i.fa.fa-thumbs-up

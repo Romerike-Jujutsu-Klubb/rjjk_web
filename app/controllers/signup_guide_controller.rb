@@ -97,30 +97,36 @@ class SignupGuideController < ApplicationController
       store_signup
       return redirect_to signup_guide_contact_info_path if params[:back]
 
-      return complete
+      return redirect_to signup_guide_welcome_package_path
     end
     @groups = Group.active.to_a
     return if @user.groups.any?
 
-    @groups.each { |g| @user.groups << g if g.conains_age(@user.age) }
+    @groups.each { |g| @user.groups << g if g.contains_age(@user.age) }
+  end
+
+  def welcome_package
+    return unless load_signup
+    return unless request.post?
+
+    store_signup
+    return redirect_to signup_guide_groups_path if params[:back]
+    return unless @user.valid? || @user.errors.keys == %i[group_memberships]
+
+    complete
   end
 
   def complete
     Signup.transaction do
-      if (existing_user_id = params[:user][:id].presence)
-        user = User.find(existing_user_id)
-        user.update! params[:user]
-      else
-        user = @user
-        group_ids = @user.group_ids
-        @user.group_ids = nil
-        @user.save!
-        @user.update! group_ids: group_ids
-      end
+      user = @user
+      group_ids = @user.group_ids
+      @user.group_ids = nil
+      @user.save!
+      @user.update! group_ids: group_ids
 
       user.address ||= user.guardian_1&.address
       user.postal_code ||= user.guardian_1&.postal_code
-      @signup = Signup.create!(user: user)
+      @signup.update!(user: user)
       clear_signup
       NkfExportTrialMembersJob.perform_later
       NkfImportTrialMembersJob.perform_later
@@ -131,12 +137,16 @@ class SignupGuideController < ApplicationController
   private
 
   def load_signup
-    @user = if (json = cookies[:signup])
-              logger.info "load_signup: #{json}"
-              User.new JSON.parse(json)
-            else
-              User.new
-            end
+    @user = User.new
+    @signup ||= Signup.new
+    if (json = cookies[:signup])
+      logger.info "load_signup: #{json}"
+      signup_attrs = JSON.parse(json)
+      unless (welcome_attr = signup_attrs.delete('welcome_package')).nil?
+        @signup.welcome_package = welcome_attr
+      end
+      @user.attributes = signup_attrs
+    end
     if @user.guardian_1_id.nil? && (guardian_1_json = cookies[:signup_guardian_1])
       logger.info "load_signup: guardian_1: #{guardian_1_json}"
       guardian_1_attributes = JSON.parse(guardian_1_json)
@@ -153,18 +163,24 @@ class SignupGuideController < ApplicationController
     if (new_attributes = params[:user])
       @user.attributes = new_attributes
     end
+    if (new_signup_attributes = params[:signup])
+      @signup.attributes = new_signup_attributes
+    end
     @user.valid? if flash.alert
     true
   rescue => e
     logger.error e
-    cookies.delete(:signup)
-    cookies.delete(:signup_guardian_1)
+    clear_signup
     redirect_to signup_guide_root_path, alert: 'Beklager!  Noe gikk galt.  Vennligst prøv på nytt.'
     false
   end
 
   def store_signup
-    json = @user.attributes.select { |_k, v| v.present? || v == false }.to_json(include: :group_ids)
+    signup_attrs = @user.attributes.select do |_k, v|
+      v.present? || v == false
+    end.merge(group_ids: @user.group_ids)
+    signup_attrs[:welcome_package] = @signup.welcome_package if @signup
+    json = signup_attrs.to_json
     logger.info "store_signup: #{json}"
     cookies[:signup] = { value: json, expires: 100.years.from_now }
     return unless @user.guardian_1&.new_record?
