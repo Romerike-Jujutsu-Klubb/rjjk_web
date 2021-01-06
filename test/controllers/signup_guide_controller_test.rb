@@ -9,8 +9,13 @@ class SignupGuideControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'post contact_info' do
-    post signup_guide_contact_info_url, params: { user: { birthdate: '2004-06-03' } }
+    post signup_guide_contact_info_url, params: { user: { birthdate: '2004-06-03', phone: '12345678' } }
     assert_redirected_to signup_guide_groups_path
+  end
+
+  test 'post missing contact_info' do
+    post signup_guide_contact_info_url, params: { user: { birthdate: '2004-06-03' } }
+    assert_redirected_to signup_guide_contact_info_path
   end
 
   test 'post guardians' do
