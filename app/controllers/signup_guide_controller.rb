@@ -65,7 +65,7 @@ class SignupGuideController < ApplicationController
 
     store_signup
     if params[:back]
-      return redirect_to @user.age < 18 ? signup_guide_guardians_path : signup_guide_basics_path
+      return redirect_to @user.age&.<(18) ? signup_guide_guardians_path : signup_guide_basics_path
     end
 
     existing_mail_user = User.find_by(email: @user.contact_email) if @user.email.present?
@@ -83,7 +83,7 @@ class SignupGuideController < ApplicationController
       store_signup
     end
 
-    if @user.invalid? && (@user.errors.keys & %i[email phone postal_code address]).any?
+    if @user.invalid? && (@user.errors.keys & %i[base email phone postal_code address]).any?
       return redirect_to signup_guide_contact_info_path, alert: ''
     end
 

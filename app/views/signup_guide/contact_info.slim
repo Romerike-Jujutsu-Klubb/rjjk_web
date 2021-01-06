@@ -16,9 +16,9 @@
           javascript:
             let $inputs = $('input#user_email,input#user_phone');
             console.log("inputs: " + $inputs.length);
-            $inputs.closest('form').on('submit', function() {
-              console.log('submiting');
-              $inputs.not(this).prop('required', !$(this).val().length);
+            $inputs.each(function(i, input) {
+              console.log('require: ' + input);
+              $inputs.not(input).prop('required', !$(input).val().length);
             });
             $inputs.on('input', function() {
               console.log('inputing');
@@ -37,7 +37,7 @@
 javascript:
   const $invalid_input = $('input.is-invalid')[0];
   if ($invalid_input) {
-    $invalid_input.select().focus();
+    $($invalid_input).select().focus();
   } else {
     $('#user_phone').focus();
   }
