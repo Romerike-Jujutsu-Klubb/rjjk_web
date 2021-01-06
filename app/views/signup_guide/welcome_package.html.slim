@@ -7,7 +7,6 @@
     = bootstrap_form_for @signup, url: signup_guide_welcome_package_path do |f|
       = invisible_captcha
       .mb-4
-        = @user.errors.full_messages
         = f.form_group :skill_level
           = f.radio_button :welcome_package, true, label: "Ja, jeg trenger drakt.", required: true
           = f.radio_button :welcome_package, false, label: "Nei, jeg trenger ikke drakt."
