@@ -5,6 +5,7 @@ class MemberDrilldownController < SimpleDrilldown::Controller
 
   field :name
   field :joined_on
+  field :contract_binding_end_on
   field :left_on
   default_fields %w[name joined_on left_on]
   list_order 'members.joined_on, members.created_at'
@@ -15,6 +16,12 @@ class MemberDrilldownController < SimpleDrilldown::Controller
     WHEN honorary_on IS NOT NULL AND honorary_on < CURRENT_DATE THEN 'Æresmedlem'
     WHEN passive_on IS NOT NULL AND passive_on < CURRENT_DATE THEN 'Passiv'
     ELSE 'Aktiv'
+    END
+  SQL
+  dimension :contract_binding, <<~SQL.squish
+    CASE
+    WHEN contract_binding_end_on IS NOT NULL AND contract_binding_end_on >= CURRENT_DATE THEN 'Bundet'
+    ELSE 'Fri'
     END
   SQL
   dimension :group, "COALESCE(groups.name, 'Uten gruppe')",

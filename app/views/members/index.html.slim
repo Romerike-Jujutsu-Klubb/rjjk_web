@@ -7,7 +7,7 @@
   a.btn.btn-secondary> href=telephone_list_members_path Telefonliste
   a.btn.btn-secondary> href=email_list_members_path E-postlister
   a.btn.btn-secondary href=list_inactive_members_path Gamle medlemmer
-  a.btn.btn-info.ml-2 href=member_drilldown_path
+  a.btn.btn-info.ml-2 href=member_drilldown_path(search: {filter: {active: :Aktiv}, dimensions: [:group], display_type: :PIE})
     i.fa.fa-chart-bar>
     | Drilldown
   - if admin?

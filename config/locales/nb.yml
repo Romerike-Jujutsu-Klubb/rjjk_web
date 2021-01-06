@@ -2,6 +2,7 @@ nb:
   attributes:
     address: Adresse
     basic_technique_id: Grunnteknikk
+    contract_binding_end_on: Bindingstid til
     curriculum_group_id: Pensum
     description: Beskrivelse
     from_age: "Fra alder"
@@ -136,7 +137,6 @@ nb:
         account_no: Kontonummer
         billing_type: "Fakturerings\u00ADmåte"
         comment: Kommentar
-        contract_binding_end_on: Bindingstid til
         discount_override: Rabatt
         honorary_on: Æresmedlem fra
         nkf_fee: NKF Hovedklubb
@@ -307,6 +307,7 @@ nb:
 
 #drilldown:
   calendar_date: Dato
+  contract_binding: Bindingstid
   created_at: Opprettet
   day_of_month: Dag i måneden
   day_of_week: Ukedag
