@@ -16,7 +16,7 @@
         label Instruktør
         span.form-control
           = link_to membership.group_instructor? ? 'Ja' : 'Nei', controller: :group_instructors
-          = check_box :member, :instructor, title: 'Permanent instruktør', class: 'ml-3'
+          = check_box :member, :instructor, title: 'Permanent instruktør', class: 'ml-3', checked: membership.instructor
           =< label :member, :instructor, 'fast', title: 'Permanent instruktør'
     .col
       - gi_btn = capture
