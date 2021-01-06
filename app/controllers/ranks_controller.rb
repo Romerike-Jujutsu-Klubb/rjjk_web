@@ -76,7 +76,7 @@ class RanksController < ApplicationController
 
   def load_form_data
     @martial_arts = MartialArt.order(:name).to_a
-    @curriculum_groups =
-      [@rank.curriculum_group] | CurriculumGroup.includes(:martial_art).order(:from_age).merge(MartialArt.originals).to_a
+    @curriculum_groups = [@rank.curriculum_group].compact |
+        CurriculumGroup.includes(:martial_art).order(:from_age).merge(MartialArt.originals).to_a
   end
 end
