@@ -177,6 +177,8 @@ Rails.application.routes.draw do
       get 'show/:id(/:width)(.:format)', action: :show
     end
   end
+  get 'ims/index'
+  post 'ims/import'
   resources :information_pages, controller: :info, path: :info do
     collection { post :preview }
     member do

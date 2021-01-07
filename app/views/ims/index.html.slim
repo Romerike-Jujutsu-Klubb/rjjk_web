@@ -1,0 +1,9 @@
+.float-right
+  = bootstrap_form_with url: ims_import_path, layout: :inline, data: {remote: false} do |f|
+    = f.file_field :file, hide_label: true, wrapper_class: 'mr-3'
+    = f.primary :Importér
+
+h1 IMS Avstemming
+
+.alert.alert-warning.mt-5
+  h1 Ikke ferdig enda.
