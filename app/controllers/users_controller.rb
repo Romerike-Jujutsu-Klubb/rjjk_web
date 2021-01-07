@@ -69,10 +69,6 @@ class UsersController < ApplicationController
     @user = User.with_deleted.find(params[:id])
     if @user.update params[:user]
       flash.notice = 'Brukeren er oppdatert.'
-      [@user, *@user.contactees, *@user.payees, *@user.primary_wards, *@user.secondary_wards]
-          .map(&:last_membership).compact.each do |member|
-        NkfMemberSyncJob.perform_later member
-      end
       redirect_to edit_user_path(@user)
     else
       flash.now.alert = "En feil oppsto ved lagring av brukeren: #{@user.errors.full_messages.join("\n")}"
@@ -92,12 +88,6 @@ class UsersController < ApplicationController
       @user.save! validate: false
       other_user.save! validate: false
       flash.notice = 'Brukeren er oppdatert.'
-      unless Rails.env.development?
-        [@user, *@user.contactees, *@user.payees, *@user.primary_wards, *@user.secondary_wards]
-            .map(&:member).compact.each do |member|
-          NkfMemberSyncJob.perform_later member
-        end
-      end
       redirect_to edit_user_path(@user)
     end
   end

@@ -52,7 +52,6 @@ class MembersControllerTest < ActionController::TestCase
     VCR.use_cassette 'GoogleMaps Lars' do
       post :create, params: { member: {
         instructor: false,
-        nkf_fee: true,
         joined_on: '2007-06-21',
         user_id: id(:unverified_user),
         user_attributes: {
@@ -81,12 +80,9 @@ class MembersControllerTest < ActionController::TestCase
   end
 
   def test_update
-    assert_enqueued_with(job: NkfMemberSyncJob) do
-      VCR.use_cassette 'GoogleMaps Lars' do
-        post :update, params: { id: @lars.id, member: { user_attributes: { id: @lars.user_id, male: true } } }
-      end
+    VCR.use_cassette 'GoogleMaps Lars' do
+      post :update, params: { id: @lars.id, member: { user_attributes: { id: @lars.user_id, male: true } } }
     end
-    assert_equal 1, ActiveJob::Base.queue_adapter.enqueued_jobs.count
     assert_response :redirect
     assert_redirected_to action: :edit, id: @lars.id
   end

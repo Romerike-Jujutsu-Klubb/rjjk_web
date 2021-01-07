@@ -128,8 +128,6 @@ class SignupGuideController < ApplicationController
       user.postal_code ||= user.guardian_1&.postal_code
       @signup.update!(user: user)
       clear_signup
-      NkfExportTrialMembersJob.perform_later
-      NkfImportTrialMembersJob.perform_later
       render :complete
     end
   end

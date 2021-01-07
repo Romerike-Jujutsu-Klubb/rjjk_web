@@ -14,9 +14,5 @@ class MemberFeatureTest < ApplicationSystemTestCase
     screenshot :duties
     # find('a.nav-link', text: 'Signaturer').click
     screenshot :signatures
-    find('a.nav-link', text: 'NKF').click
-    screenshot :nkf_tab
-    execute_script 'window.scrollBy(0, $(window).height())'
-    screenshot :nkf_tab_down
   end
 end

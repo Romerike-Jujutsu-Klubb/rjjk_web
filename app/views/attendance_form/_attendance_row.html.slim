@@ -1,14 +1,8 @@
 - @member_count += 1
-- missing_contract = member.billing_type != 'MANUELL GIRO' && member.nkf_member&.ventekid && member.nkf_member.ventekid !~ /^333000000004/ && member.joined_on < 61.days.ago.to_date
 tr
   td nowrap="true"
     a href=url_for(controller: :members, action: :edit, id: member.id)
-      b #{h member.first_name} #{h member.last_name} #{'(Permisjon)' if member.nkf_member&.medlemsstatus == 'P'}
-      - if missing_contract
-        br
-        = member.invoice_email
-        br
-        = member.nkf_member.ventekid
+      b #{h member.first_name} #{h member.last_name} #{'(Permisjon)' if member.passive_on}
   td nowrap="true" align="center"
     = member.age
   td nowrap="true"
@@ -18,11 +12,6 @@ tr
       = h member.current_rank(@group.martial_art_id, @dates.first).try(:colour)
     - else
       | &nbsp;
-    - if missing_contract
-      br
-      = link_to 'Mangler kontrakt', :controller => :members, :action => :missing_contract, :id => member.id
-      br
-      | Innmeldt: #{member.joined_on.strftime('%Y-%m-%d')}
   - if @birthdate_missing
     td
       = h member.birthdate

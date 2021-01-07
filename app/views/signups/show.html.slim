@@ -12,15 +12,10 @@ table.table
   tbody
     tr
       th Registrert
-      td
-        - date_text = [@signup.created_at, @signup.nkf_member_trial&.reg_dato, @signup.nkf_member_trial&.reg_dato].compact.min.to_date
-        - if @signup.nkf_member_trial_id
-          a href=nkf_member_trial_path(@signup.nkf_member_trial_id) = date_text
-        - else
-          = date_text
+      td = @signup.created_at.to_date
     tr
       th Alder
-      td #{@signup.user.sex_label} #{@signup.user.age || @signup.nkf_member_trial&.age} år (#{@signup.user.birthdate || @signup.nkf_member_trial&.fodselsdato})
+      td #{@signup.user.sex_label} #{@signup.user.age} år (#{@signup.user.birthdate})
     tr
       th E-post
       td

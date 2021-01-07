@@ -55,7 +55,6 @@ class MembersController < ApplicationController
     update_memberships
     if @member.update(params[:member])
       flash[:notice] = 'Medlemmet oppdatert.'
-      NkfMemberSyncJob.perform_later @member unless Rails.env.development?
       back_or_redirect_to action: :edit, id: @member
     else
       edit
@@ -78,20 +77,6 @@ class MembersController < ApplicationController
     @administrators = User.find_administrators
     @administrator_emails = @administrators.map(&:email).compact.uniq
     @missing_administrator_emails = @administrators.size - @administrator_emails.size
-  end
-
-  def missing_contract
-    member = Member.find(params[:id])
-    @name = "#{member.first_name} #{member.last_name}"
-    @email = member.invoice_email
-    render layout: 'print'
-  end
-
-  def trial_missing_contract
-    @trial = NkfMemberTrial.find(params[:id])
-    @name = "#{@trial.fornavn} #{@trial.etternavn}"
-    @email = @trial.epost_faktura || @trial.epost
-    render :missing_contract, layout: 'print'
   end
 
   def map

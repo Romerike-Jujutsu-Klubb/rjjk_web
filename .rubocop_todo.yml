@@ -70,10 +70,7 @@ Naming/MethodParameterName:
   Exclude:
     - 'app/controllers/application_controller.rb'
     - 'app/helpers/application_helper.rb'
-    - 'app/jobs/nkf_synchronization_job.rb'
     - 'app/mailers/user_message_mailer.rb'
-    - 'app/services/nkf_member_comparison.rb'
-    - 'app/services/nkf_member_import.rb'
     - 'config/initializers/schedule.rb'
 
 # Offense count: 4
@@ -111,7 +108,6 @@ Rails/UniqueValidationWithoutIndex:
     - 'app/models/graduation.rb'
     - 'app/models/group_instructor.rb'
     - 'app/models/information_page.rb'
-    - 'app/models/nkf_member.rb'
     - 'app/models/user.rb'
 
 # Offense count: 2

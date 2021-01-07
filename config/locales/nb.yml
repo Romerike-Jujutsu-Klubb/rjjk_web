@@ -13,7 +13,6 @@ nb:
     locale: Språk
     monthly_fee: "Måneds\xADavgift"
     name: Navn
-    nkf_member_trial_id: NKF Prøvemedlem
     summary: Sammendrag
     title: Tittel
     to_age: "Til alder"
@@ -139,7 +138,6 @@ nb:
         comment: Kommentar
         discount_override: Rabatt
         honorary_on: Æresmedlem fra
-        nkf_fee: NKF Hovedklubb
         passive_on: Passiv fra
         phone_home: Fasttelefon
         phone_work: Arbeidstelefon

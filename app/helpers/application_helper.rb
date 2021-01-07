@@ -6,6 +6,7 @@ module ApplicationHelper
 
   WEBP_PATTERN = %r{image/webp|^\*/\*$}.freeze
   WEBM_PATTERN = %r{image/webp|^\*/\*$}.freeze
+  IMS_JOIN_URL = 'https://medlemskap.nif.no/Start/Index/20493'
 
   def accepts_webp?
     request.headers['HTTP_ACCEPT']&.split(',')&.any? { |t| WEBP_PATTERN.match? t }

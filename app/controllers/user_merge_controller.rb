@@ -50,12 +50,6 @@ class UserMergeController < ApplicationController
       @other_user.really_destroy!
       @user.update! params[:user] if params[:user]
       flash.notice = 'Brukerene er slått sammen.'
-      unless Rails.env.development?
-        [@user, *@user.contactees, *@user.payees, *@user.primary_wards, *@user.secondary_wards]
-            .map(&:member).compact.each do |member|
-          NkfMemberSyncJob.perform_later member
-        end
-      end
       redirect_to @user
     end
   rescue => e

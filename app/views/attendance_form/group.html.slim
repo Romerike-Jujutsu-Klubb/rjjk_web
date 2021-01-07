@@ -15,16 +15,6 @@ ruby:
   attending, absent = group_members.partition{|u| u.attending?}
   absent, passive = absent.partition{|u| u.member&.active?}
 .card-deck
-  - trial_members = NkfMemberTrial.for_group(group).to_a.reject(&:signup)
-  - if trial_members.any?
-    .card
-      h3.card-header Prøvemedlemmer (#{trial_members.size})
-      .card-body.pt-3
-        table.table.mb-0 class=('table-sm' if trial_members.size > 12)
-          - trial_members.each do |tm|
-            tr class=(tm.created_at < 4.weeks.ago ? 'table-danger' : tm.created_at < 2.weeks.ago ? 'table-warning' : nil)
-              td: a href=(tm.signup ? signup_path(tm.signup) : nkf_member_trial_path(tm)) = tm.name
-                td.text-nowrap = tm.created_at.to_date
   - if signups.any?
     .card
       h3.card-header.pr-2

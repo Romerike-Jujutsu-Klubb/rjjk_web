@@ -10,8 +10,6 @@
   a.btn.btn-info.ml-2 href=member_drilldown_path(search: {filter: {active: :Aktiv}, dimensions: [:group], display_type: :PIE})
     i.fa.fa-chart-bar>
     | Drilldown
-  - if admin?
-    a.btn.btn-warning< href=sync_errors_nkf_members_path NKF Sammenligning
 
 h1 Medlemsliste (#{@members.count}) (#{link_to 'Excel', action: :excel_export})
 

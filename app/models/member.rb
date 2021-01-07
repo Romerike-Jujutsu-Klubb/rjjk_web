@@ -6,8 +6,7 @@ class Member < ApplicationRecord
   ASPIRANT_AGE_LIMIT = 10
   MEMBERS_PER_PAGE = 30
   ACTIVE_CONDITIONS = 'left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)'
-  SEARCH_FIELDS =
-      %i[comment nkf_members.medlemsnummer phone_home phone_work].freeze
+  SEARCH_FIELDS = %i[comment phone_home phone_work].freeze
 
   has_paper_trail
 
@@ -17,7 +16,6 @@ class Member < ApplicationRecord
   has_one :next_graduate, -> do
     includes(:graduation).where('graduations.held_on >= ?', Date.current).order('graduations.held_on')
   end, class_name: :Graduate, inverse_of: :member
-  has_one :nkf_member, dependent: :nullify
 
   has_many :active_group_instructors, -> { active }, class_name: :GroupInstructor, inverse_of: :member
   has_many :appointments, dependent: :destroy
@@ -42,9 +40,8 @@ class Member < ApplicationRecord
             to_date, from_date)
   end
   scope :search, ->(query) do
-    includes(:nkf_member).references(:nkf_members)
-        .where(SEARCH_FIELDS.map { |c| "UPPER(#{c}::text) ~ :query" }.join(' OR '),
-            query: query.upcase.split(/\s+/).join('|'))
+    where(SEARCH_FIELDS.map { |c| "UPPER(#{c}::text) ~ :query" }.join(' OR '),
+        query: query.upcase.split(/\s+/).join('|'))
   end
   scope :with_user, -> { includes(:user).references(:users) }
 
@@ -55,7 +52,6 @@ class Member < ApplicationRecord
 
   validates :instructor, inclusion: { in: [true, false] }
   validates :joined_on, presence: true
-  validates :nkf_fee, inclusion: { in: [true, false] }
   validates :user, presence: true
 
   validate do
@@ -163,16 +159,6 @@ class Member < ApplicationRecord
     future_graduates(after, martial_art_id).map(&:rank)
   end
 
-  def fee
-    if instructor?
-      0
-    elsif senior?
-      300 + nkf_fee_amount
-    else
-      260 + nkf_fee_amount
-    end
-  end
-
   def active?(date = Date.current)
     (date >= joined_on && (left_on.nil? || date <= left_on)) && !passive?(date)
   end
@@ -190,7 +176,7 @@ class Member < ApplicationRecord
   end
 
   def paying?
-    active? && nkf_member&.kontraktsbelop.to_i > 0
+    active?
   end
 
   def senior?
@@ -199,14 +185,6 @@ class Member < ApplicationRecord
 
   def left?(date = Date.current)
     left_on&.< date
-  end
-
-  def nkf_fee_amount
-    if senior?
-      (nkf_fee? ? (279.0 / 12).ceil : 0)
-    else
-      (nkf_fee? ? (155.0 / 12).ceil : 0)
-    end
   end
 
   # FIXME(uwe): Use PriceAgeGroup?
@@ -385,15 +363,6 @@ class Member < ApplicationRecord
     else
       [nil, nil]
     end
-  end
-
-  # Used to synchronize vs NKF
-  def martial_art_name
-    MartialArt::KWR_NAME
-  end
-
-  def martial_art_name=(value)
-    # Ignore
   end
 
   private

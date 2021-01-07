@@ -1,35 +1,30 @@
 lars:
   instructor: false
   joined_on: 2007-06-21
-  nkf_fee: true
   user: lars
   updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 uwe:
   instructor: true
   joined_on: 1987-01-05
-  nkf_fee: true
   user: uwe
   updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 sebastian:
   instructor: false
   joined_on: 2007-08-25
-  nkf_fee: true
   user: sebastian
   updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 oldie:
   instructor: false
   joined_on: 2013-08-26
-  nkf_fee: true
   user: oldie
   updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 newbie:
   instructor: false
   joined_on: 2013-08-25
-  nkf_fee: true
   user: newbie
   updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
@@ -37,6 +32,5 @@ leftie:
   instructor: false
   joined_on: 2012-05-23
   left_on: 2013-10-16
-  nkf_fee: true
   user: leftie
   updated_at: <%=TEST_TIME.utc.to_s(:db) %>

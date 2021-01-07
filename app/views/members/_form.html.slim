@@ -1,4 +1,4 @@
-- if membership.persisted? && membership.nkf_member.nil?
+- if membership.persisted? && current_user.name == 'Uwe Kubosch' && false
   .clearfix
   a.btn.btn-danger.float-right href=member_path(membership) data-method=:delete
     i.fa.fa-trash>
@@ -8,9 +8,6 @@
   .row
     .col
       = f.text_field :joined_on, class: 'date'
-    .col.form-group
-      label NKF medlemsnr
-      span.form-control = (membership.nkf_member.try(:medlemsnummer) || 'Ikke i NKF-registeret.')
     - if membership.group_instructor? || membership.instructor? || membership.user&.groups&.any? { |g| g.from_age >= 13 }
       .col-md.form-group
         label Instruktør
@@ -45,10 +42,6 @@
       = f.text_field :discount_override, label: label, placeholder: placeholder, append: appendix
     .col style="min-width:9rem"
       = f.text_field :account_no
-    - if membership.nkf_member&.ventekid
-      .col style="min-width:13.5rem" = f.static_control label: 'KID', value: membership.nkf_member.ventekid, name: nil
-    .col = f.select :nkf_fee, [['Ja', true], ['Nei', false]]
-
   .row
     - if membership.phone_home.present?
       .col-6.pr-1

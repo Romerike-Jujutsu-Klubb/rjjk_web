@@ -6,7 +6,7 @@
 
   .buttons
     - unless current_user&.member
-      a.btn.btn-secondary href=signup_guide_root_path target='NKF' title='Prøv oss!'
+      a.btn.btn-secondary href=ApplicationHelper::IMS_JOIN_URL target='IMS' title='Prøv oss!'
         i.fa.fa-child>
         span.d-none.d-md-inline Prøv oss
     #calendarBtn.btn.btn-secondary title='Kalender'

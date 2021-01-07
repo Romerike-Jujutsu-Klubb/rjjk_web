@@ -24,24 +24,20 @@ class SignupGuideControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'post groups' do
-    VCR.use_cassette 'register_nkf_trial' do
-      post signup_guide_groups_path params: { user: {
-        address: 'Nyveien 5',
-        birthdate: '1999-12-31',
-        email: 'ny@test.org',
-      } }
-      assert_redirected_to signup_guide_welcome_package_path
-    end
+    post signup_guide_groups_path params: { user: {
+      address: 'Nyveien 5',
+      birthdate: '1999-12-31',
+      email: 'ny@test.org',
+    } }
+    assert_redirected_to signup_guide_welcome_package_path
   end
 
   test 'post welcome package' do
-    VCR.use_cassette 'register_nkf_trial' do
-      post signup_guide_welcome_package_path params: { user: {
-        address: 'Nyveien 5',
-        birthdate: '1999-12-31',
-        email: 'ny@test.org',
-      } }
-      assert_response :success
-    end
+    post signup_guide_welcome_package_path params: { user: {
+      address: 'Nyveien 5',
+      birthdate: '1999-12-31',
+      email: 'ny@test.org',
+    } }
+    assert_response :success
   end
 end

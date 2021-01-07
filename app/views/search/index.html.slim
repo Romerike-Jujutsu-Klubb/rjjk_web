@@ -15,7 +15,7 @@ scss:
 h1.mb-4 Søkeresultat for "#{@query}"
 
 - if @query
-  - if [@members, @former_members, @signups, @trials, @users, @pages, @news, @events, @images, @user_messages, @basic_techniques, @technique_applications].any?(&:present?)
+  - if [@members, @former_members, @signups, @users, @pages, @news, @events, @images, @user_messages, @basic_techniques, @technique_applications].any?(&:present?)
     .row
       - if @signups.present?
         .col.mb-4: .card
@@ -25,12 +25,6 @@ h1.mb-4 Søkeresultat for "#{@query}"
               li = link_to signup.user.name, signup
       = render 'members', members: @members, title: 'Medlemmer'
       = render 'members', members: @former_members, title: 'Tidligere Medlemmer'
-      - if @trials.present?
-        .col.mb-4: .card
-          h3.card-header Søkere i prøvetid
-          ul.card-body
-            - @trials.each do |tr|
-              li = link_to tr.name, tr
       = render 'users', users: @users, title: :Folk
       = render 'users', users: @deleted_users, title: 'Slettede brukere'
       - if @pages.present?

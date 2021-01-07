@@ -14,26 +14,17 @@ class MemberHistoryGraph
   JUNIOR_AGE_LIMIT = 15
   ASPIRANT_AGE_LIMIT = 10
   ACTIVE_CLAUSE = ->(date) do
-    "NOT EXISTS (
-      SELECT kontraktsbelop FROM nkf_members
-      WHERE member_id = members.id AND kontraktsbelop::integer <= 0)
-        AND (joined_on IS NULL OR joined_on <= '#{date.strftime('%Y-%m-%d')}')
-        AND (left_on IS NULL OR left_on > '#{date.strftime('%Y-%m-%d')}'
-    )"
+    "(joined_on IS NULL OR joined_on <= '#{date.strftime('%Y-%m-%d')}')
+     AND (left_on IS NULL OR left_on > '#{date.strftime('%Y-%m-%d')}')"
   end
   NON_PAYING_CLAUSE = ->(date) do
-    "EXISTS (
-      SELECT kontraktsbelop FROM nkf_members
-      WHERE member_id = members.id AND kontraktsbelop::integer <= 0)
-        AND (joined_on IS NULL OR joined_on <= '#{date.strftime('%Y-%m-%d')}')
-        AND (left_on IS NULL OR left_on > '#{date.strftime('%Y-%m-%d')}'
-    )"
+    "(joined_on IS NULL OR joined_on <= '#{date.strftime('%Y-%m-%d')}')
+     AND (left_on IS NULL OR left_on > '#{date.strftime('%Y-%m-%d')}')"
   end
 
   def self.totals(dates)
     dates.map do |date|
-      Member.where(ACTIVE_CLAUSE.call(date)).count + Member.where(NON_PAYING_CLAUSE.call(date))
-          .count
+      Member.where(ACTIVE_CLAUSE.call(date)).count + Member.where(NON_PAYING_CLAUSE.call(date)).count
     end
   end
 
@@ -125,10 +116,6 @@ class MemberHistoryGraph
       'Tiger' => [juniors_jj(dates), Group.find_by(name: 'Tiger').color],
       'Panda' => [aspirants(dates), Group.find_by(name: 'Panda').color],
       'Gratis' => [gratis(dates), :red],
-      'Prøvetid' => [
-        dates.map { |d| NkfMemberTrial.where('reg_dato <= ?', d).count }.without_consecutive_zeros,
-        :yellow,
-      ],
     }
     [data, dates]
   end

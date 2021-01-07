@@ -17,8 +17,7 @@ module AttendanceFormDataLoader
 
     current_members = @group.members.active(first_date, last_date)
         .includes({ user: { attendances: { practice: :group_schedule }, groups: :group_schedules },
-                    graduates: %i[graduation rank] },
-            :nkf_member)
+                    graduates: %i[graduation rank] })
     attended_query = Member.references(:practices)
         .includes(user: { attendances: { practice: :group_schedule } }, graduates: %i[graduation rank])
         .where(practices: { group_schedule_id: @group.group_schedules.map(&:id) })
@@ -29,7 +28,6 @@ module AttendanceFormDataLoader
     attended_query = attended_query.where.not('members.id' => @instructors.map(&:id)) if @instructors.any?
     attended_members = attended_query.to_a
     @members = current_members | attended_members
-    @trials = @group.trials
 
     @instructors.sort_by! do |m|
       r = m.current_rank(@group.martial_art_id, last_date)

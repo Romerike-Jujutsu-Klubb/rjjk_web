@@ -26,7 +26,6 @@ class SignupsTest < ApplicationSystemTestCase
     click_on 'Endre'
 
     select_from_chosen 'Manuel Neuer', from: :signup_user_id
-    select_from_chosen 'Even Jensen', from: :signup_nkf_member_trial_id
     click_on 'Lagre'
 
     assert_text 'Signup was successfully updated'

@@ -45,14 +45,8 @@ class SignupGuideTest < ApplicationSystemTestCase
     find('label', text: 'Ja, jeg trenger drakt.').click
     screenshot :welcome_package_filled
 
-    assert_difference(-> { Signup.count }, 13) do
-      assert_difference(-> { User.count }, 33) do
-        assert_difference(-> { NkfMemberTrial.count }, 12) do
-          VCR.use_cassette('NKF_Create_Trial', match_requests_on: %i[method host path query]) do
-            click_on 'Meld inn'
-          end
-        end
-      end
+    assert_difference(-> { Signup.count }, 1) do
+      assert_difference(-> { User.count }) { click_on 'Meld inn' }
     end
 
     screenshot :complete
@@ -89,14 +83,8 @@ class SignupGuideTest < ApplicationSystemTestCase
     find('label', text: 'Ja, jeg trenger drakt.').click
     screenshot :welcome_package_filled
 
-    assert_difference(-> { Signup.count }, 13) do
-      assert_difference(-> { User.count }, 34) do
-        assert_difference(-> { NkfMemberTrial.count }, 12) do
-          VCR.use_cassette('NKF_Create_Trial', match_requests_on: %i[method host path query]) do
-            click_on 'Meld inn'
-          end
-        end
-      end
+    assert_difference(-> { Signup.count }, 1) do
+      assert_difference(-> { User.count }, 2) { click_on 'Meld inn' }
     end
 
     screenshot :complete
@@ -133,14 +121,8 @@ class SignupGuideTest < ApplicationSystemTestCase
     find('label', text: 'Ja, jeg trenger drakt.').click
     screenshot :welcome_package_filled
 
-    assert_difference(-> { Signup.count }, 13) do
-      assert_difference(-> { User.count }, 34) do
-        assert_difference(-> { NkfMemberTrial.count }, 12) do
-          VCR.use_cassette('NKF_Create_Trial', match_requests_on: %i[method host path query]) do
-            click_on 'Meld inn'
-          end
-        end
-      end
+    assert_difference(-> { Signup.count }, 1) do
+      assert_difference(-> { User.count }, 2) { click_on 'Meld inn' }
     end
 
     screenshot :complete

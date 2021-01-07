@@ -22,11 +22,10 @@ class Graduation < ApplicationRecord
                 :rank,
               ],
             },
-            :nkf_member,
           ],
           rank: [{ curriculum_group: %i[martial_art ranks] }],
         },
-        group: { members: :nkf_member }
+        group: :members
       )
   end
   scope :censors_confirmed,

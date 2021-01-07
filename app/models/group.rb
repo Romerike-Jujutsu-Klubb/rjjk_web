@@ -87,17 +87,6 @@ class Group < ApplicationRecord
     closed_on.nil? || closed_on >= date
   end
 
-  # FIXME(uwe): Revert sync direction:  RJJK => NKF
-  def update_prices
-    contracts = NkfMember.where(kontraktstype: contract).to_a
-    return if contracts.empty?
-
-    self.monthly_fee = contracts.map(&:kontraktsbelop).group_by { |x| x }
-        .group_by { |_k, v| v.size }.max.last.map(&:first).first
-    self.yearly_fee = contracts.map(&:kont_belop).group_by { |x| x }
-        .group_by { |_k, v| v.size }.max.last.map(&:first).first
-  end
-
   def next_schedule
     group_schedules.min_by { |gs| gs.next_practice.start_at }
   end
@@ -129,7 +118,7 @@ class Group < ApplicationRecord
 
     instructors_query = Member.active(dates.first, dates.last)
         .includes({ user: [{ attendances: { practice: :group_schedule } }, :groups],
-                    graduates: %i[graduation rank] }, :nkf_member)
+                    graduates: %i[graduation rank] })
         .where(instructor: true)
     instructors_query = instructors_query.where.not(id: instructors.map(&:id)) if instructors.any?
     instructors += instructors_query
@@ -142,13 +131,6 @@ class Group < ApplicationRecord
     end
 
     instructors.uniq.sort_by(&:current_rank).reverse
-  end
-
-  def trials
-    NkfMemberTrial.for_group(self)
-        .includes(signup: { user: { attendances: { practice: :group_schedule } } })
-        .order('fornavn, etternavn')
-        .to_a
   end
 
   def waiting_list

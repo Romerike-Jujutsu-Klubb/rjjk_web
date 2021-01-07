@@ -14,7 +14,7 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @group = Group.includes(users: [:recent_attendances, { member: :nkf_member }]).find(params[:id])
+    @group = Group.includes(users: %i[member recent_attendances]).find(params[:id])
     chief_instructor = @group.current_semester&.chief_instructor
     @instructors = ([chief_instructor] + @group.instructors).compact.uniq
 
@@ -36,7 +36,6 @@ class GroupsController < ApplicationController
 
   def create
     @group = Group.new(params[:group])
-    @group.update_prices
     if @group.save
       flash[:notice] = 'Group was successfully created.'
       redirect_to(@group)
@@ -49,7 +48,6 @@ class GroupsController < ApplicationController
   def update
     @group = Group.find(params[:id])
     @group.attributes = params[:group]
-    @group.update_prices
     if @group.save
       flash[:notice] = 'Group was successfully updated.'
 
@@ -85,6 +83,6 @@ class GroupsController < ApplicationController
   def load_form_data
     @curriculum_groups = CurriculumGroup.includes(:martial_art).references(:martial_arts)
         .merge(MartialArt.originals).order(:martial_art_id, :position).to_a
-    @contracts = NkfMember.distinct.pluck(:kontraktstype).compact.sort
+    @contracts = Group.distinct.pluck(:contract).compact.sort
   end
 end

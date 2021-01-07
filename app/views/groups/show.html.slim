@@ -16,11 +16,11 @@ h3 = @group.name
         => free_spots
         | ledige plasser.
         br
-        = link_to 'Meld deg på!', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', :onclick => 'return !window.open(this.href)'
+        = link_to 'Meld deg på!', ApplicationHelper::IMS_JOIN_URL, :onclick => 'return !window.open(this.href)'
       - else
         | Gruppen er full.  Sett deg på
         br
-        = link_to 'venteliste', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', :onclick => 'return !window.open(this.href)'
+        = link_to 'venteliste', ApplicationHelper::IMS_JOIN_URL, :onclick => 'return !window.open(this.href)'
         | .
     - else
       => current_size

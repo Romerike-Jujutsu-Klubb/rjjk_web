@@ -21,9 +21,7 @@ class SignupsControllerTest < ActionDispatch::IntegrationTest
   test 'should create signup' do
     signups(:three).really_destroy!
     assert_difference('Signup.count') do
-      post signups_url, params: { signup: {
-        nkf_member_trial_id: id(:even), user_id: id(:sandra)
-      } }
+      post signups_url, params: { signup: { user_id: id(:sandra) } }
     end
 
     assert_redirected_to signups_url
@@ -40,9 +38,7 @@ class SignupsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update signup' do
-    patch signup_url(@signup), params: { signup: {
-      nkf_member_trial_id: @signup.nkf_member_trial_id, user_id: id(:sandra)
-    } }
+    patch signup_url(@signup), params: { signup: { user_id: id(:sandra) } }
     assert_redirected_to signups_url
   end
 
@@ -56,11 +52,9 @@ class SignupsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should complete signup' do
     assert_difference('Signup.count', -1) do
-      assert_difference('NkfMemberTrial.count', -1) do
-        assert_difference('Member.count') do
-          assert_no_difference('User.count') do
-            patch complete_signup_url(@signup)
-          end
+      assert_difference('Member.count') do
+        assert_no_difference('User.count') do
+          patch complete_signup_url(@signup)
         end
       end
     end
@@ -69,11 +63,9 @@ class SignupsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should terminate signup' do
     assert_difference('Signup.count', -1) do
-      assert_difference('NkfMemberTrial.count', -1) do
-        assert_no_difference('Member.count') do
-          assert_no_difference('User.count') do
-            delete terminate_signup_url(@signup)
-          end
+      assert_no_difference('Member.count') do
+        assert_no_difference('User.count') do
+          delete terminate_signup_url(@signup)
         end
       end
     end

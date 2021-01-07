@@ -79,9 +79,6 @@ unless reason
     end
 
     # Admin Hourly
-    scheduler.cron('12 0 * * *') do
-      Rails.application.executor.wrap { NkfSynchronizationJob.perform_now }
-    end
     scheduler.cron('10 * * * *') do
       Rails.application.executor.wrap { AttendanceNagger.send_message_reminder }
     end
@@ -139,9 +136,6 @@ unless reason
     end
     scheduler.cron('0 3 * * mon') do
       Rails.application.executor.wrap { InstructionReminder.notify_missing_instructors }
-    end
-    scheduler.cron('0 8 * * thu') do
-      Rails.application.executor.wrap { NkfMemberTrialReminder.notify_overdue_trials }
     end
     scheduler.cron('0 6 * * mon') do
       Rails.application.executor.wrap { SemesterReminder.notify_missing_session_dates }

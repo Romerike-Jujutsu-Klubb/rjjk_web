@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_06_185230) do
+ActiveRecord::Schema.define(version: 2021_01_07_171438) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -452,7 +452,6 @@ ActiveRecord::Schema.define(version: 2021_01_06_185230) do
     t.string 'billing_type', limit: 100
     t.string 'comment', limit: 255
     t.boolean 'instructor', null: false
-    t.boolean 'nkf_fee', null: false
     t.string 'social_sec_no', limit: 11
     t.string 'account_no', limit: 16
     t.string 'billing_phone_home', limit: 32
@@ -487,88 +486,6 @@ ActiveRecord::Schema.define(version: 2021_01_06_185230) do
     t.datetime 'mailed_at'
     t.text 'summary'
     t.boolean 'user_selection'
-  end
-
-  create_table 'nkf_member_trials', force: :cascade do |t|
-    t.string 'etternavn', limit: 32, null: false
-    t.string 'fornavn', limit: 32, null: false
-    t.date 'fodselsdato', null: false
-    t.string 'postnr', limit: 4, null: false
-    t.string 'adresse_2', limit: 64
-    t.string 'epost', limit: 64, null: false
-    t.string 'mobil', limit: 16
-    t.datetime 'created_at'
-    t.datetime 'updated_at'
-    t.integer 'tid', null: false
-    t.string 'epost_faktura', limit: 64
-    t.string 'gren_stilart_avd_parti___gren_stilart_avd_parti', limit: 64, null: false
-    t.string 'kjonn', null: false
-    t.string 'foresatte', limit: 64
-    t.string 'foresatte_epost', limit: 64
-    t.string 'foresatte_mobil', limit: 25
-    t.string 'foresatte_nr_2', limit: 64
-    t.string 'foresatte_nr_2_mobil', limit: 25
-    t.integer 'hoyde', limit: 2
-    t.string 'kont_sats'
-    t.string 'kontraktsbelop'
-    t.string 'kontraktstype'
-    t.string 'medlemskategori_navn'
-    t.string 'rabatt'
-    t.string 'telefon', limit: 25
-    t.string 'telefon_arbeid', limit: 25
-    t.date 'reg_dato', null: false
-    t.index ['tid'], name: 'index_nkf_member_trials_on_tid', unique: true
-  end
-
-  create_table 'nkf_members', force: :cascade do |t|
-    t.integer 'member_id'
-    t.integer 'medlemsnummer'
-    t.string 'etternavn', limit: 255
-    t.string 'fornavn', limit: 255
-    t.string 'adresse_1', limit: 255
-    t.string 'adresse_2', limit: 255
-    t.string 'adresse_3', limit: 255
-    t.string 'postnr', limit: 255
-    t.string 'sted', limit: 255
-    t.string 'fodselsdato', limit: 255
-    t.string 'telefon', limit: 255
-    t.string 'telefon_arbeid', limit: 255
-    t.string 'mobil', limit: 255
-    t.string 'epost', limit: 255
-    t.string 'epost_faktura', limit: 255
-    t.string 'yrke', limit: 255
-    t.string 'medlemsstatus', limit: 255
-    t.string 'medlemskategori', limit: 255
-    t.string 'medlemskategori_navn', limit: 255
-    t.string 'kont_sats', limit: 255
-    t.string 'kont_belop', limit: 255
-    t.string 'kontraktstype', limit: 255
-    t.string 'kontraktsbelop', limit: 255
-    t.string 'rabatt', limit: 255
-    t.string 'gren_stilart_avd_parti___gren_stilart_avd_parti', limit: 255
-    t.string 'sist_betalt_dato', limit: 255
-    t.string 'betalt_t_o_m__dato', limit: 255
-    t.string 'konkurranseomrade_id', limit: 255
-    t.string 'konkurranseomrade_navn', limit: 255
-    t.string 'klubb_id', limit: 255
-    t.string 'klubb', limit: 255
-    t.integer 'hovedmedlem_id'
-    t.string 'hovedmedlem_navn', limit: 255
-    t.string 'innmeldtdato', limit: 255
-    t.string 'innmeldtarsak', limit: 255
-    t.string 'utmeldtdato', limit: 255
-    t.string 'utmeldtarsak', limit: 255
-    t.string 'antall_etiketter_1', limit: 255
-    t.datetime 'created_at'
-    t.datetime 'updated_at'
-    t.string 'ventekid', limit: 20
-    t.string 'kjonn', limit: 6, null: false
-    t.string 'foresatte', limit: 64
-    t.string 'foresatte_epost', limit: 64
-    t.string 'foresatte_mobil', limit: 255
-    t.string 'foresatte_nr_2', limit: 64
-    t.string 'foresatte_nr_2_mobil', limit: 255
-    t.integer 'hoyde', limit: 2
   end
 
   create_table 'page_aliases', force: :cascade do |t|
@@ -668,13 +585,11 @@ ActiveRecord::Schema.define(version: 2021_01_06_185230) do
 
   create_table 'signups', force: :cascade do |t|
     t.bigint 'user_id', null: false
-    t.bigint 'nkf_member_trial_id'
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
     t.datetime 'deleted_at'
     t.boolean 'welcome_package'
     t.index ['deleted_at'], name: 'index_signups_on_deleted_at'
-    t.index ['nkf_member_trial_id'], name: 'index_signups_on_nkf_member_trial_id', unique: true
     t.index ['user_id'], name: 'index_signups_on_user_id'
   end
 
@@ -886,13 +801,11 @@ ActiveRecord::Schema.define(version: 2021_01_06_185230) do
   add_foreign_key 'news_item_likes', 'news_items', name: 'fk_news_item_likes_news_item_id'
   add_foreign_key 'news_item_likes', 'users', name: 'fk_news_item_likes_user_id'
   add_foreign_key 'news_items', 'users', column: 'created_by', name: 'news_items_created_by_fkey'
-  add_foreign_key 'nkf_members', 'members', name: 'nkf_members_member_id_fkey'
   add_foreign_key 'practices', 'group_schedules', name: 'fk_practices_group_schedule_id'
   add_foreign_key 'rank_articles', 'information_pages'
   add_foreign_key 'rank_articles', 'ranks'
   add_foreign_key 'ranks', 'curriculum_groups'
   add_foreign_key 'signatures', 'users'
-  add_foreign_key 'signups', 'nkf_member_trials'
   add_foreign_key 'signups', 'users'
   add_foreign_key 'survey_answers', 'survey_questions', name: 'fk_survey_answers_survey_question_id'
   add_foreign_key 'survey_answers', 'survey_requests', name: 'fk_survey_answers_survey_request_id'

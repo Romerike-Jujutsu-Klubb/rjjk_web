@@ -1,9 +1,0 @@
-.float-right = link_to 'Liste', nkf_members_path
-
-h1 NKF Medlemskap
-
-table.table.table-sm
-  - @nkf_member.attributes.each do |c, v|
-    tr
-      th = c
-      td = v

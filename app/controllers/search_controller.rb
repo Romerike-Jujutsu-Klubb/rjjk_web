@@ -10,7 +10,6 @@ class SearchController < ApplicationController
       signup_users, non_signups = all_users.partition(&:signup)
       @signups = signup_users.map(&:signup)
       member_users, @users = non_signups.partition(&:last_membership)
-      @trials = NkfMemberTrial.search(@query).where.not(id: @signups.map(&:nkf_member_trial_id)).to_a
       @deleted_users = User.only_deleted.search(@query).to_a
       @former_members, @members = member_users.map(&:last_membership).partition(&:left?)
       @user_messages = UserMessage.search(@query).to_a

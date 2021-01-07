@@ -37,10 +37,6 @@ class ProfileController < ApplicationController
     @user = current_user
     if @user.update user_params
       flash.notice = 'Profilen din er oppdatert.'
-      [@user, *@user.contactees, *@user.payees, *@user.primary_wards, *@user.secondary_wards]
-          .map(&:last_membership).compact.each do |member|
-        NkfMemberSyncJob.perform_later member
-      end
       redirect_to edit_user_path(@user)
     else
       flash.now.alert = "En feil oppsto ved lagring av brukeren: #{@user.errors.full_messages.join("\n")}"

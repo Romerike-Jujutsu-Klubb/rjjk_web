@@ -229,10 +229,8 @@ Rails.application.routes.draw do
       get :list_active
       get :list_inactive
       get :telephone_list
-      get :trial_missing_contract
     end
     member do
-      get :missing_contract
       get :since_graduation
     end
   end
@@ -249,20 +247,6 @@ Rails.application.routes.draw do
       post :like
       post :move_to_top
       patch :preview
-    end
-  end
-
-  resources :nkf_members do
-    collection do
-      get :sync_errors
-      get :sync_progress
-      post :sync_with_nkf
-    end
-  end
-  resources :nkf_member_trials do
-    collection do
-      get :sync_progress
-      post :sync_with_nkf
     end
   end
   resources :page_aliases
@@ -311,7 +295,6 @@ Rails.application.routes.draw do
   resources :signups do
     member do
       patch :complete
-      post :export
       delete :terminate
     end
   end

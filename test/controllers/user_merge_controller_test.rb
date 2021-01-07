@@ -11,9 +11,7 @@ class UserMergeControllerTest < IntegrationTest
   end
 
   test 'update' do
-    VCR.use_cassette('NKF Comparison Single Member Uwe', match_requests_on: %i[method host path query]) do
-      patch user_merge_path(id(:uwe), other_user_id: id(:lise))
-    end
+    patch user_merge_path(id(:uwe), other_user_id: id(:lise))
     assert_redirected_to users(:uwe)
     assert_raise(ActiveRecord::RecordNotFound) { users(:lise) }
   end
@@ -34,9 +32,7 @@ class UserMergeControllerTest < IntegrationTest
     other_user_label = :lise
     other_user_id = id(other_user_label)
     card_keys(:uwe).update! user_id: other_user_id
-    VCR.use_cassette('NKF Comparison Single Member Uwe', match_requests_on: %i[method host path query]) do
-      patch user_merge_path(id(:uwe), other_user_id: other_user_id)
-    end
+    patch user_merge_path(id(:uwe), other_user_id: other_user_id)
     assert_redirected_to users(:uwe)
     assert_raise(ActiveRecord::RecordNotFound) { users(other_user_label) }
     assert_equal id(:uwe), card_keys(:uwe).reload.user_id
