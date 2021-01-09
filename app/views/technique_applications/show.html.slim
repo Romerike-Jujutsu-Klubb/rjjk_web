@@ -19,14 +19,14 @@ h3.clearfix
 - if [@technique_application.application_image_sequences, @technique_application.application_videos, \
       @technique_application.technique_links].reduce(0){|a,e| e.any? ? a + 1 : a} >= 2
   ul#myTab.nav.nav-tabs role="tablist"
-    - image_sequences_present = @technique_application.application_image_sequences.any? { |is| is.application_steps.any? }
-    - if image_sequences_present
-      li.nav-item
-        a#steps-tab.nav-link.active data-toggle="tab" data-target="#steps" role="tab" aria-controls="steps" aria-selected="true" Bildeserie
     - videos_present = @technique_application.application_videos.any?
+    - image_sequences_present = @technique_application.application_image_sequences.any? { |is| is.application_steps.any? }
     - if videos_present
       li.nav-item
-        a#videos-tab.nav-link data-toggle="tab" data-target="#videos" role="tab" aria-controls="videos" aria-selected="false" Filmer
+        a#videos-tab.nav-link.active data-toggle="tab" data-target="#videos" role="tab" aria-controls="videos" aria-selected="false" Filmer
+    - if image_sequences_present
+      li.nav-item
+        a#steps-tab.nav-link class=('active' unless videos_present) data-toggle="tab" data-target="#steps" role="tab" aria-controls="steps" aria-selected="true" Bildeserie
     - if @technique_application.technique_links.any?
       li.nav-item
         a#links-tab.nav-link data-toggle="tab" data-target="#links" role="tab" aria-controls="links" aria-selected="false" Lenker
@@ -42,22 +42,24 @@ scss:
   }
 
 #myTabContent.tab-content
-  #steps.tab-pane.fade.show.active role="tabpanel" aria-labelledby="steps-tab"
-    - @technique_application.application_image_sequences.each do |ais|
-      - if ais.title
-        h3 = ais.title
+  - if videos_present
+    #videos.tab-pane.fade.show.active role="tabpanel" aria-labelledby="videos-tab"
       .card-deck
-        - ais.application_steps.order(:position).each do |as|
+        - @technique_application.application_videos.each do |av|
           .card.mt-3
-            .card-body
-              - if as.image_id
-                = render 'images/item', image: as.image
-              = textalize as.description, newlines: true
-  #videos.tab-pane.fade class=('show active' unless image_sequences_present) role="tabpanel" aria-labelledby="videos-tab"
-    .card-deck
-      - @technique_application.application_videos.each do |av|
-        .card.mt-3
-          .card-body = render 'images/item', image: av.image
+            .card-body = render 'images/item', image: av.image
+  - if image_sequences_present
+    #steps.tab-pane.fade class=('show active' unless videos_present) role="tabpanel" aria-labelledby="steps-tab"
+      - @technique_application.application_image_sequences.each do |ais|
+        - if ais.title
+          h3 = ais.title
+        .card-deck
+          - ais.application_steps.order(:position).each do |as|
+            .card.mt-3
+              .card-body
+                - if as.image_id
+                  = render 'images/item', image: as.image
+                = textalize as.description, newlines: true
   #links.tab-pane.fade class=('show active' unless image_sequences_present || videos_present) role="tabpanel" aria-labelledby="links-tab"
     .card.mt-3
       .card-body
