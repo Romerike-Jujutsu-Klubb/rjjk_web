@@ -40,8 +40,13 @@ p Normert tid: #{@rank.standard_months} måneder
   - @rank.applications.sort_by(&:position).group_by(&:system).each do |system, apps|
     h3 = system
 
-    table.table
+    table.table data-record-path=technique_applications_path
       - apps.each do |app|
-        tr
+        tr data-record-id=app.id
           td = app.position
-          td = link_to app.name, app
+          td = app.name
+          td.text-right
+            - if (video_count = app.application_videos.size) > 0
+              .badge.badge-info
+                i.fa.fa-video>
+                = video_count
