@@ -1,4 +1,4 @@
 - if image.video?
-  = video_tag image_url_with_cl(image), title: image.name || 'Film', controls: true, autobuffer: true, class: 'w-100'
+  = video_tag image_url_with_cl(image), title: image.name || 'Film', controls: true, autobuffer: true, class: 'w-100', style: "max-height:100vh"
 - else
   = image_tag(image_url_with_cl(image), class: 'w-100', lazy: true) if image.name
