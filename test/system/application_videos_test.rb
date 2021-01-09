@@ -17,7 +17,7 @@ class ApplicationVideosTest < ApplicationSystemTestCase
     visit ranks_path
     find('a', text: 'Kei Wa Ryu').click
     click_on '1. kyu brunt belte'
-    click_on 'Forsvar mot dobbelt hårtak med kneing'
+    find('td', text: 'Forsvar mot dobbelt hårtak med kneing').click
     click_on 'Legg til film'
 
     find('#application_video_image_attributes_file', visible: false)
