@@ -5,7 +5,7 @@ class ImsController < ApplicationController
 
   def import
     if (file = params[:file])
-    imported_items ||= load_imported_items(file)
+      imported_items ||= load_imported_items(file)
     end
     redirect_to ims_index_path, notice: "Filen er importert: #{imported_items&.size.to_i}"
   end
