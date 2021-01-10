@@ -33,7 +33,7 @@
         = link_to id: i.id
           - img_css = "width:100%;min-width:#{width}px;min-height:#{image_height}px;object-fit:cover"
           - if i.video? && i.cloudinary_identifier
-            video title=(i.name || 'Video') style=img_css data-lazy-src=image_url_with_cl(i, width: 88)
+            video title=(i.name || 'Video') style=img_css data-lazy-src=image_url_with_cl(i, width: 88) disableRemotePlayback=true
             i.far.fa-play-circle.position-absolute.text-white.mr-1 style="top:0.15rem;right:0.25rem"
           - else
             = image_tag image_url_with_cl(i, action: :inline, width: image_width), \
@@ -50,10 +50,7 @@
 javascript:
   $(function() {
     $('video[data-lazy-src]').each(function(i, video) {
-      $(video).attr('src', $(video).data('lazy-src'))
-          .removeAttr('data-lazy-src')
-          .removeData('lazy-src');
-      video.controls = false;
+      $(video).attr('src', $(video).data('lazy-src')).removeAttr('data-lazy-src').removeData('lazy-src');
     })
   })
   $('#thumbs video').on('mouseover', function(event) {
