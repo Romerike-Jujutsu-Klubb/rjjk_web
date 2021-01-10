@@ -8,7 +8,7 @@ class ImsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'should get import' do
+  test 'should post import' do
     post ims_import_url
     assert_redirected_to ims_index_path
   end

@@ -18,5 +18,5 @@ time pg_dump "$(heroku config:get --app=jujutsu-no HEROKU_POSTGRESQL_CRIMSON_URL
 export JRUBY_OPTS=--dev
 export RAILS_ENV=development
 bundle exec rake db:migrate
-bin/rails r "Image.all.each{|i| i.update!(cloudinary_identifier: nil) if i.cloudinary_identifier =~ %r{production/images}}"
+bin/rails r "Image.all.each{|i| i.update!(cloudinary_identifier: nil, cloudinary_transformed_at: nil) if i.cloudinary_identifier =~ %r{production/images}}"
 RAILS_ENV="test" bundle exec rake db:reset

@@ -5,7 +5,11 @@
     div style="position: relative;overflow: hidden;padding-top:#{100 / @image.aspect_ratio}%"
       - media_style = "position:absolute;max-width:100%;top:0;bottom:0;left:0;right:0;max-height:100%"
       = image_tag image_url_with_cl(@image, width: 762), title: @image.name || 'Bilde', class: 'img-thumbnail w-100 p-1', style: media_style
-  .w-100 align="center"
+  .w-100.position-relative align="center"
+    - if current_user.id == @image.user_id
+      a.btn.btn-primary.float-right.position-absolute href=edit_image_path(@image) style="right:0"
+        i.fa.fa-edit>
+        | Endre
     => @image.description || @image.name
     | av #{@image.user.name}
     br
@@ -30,8 +34,11 @@
       - image_height = i.height_at(image_width)
       - height = image_height + 10
       .col
-        = link_to id: i.id do
-          = image_tag image_url_with_cl(i, action: :inline, width: image_width), \
+        = link_to id: i.id
+          - if i.video? && i.cloudinary_transformed_at?
+            video.img-thumbnail title=(i.name || 'Video') style="width:#{width}px;height:#{height}px;object-fit:cover" data-lazy-src=image_url_with_cl(i, width: image_width)
+          - else
+            = image_tag image_url_with_cl(i, action: :inline, width: image_width), \
                 title: i.name || 'Bilde', style: "width:#{width}px;height:#{height}px;object-fit:cover", class: 'img-thumbnail', lazy: true
   .row.text-center
     - slice.each do |i|
@@ -41,3 +48,17 @@
           li> = link_to i.public? ? 'Skjul' : 'Publiser', {:controller => :images, :action => :update, :id => i.id, :image => {:public => !i.public?}}, :method => :put if admin?
           - if user? && !i.user_like
             li = link_to 'Liker', {controller: :user_images, action: :like, id: i.id}, method: :post
+
+javascript:
+  $(function() {
+    $('video[data-lazy-src]').each(function(i, video) {
+      $(video).attr('src', $(video).data('lazy-src')).data('lazy-src', null)
+    })
+  })
+  $('video.img-thumbnail').on('mouseover', function(event) {
+    event.target.muted = true;
+    event.target.play();
+  }).on('mouseout', function(event) {
+    event.target.currentTime = 0;
+    event.target.pause();
+  })

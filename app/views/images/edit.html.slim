@@ -1,6 +1,23 @@
+- if current_user.id == @image.user_id || current_user.admin?
+  a.btn.btn-danger.mb-3.float-right href=image_path(@image.id) data-method=:delete data-confirm='Er du sikker?  Bildet kan ikke gjenskapes etter sletting.'
+    i.fa.fa-trash>
+    | Slett
+
 h1 Redigèr bilde
 
-= render 'form'
+.row
+  .col-6
+    = render 'form'
+  - unless @image.new_record?
+    .col-6.text-center
+      - if @image.video?
+        = video_tag url_for(controller: :images, action: :show, id: @image.id, format: @image.format), title: @image.name || 'Film', controls: true, autobuffer: true, class: 'w-100'
+      - else
+        = image_tag(url_for(action: :show, id: @image.id, format: @image.format), style: 'max-height:65vh') if @image.name
+      div
+        = "#{@image.width}x#{@image.height}"
+        =< "(#{@image.content_length / 1024}KB)"
+        =< @image.content_type
 
 .card-deck.mt-4
   .card
@@ -8,15 +25,19 @@ h1 Redigèr bilde
     .card-body
       - if @image.google_drive_reference
         .badge.badge-info.mr-3 Google Drive: #{@image.google_drive_reference.inspect}
-        - google_drive_io = @image.google_drive_io
-        .badge.badge-info.mr-3 google size: #{google_drive_io.size.inspect} bytes
-        - if google_drive_io.size == 0
+        - google_drive_size = @image.google_drive_file.size
+        - if google_drive_size >= 0
+          .badge.badge-info.mr-3 google size: #{google_drive_size} bytes
+        - else
           a.btn.btn-danger.mr-3 href=reset_google_drive_reference_image_path(@image.id) data-method=:patch Reset Google Drive
       - else
         a.btn.btn-danger.mr-3 href=reset_google_drive_reference_image_path(@image.id) data-method=:patch Upload to Google Drive
       - if @image.cloudinary_identifier
         .badge.badge-info.mr-3 Cloudinary: #{@image.cloudinary_identifier.inspect}
-        .badge.badge-info.mr-3 Cloudinary size: #{@image.cloudinary_io.size.inspect} bytes
+        - cloudinary_size = @image.cloudinary_file['bytes']
+        .badge.mr-3 class=(cloudinary_size == google_drive_size ? 'badge-info' : 'badge-warning') Cloudinary size: #{cloudinary_size} bytes
+        - if @image.cloudinary_transformed_at
+          .badge.badge-info.mr-3 Cloudinary transform: #{@image.cloudinary_transformed_at}
   .card
     .card-header Lastet opp av
     .card-body

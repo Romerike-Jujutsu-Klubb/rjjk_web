@@ -14,6 +14,13 @@ module GoogleDriveContent
     StringIO.new(content_data) if content_loaded?
   end
 
+  def google_drive_file
+    return unless google_drive_reference
+
+    logger.info "get google drive file: #{id} #{google_drive_reference}"
+    GoogleDriveService.new.get_file(google_drive_reference)
+  end
+
   def google_drive_io
     return unless google_drive_reference
 
@@ -26,6 +33,13 @@ module GoogleDriveContent
 
     Cloudinary::Downloader
         .download(cloudinary_identifier, type: 'upload', resource_type: video? ? 'video' : 'image')
+  end
+
+  def cloudinary_file
+    return unless cloudinary_identifier
+
+    Cloudinary::Api
+        .resource(cloudinary_identifier, type: 'upload', resource_type: video? ? 'video' : 'image')
   end
 
   def move_to_google_drive!

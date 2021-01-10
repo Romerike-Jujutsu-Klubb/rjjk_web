@@ -4,6 +4,10 @@ class CloudinaryUploadJob < ApplicationJob
   queue_as :default
 
   def perform(image_id)
+    unless ENV['CLOUDINARY_URL']
+      logger.error 'CLOUDINARY_URL not set'
+      return
+    end
     image = Image.find(image_id)
     if image.cloudinary_identifier
       logger.error "Image already uploaded: #{image_id.inspect}"
