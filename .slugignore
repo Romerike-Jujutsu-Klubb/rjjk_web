@@ -1,3 +1,4 @@
 doc
 test
-vendor/bundle/ruby/2.7.0/gems/google-api-client-0.46.2/generated/google/apis/compute_alpha
+vendor/bundle/ruby/*/gems/google-api-client-*/generated/google/apis/compute_alpha
+vendor/bundle/ruby/*/gems/google-api-client-*/generated/google/apis/compute_beta
