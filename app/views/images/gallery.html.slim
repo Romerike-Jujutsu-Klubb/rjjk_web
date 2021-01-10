@@ -22,42 +22,41 @@
   ' Du har ikke lastet opp noen mediefiler enda.
   | Du kan laste opp ved å velge fil i høyre kolonne, under "Last opp media".
 
-- width = 492 / 5
-- @images.each_slice(5) do |slice|
-  hr style="margin:10px 0"
-  .row.text-center
-    - slice.each do |i|
-      .col = i.description || i.name.gsub(/[._-]/, ' ').chomp(i.format)
-  .row.text-center
-    - slice.each do |i|
-      - image_width = width - 10
+- image_width = 120
+- width = image_width
+.row.text-center
+  - @images.each do |i|
+    .col.mt-3: .card.h-100
       - image_height = i.height_at(image_width)
-      - height = image_height + 10
-      .col
+      - height = image_height
+      .card-body.p-0.position-relative
         = link_to id: i.id
+          - img_css = "width:100%;min-width:#{width}px;min-height:#{image_height}px;object-fit:cover"
           - if i.video? && i.cloudinary_identifier
-            .position-relative.m-auto style="width:fit-content"
-              video.img-thumbnail title=(i.name || 'Video') style="width:#{width}px;height:#{image_height}px;object-fit:cover" data-lazy-src=image_url_with_cl(i, width: image_width)
-              i.far.fa-play-circle.position-absolute.text-white.mr-1 style="top:0.15rem;right:0.25rem"
+            video title=(i.name || 'Video') style=img_css data-lazy-src=image_url_with_cl(i, width: 88)
+            i.far.fa-play-circle.position-absolute.text-white.mr-1 style="top:0.15rem;right:0.25rem"
           - else
             = image_tag image_url_with_cl(i, action: :inline, width: image_width), \
-                title: i.name || 'Bilde', style: "width:#{width}px;height:#{height}px;object-fit:cover", class: 'img-thumbnail', lazy: true
-  .row.text-center
-    - slice.each do |i|
-      .col
-        ul.controls
-          li> = link_to 'Godkjenn', {:controller => :images, :action => :update, :id => i.id, :image => {:approved => true}}, :method => :put if admin? && !i.approved?
-          li> = link_to i.public? ? 'Skjul' : 'Publiser', {:controller => :images, :action => :update, :id => i.id, :image => {:public => !i.public?}}, :method => :put if admin?
-          - if user? && !i.user_like
-            li = link_to 'Liker', {controller: :user_images, action: :like, id: i.id}, method: :post
+                title: i.name || 'Bilde', style: img_css, lazy: true
+        .p-2 = i.description || i.name.gsub(/[._-]/, ' ').chomp(i.format)
+      .card-footer
+        - if admin? && !i.approved?
+          = link_to 'Godkjenn', {:controller => :images, :action => :update, :id => i.id, :image => {:approved => true}}, :method => :put, class: 'btn btn-link btn-sm'
+        - if admin?
+          = link_to i.public? ? 'Skjul' : 'Publiser', {:controller => :images, :action => :update, :id => i.id, :image => {:public => !i.public?}}, :method => :put, class: 'btn btn-link btn-sm'
+        - if user? && !i.user_like
+          = link_to 'Liker', {controller: :user_images, action: :like, id: i.id}, method: :post, class: 'btn btn-link btn-sm'
 
 javascript:
   $(function() {
     $('video[data-lazy-src]').each(function(i, video) {
-      $(video).attr('src', $(video).data('lazy-src')).data('lazy-src', null)
+      $(video).attr('src', $(video).data('lazy-src'))
+          .removeAttr('data-lazy-src')
+          .removeData('lazy-src');
+      video.controls = false;
     })
   })
-  $('video.img-thumbnail').on('mouseover', function(event) {
+  $('video').on('mouseover', function(event) {
     $(event.target).find('+ i').hide();
     event.target.muted = true;
     event.target.play();
