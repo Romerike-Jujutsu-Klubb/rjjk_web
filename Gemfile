@@ -59,6 +59,7 @@ gem 'rails-i18n'
 gem 'rails-observers', github: 'rails/rails-observers'
 gem 'rake'
 gem 'ri_cal'
+gem "roo-xls"
 gem 'rufus-scheduler'
 gem 'sassc-rails'
 gem 'script_relocator'
