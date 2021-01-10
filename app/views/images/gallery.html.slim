@@ -5,18 +5,19 @@
     div style="position: relative;overflow: hidden;padding-top:#{100 / @image.aspect_ratio}%"
       - media_style = "position:absolute;max-width:100%;top:0;bottom:0;left:0;right:0;max-height:100%"
       = image_tag image_url_with_cl(@image, width: 762), title: @image.name || 'Bilde', class: 'img-thumbnail w-100 p-1', style: media_style
-  .w-100.position-relative align="center"
-    - if current_user.id == @image.user_id
-      a.btn.btn-primary.float-right.position-absolute href=edit_image_path(@image) style="right:0"
-        i.fa.fa-edit>
-        | Endre
-    => @image.description || @image.name
-    | av #{@image.user.name}
-    br
-    ul.controls.pb-0
-      li> = link_to 'Godkjenn', {:controller => :images, :action => :update, :id => @image.id, :image => {:approved => true}}, :method => :put if admin? && !@image.approved?
-      li> = link_to @image.public? ? 'Skjul' : 'Publiser', {:controller => :images, :action => :update, :id => @image.id, :image => {:public => !@image.public?}}, :method => :put if admin?
-      li = link_to 'Liker', like_user_image_path(@image), method: :post if user? && !@image.likers.include?(current_user)
+  - if current_user.id == @image.user_id
+    a.btn.btn-primary.float-right href=edit_image_path(@image)
+      i.fa.fa-edit>
+      | Endre
+  => @image.description || @image.name
+  | av #{@image.user.name}
+  .clearfix
+    - if admin? && !@image.approved?
+      => link_to 'Godkjenn', {:controller => :images, :action => :update, :id => @image.id, :image => {:approved => true}}, :method => :put
+    - if admin?
+      => link_to @image.public? ? 'Skjul' : 'Publiser', {:controller => :images, :action => :update, :id => @image.id, :image => {:public => !@image.public?}}, :method => :put
+    - if user? && !@image.likers.include?(current_user)
+      = link_to 'Liker', like_user_image_path(@image), method: :post
 - elsif @images.empty?
   h3 Galleri
   ' Du har ikke lastet opp noen mediefiler enda.
