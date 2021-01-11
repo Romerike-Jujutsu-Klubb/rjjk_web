@@ -8,7 +8,7 @@
       th Treninger
     - members.sort_by{|m| [-m.next_rank.position, -m.attendances_since_graduation.size]}.each do |m|
       tr
-        td = m.name
+        td = link_to m.name, user_path(m.user, anchor: :tab_graduations_tab)
         td align="center" = m.next_rank.name
         td align="center" = m.next_rank.minimum_attendances
         td align="center" = link_to m.attendances_since_graduation.size, controller: :attendances, action: :since_graduation, id: m.user_id, only_path: false
