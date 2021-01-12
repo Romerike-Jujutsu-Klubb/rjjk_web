@@ -28,7 +28,7 @@ class Event < ApplicationRecord
   end
 
   def self.type_name
-    I18n.t(name.underscore, name)
+    I18n.t(name.underscore, default: name)
   end
 
   def type_name
