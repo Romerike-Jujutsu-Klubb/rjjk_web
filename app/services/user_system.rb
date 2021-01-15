@@ -157,8 +157,12 @@ module UserSystem
     current_user.try(:technical_committy?)
   end
 
-  def current_user
+  def self.current_user
     Thread.current[:user]
+  end
+
+  def current_user
+    UserSystem.current_user
   end
 
   def current_user=(user)

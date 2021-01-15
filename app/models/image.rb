@@ -13,7 +13,7 @@ class Image < ApplicationRecord
   belongs_to :user, -> { with_deleted }, inverse_of: :images
 
   has_one :user_like, -> do
-    where("user_images.rel_type = 'LIKE'").where(user_images: { user_id: Thread.current[:user].id })
+    where("user_images.rel_type = 'LIKE'").where(user_images: { user_id: UserSystem.current_user&.id })
   end, class_name: 'UserImage', inverse_of: :image
 
   has_many :application_steps, dependent: :restrict_with_error

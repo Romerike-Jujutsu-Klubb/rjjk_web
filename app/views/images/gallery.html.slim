@@ -5,7 +5,7 @@
     div style="position: relative;overflow: hidden;padding-top:#{100 / @image.aspect_ratio}%"
       - media_style = "position:absolute;max-width:100%;top:0;bottom:0;left:0;right:0;max-height:100%"
       = image_tag image_url_with_cl(@image, width: 762), title: @image.name || 'Bilde', class: 'img-thumbnail w-100 p-1', style: media_style
-  - if current_user.id == @image.user_id
+  - if current_user&.id&.== @image.user_id
     a.btn.btn-primary.float-right.ml-2 href=edit_image_path(@image)
       i.fa.fa-edit>
       | Endre
