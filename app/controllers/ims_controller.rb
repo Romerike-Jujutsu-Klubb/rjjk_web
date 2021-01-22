@@ -28,6 +28,7 @@ class ImsController < ApplicationController
     (21..spreadsheet.last_row).each do |i|
       row = spreadsheet.row(i)
       break if row[0].blank?
+
       rows << {name: row[2]}
     end
     rows
