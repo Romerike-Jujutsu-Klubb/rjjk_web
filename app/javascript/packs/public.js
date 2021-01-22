@@ -6,3 +6,8 @@ import "@fortawesome/fontawesome-free/js/v4-shims"
 import "bootstrap/js/dist/util"
 import "bootstrap/js/dist/modal"
 import "bootstrap/js/dist/collapse"
+import 'lazyload/lazyload'
+
+$(function() {
+  lazyload();
+});

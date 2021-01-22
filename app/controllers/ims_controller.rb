@@ -29,7 +29,7 @@ class ImsController < ApplicationController
       row = spreadsheet.row(i)
       break if row[0].blank?
 
-      rows << {name: row[2]}
+      rows << { name: row[2] }
     end
     rows
   end

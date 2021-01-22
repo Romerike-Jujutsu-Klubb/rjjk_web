@@ -8,8 +8,28 @@ class ImsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'should post import' do
-    post ims_import_url
+  test 'should post import xls' do
+    post ims_import_url, params: { file: fixture_file_upload('files/MembershipStatistics-1610036403783.xls') }
+    assert_redirected_to ims_index_path
+  end
+
+  test 'should post import csv' do
+    post ims_import_url, params: { file: fixture_file_upload('files/MembershipStatistics-1610092032730.csv') }
+    assert_redirected_to ims_index_path
+  end
+
+  test 'should post import empty xls' do
+    post ims_import_url, params: { file: fixture_file_upload('files/Empty.xls') }
+    assert_redirected_to ims_index_path
+  end
+
+  test 'should post import empty xlsx' do
+    post ims_import_url, params: { file: fixture_file_upload('files/Empty.xlsx') }
+    assert_redirected_to ims_index_path
+  end
+
+  test 'should post import empty csv' do
+    post ims_import_url, params: { file: fixture_file_upload('files/Empty.csv') }
     assert_redirected_to ims_index_path
   end
 end
