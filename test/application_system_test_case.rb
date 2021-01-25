@@ -57,12 +57,12 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   teardown do
-    visit logout_path reply: 'done'
-    assert_text 'done'
     unless passed?
       log = page.driver.browser.manage.logs.get(:browser).map(&:message).join("\n")
       puts "Browser log: #{log}" if log.present?
     end
+    execute_script 'new AbortController().abort()'
+    Capybara.reset_session!
   end
 end
 
