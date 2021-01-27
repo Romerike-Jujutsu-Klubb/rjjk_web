@@ -4,6 +4,9 @@ nav#navbar.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
     - unless current_user
       .d-inline.d-lg-none.d-xl-inline Romerike Jujutsu Klubb
       .d-none.d-lg-inline.d-xl-none RJJK
+  ul.navbar-nav.mr-auto
+    li.nav-item
+      a.nav-link.btn.btn-warning.p-2 href=ApplicationHelper::IMS_JOIN_URL Prøv oss!
   button.navbar-toggler type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
     span.navbar-toggler-icon
   #navbarSupportedContent.collapse.navbar-collapse
@@ -12,14 +15,17 @@ nav#navbar.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
         li.nav-item id="menu-item-#{ip.id}" class=('d-none d-xl-inline' if i >= 5)
           a.nav-link href=information_page_path(ip.title) = ip.title
       li.nav-item
-        a.nav-link.btn.btn-warning href=signup_guide_root_path Prøv oss!
-      li.nav-item
         a.nav-link href=(current_user ? root_path : with_detour(login_path)) Medlemssider
       li.nav-item
-        a.nav-link.btn.btn-success href='https://supporter.no/rjjk' target=:webshop Nettbutikk
+        a.nav-link.btn.btn-success href='https://supporter.no/rjjk' target=:webshop
+          | Nettbutikk
+          i.fa.fa-shopping-cart.ml-1
     form.form-inline.my-2.my-lg-0 action=search_path
-      input.form-control.mr-sm-2 type="search" name=:q placeholder=t(:search) aria-label=t(:search)
-      button.btn.btn-outline-success.my-2.my-sm-0 type="submit" = t(:search)
+      .input-group.ml-3
+        input.form-control type="search" name=:q placeholder=t(:search) aria-label=t(:search)
+        .input-group-append
+          button.btn.btn-outline-success.my-2.my-sm-0 type="submit" title=t(:search)
+            i.fa.fa-search
 
 - if @content_width
   javascript:
