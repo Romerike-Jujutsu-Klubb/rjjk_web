@@ -17,9 +17,7 @@ require 'application_system_test_case'
 
 class SignupGuideTest < ApplicationSystemTestCase
   test 'New user over 18 years' do
-    visit root_path
-    click_on 'Prøv oss!'
-
+    visit signup_guide_root_path
     screenshot :basics
     fill_in :user_name, with: 'Bruce Lee'
     fill_in :user_birthdate, with: '27111940'
