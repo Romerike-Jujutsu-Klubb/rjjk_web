@@ -13,7 +13,7 @@ ul#user-menu.collapse data-parent="#main-menu"
   li = menu_item 'Mine media', controller: :images, action: :mine
   li
     i.fa.fa-tshirt.float-right.m-1.mr-2
-    a href='https://supporter.no/rjjk' target=:webshop WebShop
+    a href='https://supporter.no/rjjk' target=:webshop Nettbutikk
   li: a href='http://imsapp.nif.no/b2c/dashboard' target=:NIF NIF medlemsside
   - unless admin?
     li = menu_item 'Nyheter', controller: :news

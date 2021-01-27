@@ -8,15 +8,15 @@ nav#navbar.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
     span.navbar-toggler-icon
   #navbarSupportedContent.collapse.navbar-collapse
     ul.navbar-nav.mr-auto
-      - @information_pages.select(&:public).reject(&:hidden).each do |ip|
-        li.nav-item id="menu-item-#{ip.id}"
+      - @information_pages.select(&:public).reject(&:hidden).each.with_index do |ip, i|
+        li.nav-item id="menu-item-#{ip.id}" class=('d-none d-xl-inline' if i >= 5)
           a.nav-link href=information_page_path(ip.title) = ip.title
       li.nav-item
         a.nav-link.btn.btn-warning href=signup_guide_root_path Prøv oss!
       li.nav-item
         a.nav-link href=(current_user ? root_path : with_detour(login_path)) Medlemssider
       li.nav-item
-        a.nav-link.btn.btn-success href='https://supporter.no/rjjk' target=:webshop WebShop
+        a.nav-link.btn.btn-success href='https://supporter.no/rjjk' target=:webshop Nettbutikk
     form.form-inline.my-2.my-lg-0 action=search_path
       input.form-control.mr-sm-2 type="search" name=:q placeholder=t(:search) aria-label=t(:search)
       button.btn.btn-outline-success.my-2.my-sm-0 type="submit" = t(:search)
