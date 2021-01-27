@@ -47,6 +47,7 @@ https://developers.google.com/apis-explorer/?hl=en_US#p/drive/v3/
 
 https://testmysite.withgoogle.com/intl/no-no/?utm_source=google_search&utm_medium=dcallout&utm_campaign=v2f_no
 
+[PERFORMANCE](doc/PERFORMANCE.md)
 
 ## Linting
 

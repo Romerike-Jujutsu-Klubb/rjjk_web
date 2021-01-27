@@ -60,7 +60,7 @@ gem 'rails-observers', github: 'rails/rails-observers'
 gem 'rake'
 gem 'ri_cal'
 gem "roo-xls"
-gem 'rufus-scheduler'
+gem 'rufus-scheduler' # https://github.com/rossta/montrose
 gem 'sassc-rails'
 gem 'script_relocator'
 gem 'serviceworker-rails'
