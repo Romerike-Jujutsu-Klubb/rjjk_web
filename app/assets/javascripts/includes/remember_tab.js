@@ -1,6 +1,7 @@
 function show_tab() {
   if (location.hash) {
-    var selected_tab = $('a[data-target="' + decodeURIComponent(location.hash).slice(0, -4) + '"]');
+    const target_id = decodeURIComponent(location.hash).slice(0, -4);
+    const selected_tab = $('a[data-target="' + target_id + '"],a[href="' + target_id + '"]');
 
     // Show parent tab
     parent_tab_content = selected_tab.closest('.tab-pane');
@@ -32,36 +33,40 @@ function show_tab() {
       selected_tab.tab('show');
     }
   } else {
-    var default_tab = $('a.nav-link.active[data-toggle="tab"]');
+    let default_tab = $('a.nav-link.active[data-toggle="tab"]');
     if (default_tab[0]) {
-      console.log("found active tab: " + default_tab.attr("data-target"));
+      const default_target = default_tab.attr("data-target") || default_tab.attr("href");
+      const target = default_target;
+      console.log("found active tab: " + target);
 
       // Find and activate child tab
-      default_tab_content = $(default_tab.attr("data-target"));
+      default_tab_content = $(target);
       child_tab = default_tab_content.find('a.nav-link.active[data-toggle="tab"]');
       if (child_tab.length === 0) {
         child_tab = default_tab_content.find('a.nav-link[data-toggle="tab"]');
       }
       if (child_tab[0]) {
-        console.log("found child tab: " + child_tab.attr("data-target"));
-        console.log("replaceState: " + window.location.href.replace(location.hash, "") + child_tab.attr("data-target") + '_tab');
-        window.history.replaceState({}, window.title, window.location.href.replace(location.hash, "") + child_tab.attr("data-target") + '_tab');
+        const child_target = child_tab.attr("data-target") || child_tab.attr("href");
+        console.log("found child tab: " + child_target);
+        console.log("replaceState: " + window.location.href.replace(location.hash, "") + child_target + '_tab');
+        window.history.replaceState({}, window.title, window.location.href.replace(location.hash, "") + child_target + '_tab');
         console.log("location.hash: " + decodeURIComponent(location.hash));
       } else {
         // Store tab id in location hash
 
         // default_tab.trigger('show.bs.tab');
-        console.log("replaceState: " + window.location.href.replace(location.hash, "") + default_tab.attr("data-target") + '_tab');
-        window.history.replaceState({}, window.title, window.location.href.replace(location.hash, "") + default_tab.attr("data-target") + '_tab');
+        console.log("replaceState: " + window.location.href.replace(location.hash, "") + default_target + '_tab');
+        window.history.replaceState({}, window.title, window.location.href.replace(location.hash, "") + default_target + '_tab');
         console.log("location.hash: " + decodeURIComponent(location.hash));
         default_tab.trigger('show.bs.tab');
       }
     } else {
       default_tab = $('a.nav-link[data-toggle="tab"]');
+      const default_target = default_tab.attr("data-target") || default_tab.attr("href");
       if (default_tab[0]) {
         default_tab.trigger('show.bs.tab');
-        console.log("replaceState: " + window.location.href.replace(location.hash, "") + default_tab.attr("data-target") + '_tab');
-        window.history.replaceState({}, window.title, window.location.href.replace(location.hash, "") + default_tab.attr("data-target") + '_tab');
+        console.log("replaceState: " + window.location.href.replace(location.hash, "") + default_target + '_tab');
+        window.history.replaceState({}, window.title, window.location.href.replace(location.hash, "") + default_target + '_tab');
         console.log("location.hash: " + decodeURIComponent(location.hash));
       }
     }
