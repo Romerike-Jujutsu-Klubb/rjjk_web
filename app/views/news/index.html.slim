@@ -20,6 +20,7 @@ javascript:
     const span = btn.find('span');
     span.text(span.text().replace('mer', 'mindre'))
   }).on('hide.bs.collapse', function() {
+    $(this).closest('.card')[0].scrollIntoView({behavior: "smooth"});
     const btn = $('[data-target="#' + this.id + '"]');
     btn.find('i').addClass('fa fa-angle-double-down')
     const span = btn.find('span');
