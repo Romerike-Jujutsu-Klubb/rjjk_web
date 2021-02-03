@@ -38,7 +38,7 @@
         = f.text_area :body, hide_label: true, class: (:expanding if @news_item.body.present?), value: @news_item.body && (document = Kramdown::Document.new(@news_item.body, html_to_native: true)) && document.to_kramdown
   .card
     .card-header Forhåndsvisning
-    #preview.card-body
+    #preview.card-body.px-0.py-3
 
 ruby:
   form_id = @news_item.new_record? ? :new_news_item : "edit_news_item_#{@news_item.id}"
