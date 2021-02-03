@@ -14,7 +14,7 @@ env:
   RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
 jobs:
-  Lint:
+  Rubocop:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
