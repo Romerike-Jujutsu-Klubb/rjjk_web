@@ -171,12 +171,11 @@ class LoginController < ApplicationController
               url = url_for(action: :change_password)
               UserMailer.forgot_password(user, url).store(user, tag: :forgot_password)
             end
-            flash.notice =
-                "En e-post med veiledning for å sette nytt passord er sendt til #{escaped_email}."
-            unless authenticated_user?
-              redirect_to login_path
-              return
-            end
+          end
+          flash.notice = "En e-post med veiledning for å sette nytt passord er sendt til #{escaped_email}."
+          unless authenticated_user?
+            redirect_to login_path
+            return
           end
           back_or_redirect_to '/'
         else

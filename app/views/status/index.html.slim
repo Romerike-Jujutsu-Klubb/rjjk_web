@@ -19,7 +19,7 @@ table.table
     tr
       th Versjon
       td
-        - if File.exists? 'REVISION'
+        - if File.exist? 'REVISION'
           dl
             dt Revision
             dd = File.read('REVISION')

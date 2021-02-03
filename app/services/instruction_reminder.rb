@@ -21,6 +21,6 @@ class InstructionReminder
 
     InstructionMailer
         .missing_instructors(missing_chief_instructions, missing_instructions)
-        .store(Role[:'Hovedinstruktør'], tag: :missing_instructors)
+        .store(Role[:Hovedinstruktør], tag: :missing_instructors)
   end
 end

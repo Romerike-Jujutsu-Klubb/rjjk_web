@@ -12,7 +12,7 @@ ruby File.read("#{__dir__}/.ruby-version")[5..]
 # For Rails 6
 # https://gorails.com/episodes/how-to-use-bootstrap-with-webpack-and-rails
 
-gem 'rails', '~>6.0.0'
+gem 'rails', '~>6.1.0'
 
 platform :ruby do
   gem 'oily_png'
@@ -39,6 +39,7 @@ gem 'exception_notification'
 gem 'geocoder'
 gem 'google_drive'
 gem 'http'
+gem 'icalendar'
 gem 'invisible_captcha'
 gem 'jbuilder'
 gem 'jquery-ui-rails'
@@ -58,13 +59,13 @@ gem 'rails_autolink'
 gem 'rails-i18n'
 gem 'rails-observers', github: 'rails/rails-observers'
 gem 'rake'
-gem 'ri_cal'
+gem "roo", github: 'roo-rb/roo' # FIXME(uwe): Remove when fixed: https://github.com/roo-rb/roo/issues/551
 gem "roo-xls"
 gem 'rufus-scheduler' # https://github.com/rossta/montrose
 gem 'sassc-rails'
 gem 'script_relocator'
 gem 'serviceworker-rails'
-gem 'simple_drilldown' # , path: '~/work/simple_drilldown'
+gem 'simple_drilldown' # , path: '~/work/open-source/simple_drilldown'
 gem 'simple_workflow' # , path: '~/work/open-source/simple_workflow'
 gem 'slim-rails'
 gem 'uglifier'

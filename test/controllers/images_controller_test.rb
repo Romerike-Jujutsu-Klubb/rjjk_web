@@ -78,7 +78,7 @@ class ImagesControllerTest < ActionController::TestCase
 
     assert_difference('Image.count') do
       post :create, params: { image: {
-        name: 'new file', content_type: 'image/png', file: fixture_file_upload('files/tiny.png')
+        name: 'new file', content_type: 'image/png', file: fixture_file_upload('tiny.png')
       } }
     end
 
@@ -97,7 +97,7 @@ class ImagesControllerTest < ActionController::TestCase
     login :lars
 
     assert_difference('Image.count') do
-      post :create, params: { image: { file: fixture_file_upload('files/tiny.png', 'image/png') } }
+      post :create, params: { image: { file: fixture_file_upload('tiny.png', 'image/png') } }
     end
 
     assert_response :redirect
@@ -112,7 +112,7 @@ class ImagesControllerTest < ActionController::TestCase
     login :lars
 
     assert_no_difference('Image.count') do
-      post :create, params: { image: { file: fixture_file_upload('files/tiny.png') } }
+      post :create, params: { image: { file: fixture_file_upload('tiny.png') } }
     end
 
     assert_response :success

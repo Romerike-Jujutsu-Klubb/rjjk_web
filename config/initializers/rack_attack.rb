@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-USER_VALID_PATTERN = %r{/users/\d+/valid }.freeze
+USER_VALID_PATTERN = %r{/users/\d+/valid }
 
 if Rails.env.test?
   Rack::Attack.enabled = false

@@ -19,7 +19,8 @@ class SignupGuideController < ApplicationController
     @user.signup ||= Signup.new(user: @user)
     store_signup
 
-    return unless @user.valid? || (@user.errors.keys & %i[birthdate first_name last_name male name]).empty?
+    return unless @user.valid? ||
+        (@user.errors.attribute_names & %i[birthdate first_name last_name male name]).empty?
     return redirect_to signup_guide_guardians_path if @user.age&.<(18)
 
     redirect_to signup_guide_contact_info_path
@@ -33,7 +34,7 @@ class SignupGuideController < ApplicationController
 
     store_signup
     return redirect_to signup_guide_basics_path if params[:back]
-    if @user.invalid? && (@user.errors.keys & %i[guardian_1_id]).any?
+    if @user.invalid? && (@user.errors.attribute_names & %i[guardian_1_id]).any?
       return redirect_to signup_guide_guardians_path, alert: ''
     end
 
@@ -83,7 +84,7 @@ class SignupGuideController < ApplicationController
       store_signup
     end
 
-    if @user.invalid? && (@user.errors.keys & %i[base email phone postal_code address]).any?
+    if @user.invalid? && (@user.errors.attribute_names & %i[base email phone postal_code address]).any?
       return redirect_to signup_guide_contact_info_path, alert: ''
     end
 
@@ -111,7 +112,7 @@ class SignupGuideController < ApplicationController
 
     store_signup
     return redirect_to signup_guide_groups_path if params[:back]
-    return unless @user.valid? || @user.errors.keys == %i[group_memberships]
+    return unless @user.valid? || @user.errors.attribute_names == %i[group_memberships]
 
     complete
   end

@@ -1,5 +1,21 @@
 #!/bin/bash -e
 
+HEROKU_USER="uwe@kubosch.no"
+HEROKU_LOGIN=$(heroku auth:whoami || echo "")
+
+if [[ "${HEROKU_LOGIN}" != "${HEROKU_USER}" ]]; then
+  if [[ "${HEROKU_LOGIN}" != "" ]]; then
+    echo "Logged in as ${HEROKU_LOGIN}."
+    heroku auth:logout
+  else
+    echo "Not logged in to Heroku."
+  fi
+  echo "Please log in as ${HEROKU_USER}."
+  heroku auth:login
+  exec $0
+  exit
+fi
+
 DB_NAME=rjjk_web_development
 
 echo "Disconnecting clients"

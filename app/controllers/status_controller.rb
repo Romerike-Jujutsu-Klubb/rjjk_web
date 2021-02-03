@@ -8,7 +8,7 @@ class StatusController < ApplicationController
   HEAP_DUMP_SUFFIX = '.json'
 
   def index
-    @heap_dumps = Dir["#{HEAP_DUMP_PATH}/#{HEAP_DUMP_PREFIX}*#{HEAP_DUMP_SUFFIX}"].sort
+    @heap_dumps = Dir["#{HEAP_DUMP_PATH}/#{HEAP_DUMP_PREFIX}*#{HEAP_DUMP_SUFFIX}"]
         .map { |f| [f.split('/').last, File.size(f)] }
   end
 

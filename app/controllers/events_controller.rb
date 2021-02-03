@@ -165,49 +165,72 @@ class EventsController < ApplicationController
 
   def calendar
     event_id = params[:id]
-    cal = RiCal.Calendar do
-      if event_id
-        events = []
-        if (event = Event.find_by(id: event_id))
-          events << event
-        end
-        if (graduation = Graduation.find_by(id: event_id))
-          events << GraduationEvent.new(graduation)
-        end
-      else
-        today = Time.zone.today
-        events = Event
-            .where('(end_at IS NOT NULL AND end_at >= ?) OR start_at >= ?', today, today)
-            .order(:start_at, :end_at).to_a +
-            Graduation.where('held_on >= ?', today).order(:held_on).map { |g| GraduationEvent.new(g) }
+    if event_id
+      events = []
+      if (event = Event.find_by(id: event_id))
+        events << event
       end
-      events.each do |e|
-        event do
-          env_prefix = ("#{Rails.env}." unless Rails.env.production?)
-          uid "#{e.class.name.underscore}.#{e.id}@#{env_prefix}jujutsu.no"
-          summary e.name
-          if e.description
-            description Kramdown::Document
-                .new(e.description.strip, html_to_native: true).to_kramdown
-                .gsub(/\{:.*?\}\s*/, '')
-          end
-          dtstart e.start_at
-          dtend e.end_at || e.start_at
-          # location "Datek Wireless AS, Instituttveien, Kjeller"
-          # add_attendee "uwe@kubosch.no"
-          alarm do
-            description e.name
-          end
+      if (graduation = Graduation.find_by(id: event_id))
+        events << GraduationEvent.new(graduation)
+      end
+    else
+      today = Time.zone.today
+      events = Event
+          .where('(end_at IS NOT NULL AND end_at >= ?) OR start_at >= ?', today, today)
+          .order(:start_at, :end_at).to_a +
+          Graduation.where('held_on >= ?', today).order(:held_on).map { |g| GraduationEvent.new(g) }
+    end
+
+    cal = Icalendar::Calendar.new
+    env_prefix = ("#{Rails.env}." unless Rails.env.production?)
+
+    events.each do |e|
+      cal.event do |ce|
+        ce.uid = "#{e.class.name.underscore}.#{e.id}@#{env_prefix}jujutsu.no"
+        ce.dtstart = Icalendar::Values::Date.new(e.start_at)
+        ce.dtend = Icalendar::Values::Date.new(e.end_at || e.start_at)
+        ce.summary = e.name
+        if e.description
+          ce.description = Kramdown::Document
+              .new(e.description.strip, html_to_native: true).to_kramdown
+              .gsub(/\{:.*?\}\s*/, '')
+        end
+        ce.ip_class = 'PRIVATE'
+
+        ce.alarm do |a|
+          a.action = 'DISPLAY' # This line isn't necessary, it's the default
+          a.summary = 'Alarm notification'
+          a.trigger = '-P1DT0H0M0S' # 1 day before
+        end
+        ce.alarm do |a|
+          a.action = 'DISPLAY'
+          a.summary = 'Alarm notification' # email subject (required)
+          a.description = e.name
+          a.trigger = '-PT15M' # 15 minutes before
+        end
+        ce.alarm do |a|
+          a.action = 'DISPLAY'
+          a.summary = 'Alarm notification' # email subject (required)
+          a.description = e.name
+          a.trigger = '-PT1H15M' # 15 minutes before
+        end
+        ce.alarm do |a|
+          a.action = 'AUDIO'
+          a.trigger = '-PT15M'
+          a.append_attach 'Basso'
         end
       end
     end
+
+    cal.publish
+
     respond_to do |format|
       format.ics do
-        send_data(cal.export, filename: 'RJJK.ics',
+        send_data(cal.to_ical, filename: 'RJJK.ics',
                               disposition: 'inline; filename=RJJK.ics', type: 'text/calendar')
       end
       format.all do
-        send_data(cal.export, filename: 'RJJK.ics',
+        send_data(cal.to_ical, filename: 'RJJK.ics',
                               disposition: 'inline; filename=RJJK.ics', type: 'text/calendar')
       end
     end

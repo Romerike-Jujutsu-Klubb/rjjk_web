@@ -7,7 +7,7 @@ class User < ApplicationRecord
   include Rails.application.routes.url_helpers
   include Searching
 
-  EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i.freeze
+  EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
 
   has_paper_trail
   acts_as_paranoid

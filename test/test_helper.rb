@@ -9,6 +9,7 @@ Warning[:deprecated] = true
 
 ENV['RAILS_ENV'] ||= 'test'
 ENV['CPAS_API_BASE_URL'] ||= 'https://example.com/sms'
+ENV['BACKTRACE'] = '1'
 require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'
 

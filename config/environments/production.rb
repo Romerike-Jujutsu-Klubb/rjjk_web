@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
+require 'active_support/core_ext/integer/time'
+
 Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
   # config.action_cable.mount_path = nil
   # config.action_cable.url = 'wss://example.com/cable'
-  # config.action_controller.asset_host = 'http://assets.example.com'
   config.action_controller.perform_caching = true
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
-  config.action_mailer.asset_host = 'https://www.jujutsu.no'
+  # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
   config.action_mailer.default_url_options = { protocol: 'https', host: 'www.jujutsu.no' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
@@ -23,7 +24,7 @@ Rails.application.configure do
   config.action_mailer.perform_caching = true
   # config.action_mailer.raise_delivery_errors = false
   # config.active_job.queue_adapter     = :resque
-  # config.active_job.queue_name_prefix = "rjjk_web_#{Rails.env}"
+  # config.active_job.queue_name_prefix = "rjjk_web_production"
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context =
   #     ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
@@ -31,6 +32,9 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
   config.active_storage.service = :db
   config.active_support.deprecation = :notify
+  config.active_support.disallowed_deprecation = :log
+  config.active_support.disallowed_deprecation_warnings = []
+  # config.asset_host = 'https://www.jujutsu.no'
   config.assets.compile = false
   # config.assets.css_compressor = :sass
   config.assets.js_compressor = Uglifier.new(harmony: true)
@@ -46,10 +50,10 @@ Rails.application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
   config.lograge.enabled = true
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
-  config.public_file_server.headers = {
-    'Cache-Control' => "public, max-age=#{1.year.to_i}, s-maxage=#{1.year.to_i}",
-    'Expires' => 1.year.from_now.to_formatted_s(:rfc822),
-  }
+  # config.public_file_server.headers = {
+  #   'Cache-Control' => "public, max-age=#{1.year.to_i}, s-maxage=#{1.year.to_i}",
+  #   'Expires' => 1.year.from_now.to_formatted_s(:rfc822),
+  # }
   config.require_master_key = true
   if ENV['RAILS_LOG_TO_STDOUT'].present?
     logger = ActiveSupport::Logger.new($stdout)

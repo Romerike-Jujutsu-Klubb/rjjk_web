@@ -4,8 +4,8 @@ module ApplicationHelper
   include UserSystem
   include GraduationAccess
 
-  WEBP_PATTERN = %r{image/webp|^\*/\*$}.freeze
-  WEBM_PATTERN = %r{image/webp|^\*/\*$}.freeze
+  WEBP_PATTERN = %r{image/webp|^\*/\*$}
+  WEBM_PATTERN = %r{image/webp|^\*/\*$}
   IMS_JOIN_URL = 'https://medlemskap.nif.no/Start/Index/20493'
 
   def accepts_webp?

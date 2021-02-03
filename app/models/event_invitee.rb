@@ -3,7 +3,7 @@
 class EventInvitee < ApplicationRecord
   include ActionView::Helpers::UrlHelper
 
-  EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i.freeze
+  EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   INTERNAL_ORG = 'Romerike Jujutsu Klubb'
 
   scope :for_user, ->(user_id) { where user_id: user_id }
