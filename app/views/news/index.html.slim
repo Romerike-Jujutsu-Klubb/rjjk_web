@@ -13,7 +13,7 @@
 = render 'layouts/modal_image'
 
 javascript:
-  $('.collapse').on('show.bs.collapse', function() {
+  $('.md.collapse').on('show.bs.collapse', function() {
     $(this).closest('.card')[0].scrollIntoView({behavior: "smooth"});
     const btn = $('[data-target="#' + this.id + '"]');
     btn.find('i').addClass('fa fa-angle-double-up')
