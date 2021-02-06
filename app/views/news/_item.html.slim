@@ -28,10 +28,9 @@
       - unless full
         .text-center
           button.btn.btn-outline-info.btn-sm type="button" data-toggle="collapse" data-target="#news_more_#{news_item.id}" aria-expanded="false" aria-controls="news_more_#{news_item.id}"
-            | Se
             i.fa.fa-angle-double-down.px-1
+            ' Se
             span mer
-
 
     - if user? && news_item.persisted?
       ul.controls.mb-0
