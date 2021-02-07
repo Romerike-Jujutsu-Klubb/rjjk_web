@@ -47,7 +47,7 @@ html lang="nb"
           .row.d-print-none
             .col-12.p-0 = render 'layouts/header'
           .row style="flex-grow: 1"
-            .subnav.d-print-none style="overflow-y: scroll" = render 'layouts/navigation'
+            .subnav.d-print-none = render 'layouts/navigation'
             .main.col
               = image_tag('rjjk_logo_plus_txt_320.png', class: 'd-none d-print-block float-right w-25 m-3 mb-4')
               - if @query
