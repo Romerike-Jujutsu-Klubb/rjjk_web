@@ -7,6 +7,10 @@ class GraduationNewsItem
     @graduation = graduation
   end
 
+  def id
+    @graduation.id
+  end
+
   def title
     I18n.t('graduation_title', name: @graduation.group.name)
   end
@@ -38,7 +42,7 @@ class GraduationNewsItem
   end
 
   def body
-    @graduation.admin? ? 'Les mer...' : nil
+    "<a href='/graduations/#{id}'>Les mer...</a>" if @graduation.admin?
   end
 
   def to_model
