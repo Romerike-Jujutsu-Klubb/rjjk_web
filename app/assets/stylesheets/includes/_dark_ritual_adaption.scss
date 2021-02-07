@@ -331,6 +331,8 @@ body:not(.wide) .container-fluid {
   z-index: 1000;
   transition: 0.5s;
   height: 100%;
+  max-height:100vh;
+  overflow-y:scroll;
   width: $sidebar_width;
 
   h1 {
@@ -465,7 +467,7 @@ body:not(.wide) .container-fluid {
     }
 
     .subnav {
-      position: static;
+      position:sticky;
       transform: translate(0, 0) !important;
       height: auto;
     }
