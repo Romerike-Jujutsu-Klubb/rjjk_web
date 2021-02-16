@@ -34,7 +34,7 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
   config.active_support.disallowed_deprecation = :log
   config.active_support.disallowed_deprecation_warnings = []
-  # config.asset_host = 'https://www.jujutsu.no'
+  config.asset_host = 'https://www.jujutsu.no' # For logo in emails
   config.assets.compile = false
   # config.assets.css_compressor = :sass
   config.assets.js_compressor = Uglifier.new(harmony: true)
