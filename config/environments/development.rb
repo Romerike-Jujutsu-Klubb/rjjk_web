@@ -14,6 +14,7 @@ Rails.application.configure do
   config.active_support.deprecation = :log
   config.active_support.disallowed_deprecation = :raise
   config.active_support.disallowed_deprecation_warnings = []
+  config.asset_host = 'http://localhost:3000' # Required to display assets (logo) in emails
   config.assets.debug = true
   config.assets.quiet = true
   config.cache_classes = false

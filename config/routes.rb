@@ -313,9 +313,13 @@ Rails.application.routes.draw do
   resources :survey_requests
   resources :surveys
   resources :technique_applications do
+    collection do
+      get :report
+    end
     member do
       post :move_down
       post :move_up
+      get :report
     end
   end
   resources :technique_links

@@ -1,0 +1,7 @@
+h1 Nyex teknikker #{@year_start.year} (#{@technique_applications.size})
+
+table.table
+  - @technique_applications.each do |ta|
+    tr
+      th = ta.rank
+      th = link_to ta.name, ta

@@ -80,6 +80,14 @@ class TechniqueApplicationsController < ApplicationController
     redirect_to edit_rank_path(@technique_application.rank_id)
   end
 
+  def report
+    @year_start = params[:id] ? Date.new(params[:id].to_i, 1, 1) : Date.current.beginning_of_year
+    @technique_applications = TechniqueApplication
+      .where("created_at >= ?", @year_start).to_a
+      .select{|ta| ta.rank.martial_art.original_martial_art_id.nil?}
+      .sort_by{|ta| ta.rank}
+  end
+
   private
 
   def load_form_data
