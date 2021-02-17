@@ -22,7 +22,7 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
       - name: Rubocop
-        run: bundle exec rubocop --auto-correct
+        run: bundle exec rubocop --auto-correct-all
   FunctionalTest:
     runs-on: ubuntu-20.04
     services:
