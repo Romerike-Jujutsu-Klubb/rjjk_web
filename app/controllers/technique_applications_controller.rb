@@ -82,8 +82,9 @@ class TechniqueApplicationsController < ApplicationController
 
   def report
     @year_start = params[:id] ? Date.new(params[:id].to_i, 1, 1) : Date.current.beginning_of_year
+    @year_end = @year_start.end_of_year
     @technique_applications = TechniqueApplication
-      .where("created_at >= ?", @year_start).to_a
+      .where("created_at >= ? AND created_at <= ?", @year_start, @year_end).to_a
       .select{|ta| ta.rank.martial_art.original_martial_art_id.nil?}
       .sort_by{|ta| ta.rank}
   end

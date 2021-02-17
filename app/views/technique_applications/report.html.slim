@@ -1,7 +1,16 @@
-h1 Nyex teknikker #{@year_start.year} (#{@technique_applications.size})
+h1
+  ' Nye teknikker (#{@technique_applications.size})
+  => link_to report_technique_application_path(@year_start.year - 1), title: @year_start.year - 1
+    i.fa.fa-arrow-left
+  => @year_start.year
+  = link_to report_technique_application_path(@year_start.year + 1), title: @year_start.year + 1
+    i.fa.fa-arrow-right
 
 table.table
+  - previous_rank = nil
   - @technique_applications.each do |ta|
     tr
-      th = ta.rank
+      th
+        = ta.rank if ta.rank != previous_rank
       th = link_to ta.name, ta
+    - previous_rank = ta.rank
