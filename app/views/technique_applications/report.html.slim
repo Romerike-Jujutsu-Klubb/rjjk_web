@@ -1,10 +1,15 @@
 h1
   ' Nye teknikker (#{@technique_applications.size})
-  => link_to report_technique_application_path(@year_start.year - 1), title: @year_start.year - 1
-    i.fa.fa-arrow-left
+  - year_index = @years.index(@year_start.year)
+  - if year_index > 0
+    - prev_year = @years[year_index - 1]
+    => link_to report_technique_application_path(prev_year), title: prev_year
+      i.fa.fa-arrow-left
   => @year_start.year
-  = link_to report_technique_application_path(@year_start.year + 1), title: @year_start.year + 1
-    i.fa.fa-arrow-right
+  - if year_index < @years.size - 1
+    - next_year = @years[year_index + 1]
+    = link_to report_technique_application_path(next_year), title: next_year
+      i.fa.fa-arrow-right
 
 table.table
   - previous_rank = nil

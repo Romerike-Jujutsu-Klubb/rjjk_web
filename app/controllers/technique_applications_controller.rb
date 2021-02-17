@@ -87,6 +87,10 @@ class TechniqueApplicationsController < ApplicationController
       .where("created_at >= ? AND created_at <= ?", @year_start, @year_end).to_a
       .select{|ta| ta.rank.martial_art.original_martial_art_id.nil?}
       .sort_by{|ta| ta.rank}
+    @years = TechniqueApplication
+      .connection
+      .execute("SELECT extract(year from created_at) AS year FROM technique_applications GROUP BY 1")
+      .to_a.map{|r| r.values.first.to_i}.sort
   end
 
   private
