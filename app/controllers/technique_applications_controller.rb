@@ -84,13 +84,13 @@ class TechniqueApplicationsController < ApplicationController
     @year_start = params[:id] ? Date.new(params[:id].to_i, 1, 1) : Date.current.beginning_of_year
     @year_end = @year_start.end_of_year
     @technique_applications = TechniqueApplication
-      .where("created_at >= ? AND created_at <= ?", @year_start, @year_end).to_a
-      .select{|ta| ta.rank.martial_art.original_martial_art_id.nil?}
-      .sort_by{|ta| ta.rank}
+        .where('created_at >= ? AND created_at <= ?', @year_start, @year_end).to_a
+        .select { |ta| ta.rank.martial_art.original_martial_art_id.nil? }
+        .sort_by(&:rank)
     @years = TechniqueApplication
-      .connection
-      .execute("SELECT extract(year from created_at) AS year FROM technique_applications GROUP BY 1")
-      .to_a.map{|r| r.values.first.to_i}.sort
+        .connection
+        .execute('SELECT extract(year from created_at) AS year FROM technique_applications GROUP BY 1')
+        .to_a.map { |r| r.values.first.to_i }.sort
   end
 
   private
